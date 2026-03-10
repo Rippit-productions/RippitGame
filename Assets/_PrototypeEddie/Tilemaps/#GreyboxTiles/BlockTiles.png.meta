@@ -1,0 +1,451 @@
+fileFormatVersion: 2
+guid: 023ce585fecc7f8489a06136e8e14cac
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7223950226953391895
+    second: Tiles_0
+  - first:
+      213: -8377130690987618698
+    second: Tiles_1
+  - first:
+      213: -4684333735789482159
+    second: Tiles_2
+  - first:
+      213: -5062486230716756072
+    second: Tiles_3
+  - first:
+      213: 4099902767569298868
+    second: Tiles_4
+  - first:
+      213: -6833445872158455971
+    second: Tiles_5
+  - first:
+      213: -537749870668139058
+    second: Tiles_6
+  - first:
+      213: 1561205615984820651
+    second: Tiles_7
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 62.5
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BlockTiles_0
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 1462
+        width: 249
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 74.18758, y: -110.18737}
+        - {x: 53.56258, y: -104.56237}
+        - {x: 10.437583, y: -85.81237}
+        - {x: 6.6875834, y: -82.06237}
+        - {x: -2.6874158, y: -76.43737}
+        - {x: -13.937415, y: -68.93738}
+        - {x: -34.562416, y: -53.937374}
+        - {x: -36.437416, y: -53.937374}
+        - {x: -53.312412, y: -35.187378}
+        - {x: -75.81241, y: -8.937378}
+        - {x: -77.68741, y: -1.4373778}
+        - {x: -85.18741, y: 11.687621}
+        - {x: -100.18741, y: 36.062622}
+        - {x: -100.18741, y: 39.81262}
+        - {x: -105.81241, y: 56.68762}
+        - {x: -111.43741, y: 77.312614}
+        - {x: -115.18741, y: 84.812614}
+        - {x: -117.06241, y: 107.312614}
+        - {x: -120.81241, y: 111.062614}
+        - {x: -124.5, y: 109.187614}
+        - {x: -124.5, y: -123.31237}
+        - {x: -122.68741, y: -125}
+        - {x: 100.43758, y: -125}
+        - {x: 104.18758, y: -121.43737}
+        - {x: 102.31258, y: -115.81237}
+      tessellationDetail: 0.6
+      bones: []
+      spriteID: 3a8b059f9ae7fca4695c8728b0f92fbb
+      internalID: 999909899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockTiles_1
+      rect:
+        serializedVersion: 2
+        x: 1342
+        y: 1462
+        width: 259
+        height: 259
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 94.187614, y: 129.5}
+        - {x: 82.937614, y: 129.5}
+        - {x: 73.562614, y: 127.937614}
+        - {x: 58.56262, y: 124.187614}
+        - {x: 52.93762, y: 122.312614}
+        - {x: 51.06262, y: 120.437614}
+        - {x: 36.062622, y: 116.687614}
+        - {x: 26.68762, y: 112.937614}
+        - {x: 6.0626216, y: 103.562614}
+        - {x: -3.3123777, y: 97.937614}
+        - {x: -18.312376, y: 88.562614}
+        - {x: -23.937376, y: 82.937614}
+        - {x: -31.437376, y: 77.312614}
+        - {x: -48.312374, y: 60.43762}
+        - {x: -50.187374, y: 60.43762}
+        - {x: -55.812374, y: 54.81262}
+        - {x: -55.812374, y: 52.93762}
+        - {x: -72.68738, y: 36.062622}
+        - {x: -78.31237, y: 28.56262}
+        - {x: -87.68737, y: 17.312622}
+        - {x: -98.93737, y: -5.1873775}
+        - {x: -102.68737, y: -10.812377}
+        - {x: -102.68737, y: -14.562377}
+        - {x: -110.18737, y: -27.687376}
+        - {x: -113.93737, y: -37.062374}
+        - {x: -119.56237, y: -53.937374}
+        - {x: -123.31237, y: -68.93738}
+        - {x: -125.18737, y: -78.31237}
+        - {x: -127.06237, y: -91.43737}
+        - {x: -127.06237, y: -108.31237}
+        - {x: -128.93738, y: -110.18737}
+        - {x: -128.93738, y: -125.18737}
+        - {x: -125.18737, y: -128.93738}
+        - {x: 129.5, y: -128.93738}
+        - {x: 129.5, y: -127.06237}
+        - {x: 129.5, y: 129.5}
+      tessellationDetail: 0.72
+      bones: []
+      spriteID: 77f64ee0ccbf0fd44babbab114bc414f
+      internalID: 244971554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockTiles_2
+      rect:
+        serializedVersion: 2
+        x: 1663
+        y: 1462
+        width: 514
+        height: 259
+      alignment: 9
+      pivot: {x: 0.75, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 52.375027, y: 129.5}
+        - {x: 33.62503, y: 129.5}
+        - {x: 26.125029, y: 127.937614}
+        - {x: 24.250029, y: 126.062614}
+        - {x: 9.25003, y: 122.312614}
+        - {x: -18.874968, y: 109.187614}
+        - {x: -22.624968, y: 105.437614}
+        - {x: -28.249968, y: 103.562614}
+        - {x: -43.249966, y: 88.562614}
+        - {x: -45.124966, y: 88.562614}
+        - {x: -256.99997, y: -123.31237}
+        - {x: -255.12495, y: -128.93738}
+        - {x: 256.75003, y: -128.93738}
+        - {x: 257, y: -125.18737}
+        - {x: 257, y: 129.5}
+        - {x: 257, y: 129.5}
+      tessellationDetail: 0.96
+      bones: []
+      spriteID: 3c9ec6fd15099f24eb667c5f690e1350
+      internalID: 1696881814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockTiles_3
+      rect:
+        serializedVersion: 2
+        x: 2239
+        y: 1462
+        width: 258
+        height: 259
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -129, y: 129.5}
+        - {x: -129, y: -127.06237}
+        - {x: -127.249825, y: -128.93738}
+        - {x: 127.75016, y: -128.93738}
+        - {x: 129, y: -127.06237}
+        - {x: 129, y: 129.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47cacb7c68ba86d48b6afb7d0021409d
+      internalID: 1639333210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockTiles_4
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 1462
+        width: 257
+        height: 259
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -128.5, y: -129.5}
+        - {x: 128.5, y: -128.93738}
+        - {x: 128.5, y: 129.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1119dd88ac97c74ebd99102e23c3ae5
+      internalID: -555464218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockTiles_5
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 566
+        width: 761
+        height: 761
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 302.00006, y: -366.81247}
+        - {x: 253.25008, y: -359.31247}
+        - {x: 232.62508, y: -355.56247}
+        - {x: 215.75008, y: -351.81247}
+        - {x: 195.12508, y: -348.06247}
+        - {x: 180.12508, y: -342.43747}
+        - {x: 144.50008, y: -331.18747}
+        - {x: 93.87508, y: -314.31247}
+        - {x: 28.250082, y: -280.56247}
+        - {x: -9.249915, y: -258.06247}
+        - {x: -39.249912, y: -239.31248}
+        - {x: -91.74991, y: -201.81248}
+        - {x: -119.87491, y: -177.43748}
+        - {x: -140.49991, y: -158.68748}
+        - {x: -142.37491, y: -158.68748}
+        - {x: -179.87491, y: -117.43749}
+        - {x: -191.12491, y: -104.31249}
+        - {x: -215.49991, y: -74.31249}
+        - {x: -219.24991, y: -66.81249}
+        - {x: -241.74991, y: -36.812492}
+        - {x: -267.9999, y: 6.3125033}
+        - {x: -279.2499, y: 25.062502}
+        - {x: -294.2499, y: 53.1875}
+        - {x: -318.6249, y: 105.6875}
+        - {x: -331.7499, y: 143.1875}
+        - {x: -337.3749, y: 158.1875}
+        - {x: -342.9999, y: 176.9375}
+        - {x: -346.7499, y: 191.9375}
+        - {x: -357.9999, y: 235.06248}
+        - {x: -361.7499, y: 255.68748}
+        - {x: -369.2499, y: 306.3125}
+        - {x: -380.5, y: 380.5}
+        - {x: -380.4999, y: -378.06247}
+        - {x: 380.5, y: -380.5}
+      tessellationDetail: 0.4
+      bones: []
+      spriteID: b91b57558fefb784586788b87cb7c465
+      internalID: -654443103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockTiles_6
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 1144
+        width: 512
+        height: 257
+      alignment: 9
+      pivot: {x: 0.75, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -253.4999, y: -128.5}
+        - {x: 256, y: -128.5}
+        - {x: 256, y: 128.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e044ab982609f44793a5ee14d890484
+      internalID: -1593527087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockTiles_7
+      rect:
+        serializedVersion: 2
+        x: 2302
+        y: 566
+        width: 516
+        height: 516
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -258, y: -258}
+        - {x: 258, y: -258}
+        - {x: 258, y: -256.18747}
+        - {x: 258, y: 258}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9ecfd29b0d60a246a86fd44f5ecc7ca
+      internalID: -208260840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: f37f50d6ba259eb41b8b96f660255820
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      BlockTiles_0: 999909899
+      BlockTiles_1: 244971554
+      BlockTiles_2: 1696881814
+      BlockTiles_3: 1639333210
+      BlockTiles_4: -555464218
+      BlockTiles_5: -654443103
+      BlockTiles_6: -1593527087
+      BlockTiles_7: -208260840
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
