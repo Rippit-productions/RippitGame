@@ -32,7 +32,7 @@ public class CanvasSwitcher : MonoBehaviour
                 && selected.transform != transform
                 && selected.transform.IsChildOf(transform))
             {
-                ActiveIndex = transform.GetClosetChildsIndex(selected.transform);
+                ActiveIndex = selected.transform.GetSiblingIndex();
             }
             else
             {
@@ -66,7 +66,7 @@ public class CanvasSwitcher : MonoBehaviour
     {
         if (targetObj.transform.IsChildOf(this.gameObject.transform))
         {
-            SetActiveIndex(this.transform.GetClosetChildsIndex(targetObj.transform));
+            SetActiveIndex(this.transform.GetSiblingIndex());
         }
         // Target Object is not child of Switcher. Do nothing.
         else

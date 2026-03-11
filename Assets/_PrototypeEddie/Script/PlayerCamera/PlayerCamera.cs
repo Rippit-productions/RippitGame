@@ -1,5 +1,6 @@
 using Cinemachine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,41 +10,52 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CinemachineBrain))]
 public class PlayerCamera : MonoBehaviour
 {
-    private float _CurrentDistanceValue = 0.0f;
     [SerializeField] private float zOffsetDistance = 30.0f;
     [SerializeField] private float MinZOffset = 20.0f;
 
     private Camera _CameraComponent;
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
     private CinemachineFramingTransposer _cinemachineTransposer;
-    private Skater linkedCharacter;
+    protected Skater linkedCharacter;
 
-    private static List<CameraLink> Connections = new List<CameraLink>();
-
-    private struct CameraLink
-    {
-        public PlayerCamera Camera;
-        public Skater Player;
-    }
+    public static PlayerCamera[] All => FindObjectsByType<PlayerCamera>(FindObjectsInactive.Exclude,FindObjectsSortMode.InstanceID);
 
     public static PlayerCamera CreateCamera()
     {
         var newGameObject = new GameObject();
         var component = newGameObject.AddComponent<PlayerCamera>();
-
         return component;
+    }
+
+    public static PlayerCamera CreateCamera(Skater Player)
+    {
+        var newCamera = PlayerCamera.CreateCamera();
+        newCamera.ConnectToPlayer(Player);
+        return newCamera;
+    }
+
+    public void ConnectToPlayer(Skater Player)
+    {
+        var existingCamera = GetLinkedCamera(Player);
+        if (existingCamera)
+        {
+            existingCamera._cinemachineVirtualCamera.Follow = null;
+            existingCamera.linkedCharacter = null;
+        }
+
+        this.linkedCharacter = Player;
+        _cinemachineVirtualCamera.Follow = Player.transform;
     }
     
     public PlayerCamera GetLinkedCamera(Skater Player)
     {
         foreach (var playerCharacter in Skater.All)
         {
-            foreach (var link in Connections)
+            foreach (var camera in PlayerCamera.All)
             {
-                if (link.Player == playerCharacter)
+                if (camera.linkedCharacter == playerCharacter)
                 {
-                    this.linkedCharacter = playerCharacter;
-                    return link.Camera;
+                    return camera;
                 }
             }
         }
@@ -55,26 +67,8 @@ public class PlayerCamera : MonoBehaviour
         _CameraComponent = GetComponent<Camera>();
         _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
         _cinemachineTransposer = _cinemachineVirtualCamera.AddCinemachineComponent<CinemachineFramingTransposer>();
+
         
-        foreach (var player in Skater.All)
-        {
-            if (!GetLinkedCamera(player))
-            {
-                var newConnection = new CameraLink
-                {
-                    Camera = this,
-                    Player = player
-                };
-                this.linkedCharacter = player;
-                Connections.Add(newConnection);
-                _cinemachineVirtualCamera.Follow = player.transform;
-
-                var inputComponent = this.linkedCharacter.GetComponent<PlayerInput>();
-                inputComponent.camera = this._CameraComponent;
-
-                this.gameObject.name = $"{this.linkedCharacter.name}: Camera";
-            }
-        }
     }
     
     void Awake()
@@ -83,7 +77,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (_cinemachineVirtualCamera == null) return;
         _UpdatePosition();
@@ -93,6 +87,10 @@ public class PlayerCamera : MonoBehaviour
     {
         if (_cinemachineVirtualCamera == null || linkedCharacter == null) return;
         float newDistance = MinZOffset +  ( zOffsetDistance * linkedCharacter.GetNormalisedSpeed() );
-        _cinemachineTransposer.m_CameraDistance = newDistance;
+        _cinemachineTransposer.m_CameraDistance = Mathf.Lerp(_cinemachineTransposer.m_CameraDistance ,newDistance
+            ,Mathf.Abs(_cinemachineTransposer.m_CameraDistance - newDistance));
+        _cinemachineTransposer.m_LookaheadTime = 0.5f;
+
+        this.gameObject.name = $"Player Camera: {this.linkedCharacter.name}";
     }
 }

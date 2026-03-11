@@ -26,7 +26,7 @@ public class SkateTrick
     }
 }
 
-public struct GrindStates
+public struct GrindAction
 {
     public bool InSplineDirection;
     public float GrindSpeed;
@@ -40,7 +40,7 @@ public class Skater : MonoBehaviour
 {
     public static Skater[] All => FindObjectsByType<Skater>(FindObjectsSortMode.InstanceID);
 
-    public enum SkateState
+    public enum SkaterState
     {
         Grounded,
         Jumping,
@@ -49,7 +49,7 @@ public class Skater : MonoBehaviour
         Grapple
     }
     
-    [field:SerializeField] protected SkateState _CharacterState = SkateState.Grounded;
+    [field:SerializeField] protected SkaterState _CharacterState = SkaterState.Grounded;
 
     [Header("Components")]
     public SkateController playerController;
@@ -96,9 +96,9 @@ public class Skater : MonoBehaviour
     [Range(0.0f,20.0f)]
     public float JumpForce = 3.0f;
 
-    public bool IsGrounded => _CharacterState == SkateState.Grounded;
+    public bool IsGrounded => _CharacterState == SkaterState.Grounded;
     private float AirTime;
-    private GrindStates _GrindAction = new GrindStates();
+    private GrindAction _GrindAction = new GrindAction();
 
     public void _InitRigidbody()
     {
@@ -118,7 +118,7 @@ public class Skater : MonoBehaviour
         _AnimatorComp = GetComponentInChildren<Animator>(); 
         playerController = GetComponent<SkateController>();
 
-        PlayerCamera.CreateCamera();
+        PlayerCamera.CreateCamera(this);
     }
 
     // Update is called once per frame
@@ -127,9 +127,9 @@ public class Skater : MonoBehaviour
         var lastPosition = this.transform.position;
         switch (_CharacterState)
         {
-            case SkateState.Grounded:
+            case SkaterState.Grounded:
                 {
-                    bool solidGround = Vector2.Angle(UpVector, Vector2.up) <= 90f;
+                    bool solidGround = Vector2.Angle(UpVector, Vector2.up) < 90.0f;
                     bool wallRunning = !solidGround && playerController.NoMoveInput < 0.2f && _RigidBody.velocity.magnitude >= 0.3f;
                     if (wallRunning || solidGround )
                     {
@@ -148,7 +148,7 @@ public class Skater : MonoBehaviour
                     var floorCast = RaycastFloor();
                     if (!floorCast.Success)
                     {
-                        this._CharacterState = SkateState.Jumping;
+                        this._CharacterState = SkaterState.Jumping;
                     }
                     else
                     {
@@ -158,7 +158,7 @@ public class Skater : MonoBehaviour
                     if (playerController.Jump.WasPressedThisFrame())
                     {
                         Jump();
-                        this._CharacterState = SkateState.Jumping;
+                        this._CharacterState = SkaterState.Jumping;
                         //this._CurrentPlatform = null;
                     }
 
@@ -174,7 +174,7 @@ public class Skater : MonoBehaviour
                     }
                     break;
                 }
-            case SkateState.Jumping:
+            case SkaterState.Jumping:
                 {
                     Move(playerController.Move);
                     ApplyGravity(Vector2.down);
@@ -197,7 +197,7 @@ public class Skater : MonoBehaviour
                     var floorCast = RaycastFloor();
                     if (floorCast.Success  && _RigidBody.velocity.y < 0.0f) 
                     {
-                        this._CharacterState = SkateState.Grounded;
+                        this._CharacterState = SkaterState.Grounded;
                         this._CurrentPlatform = floorCast.Result.collider.GetComponent<Platform>();
                         AirTime = 0.0f;
                         this.UpVector = floorCast.Result.normal;
@@ -223,11 +223,11 @@ public class Skater : MonoBehaviour
                         this._GrindAction.GrindSpeed = _RigidBody.velocity.magnitude;
                         this._GrindAction.grindRailPoint = collidingRailPoint;
                         _RigidBody.velocity = Vector2.zero;
-                        this._CharacterState = SkateState.Grind;
+                        this._CharacterState = SkaterState.Grind;
                     }
                     break; 
                 }
-            case SkateState.Grind:
+            case SkaterState.Grind:
                 {
                     if (this._GrindAction.InSplineDirection)
                     {
@@ -248,7 +248,7 @@ public class Skater : MonoBehaviour
 
                     if (breakGrind)
                     {
-                        this._CharacterState = SkateState.Jumping;
+                        this._CharacterState = SkaterState.Jumping;
                         Vector2 grindVector = _GrindAction.grindRailPoint.GetForwardVector();
                         if (!_GrindAction.InSplineDirection) grindVector *= -1.0f;
                         _RigidBody.velocity = grindVector * _GrindAction.GrindSpeed;
@@ -284,12 +284,12 @@ public class Skater : MonoBehaviour
         bool FollowVelocity = Vector3.Dot(moveVector, _RigidBody.velocity) >= 0.0f;
         // Breaking velocity.
         // i.e moving in opposite of current velocity
-        if (!FollowVelocity && this._CharacterState == SkateState.Grounded)
+        if (!FollowVelocity && this._CharacterState == SkaterState.Grounded)
         {
             moveVector *= BreakingSpeedScale;
         }
         //Weaken move speed when in air
-        else if (this._CharacterState == SkateState.Jumping)
+        else if (this._CharacterState == SkaterState.Jumping)
         {
             moveVector *= 0.2f;
         }
@@ -419,7 +419,7 @@ public class Skater : MonoBehaviour
     {
         switch (_CharacterState)
         {
-            case SkateState.Jumping:
+            case SkaterState.Jumping:
                 {
                     Vector3 upVector = Vector3.Cross(_RigidBody.velocity, Vector3.forward);
                     if (_RigidBody.velocity.x >= 0.0f)
@@ -430,7 +430,7 @@ public class Skater : MonoBehaviour
                     _SpriteRenderer.flipX = Vector3.Dot(GetForwardMoveVector(), _RigidBody.velocity) < 0.0f;
                     break;
                 }
-            case SkateState.Grind:
+            case SkaterState.Grind:
                 {
                     SetSpriteRotation(_GrindAction.grindRailPoint.GetUpVector());
                     break;
