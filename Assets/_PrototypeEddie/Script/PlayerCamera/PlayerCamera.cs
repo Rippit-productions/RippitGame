@@ -87,6 +87,7 @@ public class PlayerCamera : MonoBehaviour
     {
         if (_cinemachineVirtualCamera == null || linkedCharacter == null) return;
         float newDistance = MinZOffset +  ( zOffsetDistance * linkedCharacter.GetNormalisedSpeed() );
+        if (newDistance < _cinemachineTransposer.m_CameraDistance && this.linkedCharacter.State != Skater.SkaterState.Grounded) return;
         _cinemachineTransposer.m_CameraDistance = Mathf.Lerp(_cinemachineTransposer.m_CameraDistance ,newDistance
             ,Mathf.Abs(_cinemachineTransposer.m_CameraDistance - newDistance));
         _cinemachineTransposer.m_LookaheadTime = 0.5f;

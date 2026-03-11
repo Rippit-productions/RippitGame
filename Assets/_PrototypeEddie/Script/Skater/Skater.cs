@@ -48,7 +48,8 @@ public class Skater : MonoBehaviour
         Trick,
         Grapple
     }
-    
+
+    public SkaterState State => _CharacterState;
     [field:SerializeField] protected SkaterState _CharacterState = SkaterState.Grounded;
 
     [Header("Components")]
@@ -321,6 +322,9 @@ public class Skater : MonoBehaviour
 
     public float GetNormalisedSpeed()
     {
+        if (this._CharacterState == SkaterState.Grind) {
+            return _GrindAction.GrindSpeed / Maxspeed;
+        }
         return _RigidBody.velocity.magnitude / Maxspeed;
     }
     
