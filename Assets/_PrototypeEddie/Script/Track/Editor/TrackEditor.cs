@@ -27,6 +27,16 @@ public class TrackEditor : Editor
             selectIndex = -1;
         }
 
+
+        var Ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+
+        var something = HandleUtility.RaySnap(Ray);
+        if (something != null) 
+        {
+            Handles.DrawWireCube(((RaycastHit)something).point, Vector3.one * 5.0f);
+        }
+        
+
         for (int i = 0; i < _Component.CheckPoints.Length; i++)
         {
             var handlePos = _Component.GetPointWorldPosition(i);

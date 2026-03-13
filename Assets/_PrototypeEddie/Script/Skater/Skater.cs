@@ -51,6 +51,7 @@ public class Skater : MonoBehaviour
 
     public SkaterState State => _CharacterState;
     [field:SerializeField] protected SkaterState _CharacterState = SkaterState.Grounded;
+    public bool IsGrounded => _CharacterState == SkaterState.Grounded;
 
     [Header("Components")]
     public SkateController playerController;
@@ -97,9 +98,10 @@ public class Skater : MonoBehaviour
     [Range(0.0f,20.0f)]
     public float JumpForce = 3.0f;
 
-    public bool IsGrounded => _CharacterState == SkaterState.Grounded;
-    private float AirTime;
     private GrindAction _GrindAction = new GrindAction();
+
+    [Header("Camera")]
+    public PlayerCamera.Setup CameraSetup;
 
     public void _InitRigidbody()
     {
@@ -181,7 +183,6 @@ public class Skater : MonoBehaviour
                     ApplyGravity(Vector2.down);
 
                     // Add AirTime
-                    AirTime += Time.deltaTime;
                     UpVector = Vector3.up;
 
                     if (playerController.Jump.WasReleasedThisFrame())
@@ -200,7 +201,6 @@ public class Skater : MonoBehaviour
                     {
                         this._CharacterState = SkaterState.Grounded;
                         this._CurrentPlatform = floorCast.Result.collider.GetComponent<Platform>();
-                        AirTime = 0.0f;
                         this.UpVector = floorCast.Result.normal;
                         this._GrindAction.PreviousSpline = null;
                     }
@@ -517,7 +517,7 @@ public class Skater : MonoBehaviour
 
         string PlatformName = this._CurrentPlatform ? this._CurrentPlatform.gameObject.name : "None";
         GUILayout.Label($"Current Platform: {PlatformName}");
-        GUI.DragWindow(_GuiRect);
+        GUI.DragWindow(new Rect(0,0,float.MaxValue, float.MaxValue));
     }
 #endif
 }
