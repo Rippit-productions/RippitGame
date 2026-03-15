@@ -1,0 +1,582 @@
+fileFormatVersion: 2
+guid: 2d761a3481b29f149a4422d0431ee930
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5449539288595813914
+    second: GreyboxTiles_0
+  - first:
+      213: 1058895933905005033
+    second: GreyboxTiles_1
+  - first:
+      213: -2038697967336756512
+    second: GreyboxTiles_2
+  - first:
+      213: -7053083100222169386
+    second: GreyboxTiles_3
+  - first:
+      213: -4967374719784507481
+    second: GreyboxTiles_4
+  - first:
+      213: -1082418830253669940
+    second: GreyboxTiles_5
+  - first:
+      213: -7773584206104598621
+    second: GreyboxTiles_6
+  - first:
+      213: 5491650049521954792
+    second: GreyboxTiles_7
+  - first:
+      213: -8107086084191046424
+    second: GreyboxTiles_8
+  - first:
+      213: -6375781585894496988
+    second: GreyboxTiles_9
+  - first:
+      213: -5009399105355984733
+    second: GreyboxTiles_10
+  - first:
+      213: 9175595168381769951
+    second: GreyboxTiles_11
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 102.25
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_0
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 2865
+        width: 414
+        height: 414
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -205, y: 207}
+        - {x: -207, y: 205}
+        - {x: -207, y: -203}
+        - {x: -203, y: -207}
+        - {x: 207, y: -207}
+        - {x: 207, y: 207}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 517496d0117b0f345812f87578f0c196
+      internalID: -1413652154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_1
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 2865
+        width: 822
+        height: 414
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 123, y: 87}
+        - {x: 101, y: 105}
+        - {x: 71, y: 125}
+        - {x: 45, y: 139}
+        - {x: -5, y: 163}
+        - {x: -57, y: 183}
+        - {x: -113, y: 199}
+        - {x: -133, y: 203}
+        - {x: -175, y: 207}
+        - {x: -407, y: 207}
+        - {x: -411, y: 207}
+        - {x: -411, y: -207}
+        - {x: 409, y: -207}
+        - {x: 411, y: -207}
+        - {x: 141, y: 71}
+      tessellationDetail: 0.35
+      bones: []
+      spriteID: ef296ab58be851947a2b0700744c2fec
+      internalID: -1188083158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_2
+      rect:
+        serializedVersion: 2
+        x: 1841
+        y: 2863
+        width: 414
+        height: 416
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 207, y: -150}
+        - {x: 195, y: -84}
+        - {x: 175, y: -30}
+        - {x: 149, y: 18}
+        - {x: 103, y: 76}
+        - {x: 53, y: 128}
+        - {x: -31, y: 178}
+        - {x: -91, y: 198}
+        - {x: -153, y: 208}
+        - {x: -205, y: 208}
+        - {x: -207, y: 206}
+        - {x: -207, y: -208}
+        - {x: -93, y: -208}
+        - {x: 207, y: -208}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 3adaf88c4181e5948b6c8297e97e297a
+      internalID: -964522915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_3
+      rect:
+        serializedVersion: 2
+        x: 2455
+        y: 2453
+        width: 824
+        height: 826
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 412, y: -355}
+        - {x: 408, y: -285}
+        - {x: 398, y: -231}
+        - {x: 378, y: -155}
+        - {x: 350, y: -87}
+        - {x: 314, y: -11}
+        - {x: 278, y: 49}
+        - {x: 254, y: 83}
+        - {x: 224, y: 119}
+        - {x: 210, y: 137}
+        - {x: 160, y: 189}
+        - {x: 136, y: 211}
+        - {x: 68, y: 267}
+        - {x: -12, y: 315}
+        - {x: -70, y: 343}
+        - {x: -98, y: 355}
+        - {x: -138, y: 373}
+        - {x: -222, y: 397}
+        - {x: -286, y: 407}
+        - {x: -350, y: 413}
+        - {x: -408, y: 413}
+        - {x: -412, y: 411}
+        - {x: -412, y: -407}
+        - {x: -406, y: -413}
+        - {x: -76, y: -413}
+        - {x: -74, y: -411}
+        - {x: 410, y: -411}
+        - {x: 412, y: -407}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 67ff9d9bc2077614d91f5968a7ba6cb6
+      internalID: 675872561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_4
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 2251
+        width: 414
+        height: 414
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -205, y: 207}
+        - {x: -207, y: 205}
+        - {x: -207, y: -203}
+        - {x: -203, y: -207}
+        - {x: 207, y: -207}
+        - {x: 207, y: 207}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: c331dcc43c143ab4db5e48206a73c5d0
+      internalID: 114935296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_5
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 2251
+        width: 412
+        height: 412
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -206, y: 206}
+        - {x: -206, y: -202}
+        - {x: -202, y: -206}
+        - {x: 204, y: -206}
+        - {x: 206, y: -202}
+        - {x: 206, y: -192}
+        - {x: -200, y: 206}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 2a359fa9bf1ebc44683c92003726bd82
+      internalID: -1994390084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_6
+      rect:
+        serializedVersion: 2
+        x: 1431
+        y: 2251
+        width: 822
+        height: 412
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -403, y: 206}
+        - {x: -411, y: 206}
+        - {x: -411, y: -202}
+        - {x: -407, y: -206}
+        - {x: 405, y: -206}
+        - {x: 409, y: -202}
+        - {x: 409, y: -194}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: abedb506717ec574ba282def8550afcb
+      internalID: 750959578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_7
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 1431
+        width: 414
+        height: 414
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -205, y: 207}
+        - {x: -207, y: 205}
+        - {x: -207, y: -203}
+        - {x: -203, y: -207}
+        - {x: 207, y: -207}
+        - {x: 207, y: 207}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 9f90b60a977219844878b9f23a0fc981
+      internalID: 549974955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_8
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 817
+        width: 822
+        height: 822
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -411, y: 411}
+        - {x: -411, y: -411}
+        - {x: 409, y: -411}
+        - {x: 411, y: -407}
+        - {x: 411, y: -405}
+        - {x: -403, y: 411}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 76fa443af7e71db42bd6da662e02ed8c
+      internalID: 957065836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_9
+      rect:
+        serializedVersion: 2
+        x: 2667
+        y: 817
+        width: 1226
+        height: 1220
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 605, y: 568}
+        - {x: 603, y: 526}
+        - {x: 601, y: 496}
+        - {x: 595, y: 456}
+        - {x: 591, y: 428}
+        - {x: 585, y: 388}
+        - {x: 559, y: 282}
+        - {x: 543, y: 240}
+        - {x: 517, y: 160}
+        - {x: 499, y: 120}
+        - {x: 481, y: 82}
+        - {x: 459, y: 36}
+        - {x: 443, y: 12}
+        - {x: 407, y: -48}
+        - {x: 383, y: -82}
+        - {x: 337, y: -144}
+        - {x: 319, y: -168}
+        - {x: 279, y: -212}
+        - {x: 261, y: -232}
+        - {x: 239, y: -254}
+        - {x: 217, y: -274}
+        - {x: 175, y: -312}
+        - {x: 135, y: -344}
+        - {x: 87, y: -378}
+        - {x: 65, y: -396}
+        - {x: 49, y: -404}
+        - {x: -31, y: -452}
+        - {x: -69, y: -472}
+        - {x: -107, y: -490}
+        - {x: -141, y: -506}
+        - {x: -195, y: -526}
+        - {x: -255, y: -548}
+        - {x: -373, y: -578}
+        - {x: -467, y: -592}
+        - {x: -493, y: -596}
+        - {x: -529, y: -598}
+        - {x: -569, y: -600}
+        - {x: -573, y: -604}
+        - {x: -571, y: -610}
+        - {x: 611, y: -610}
+        - {x: 613, y: -606}
+        - {x: 613, y: 566}
+        - {x: 611, y: 570}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: d5ce932b27a3e7e468fffc9b5e753a35
+      internalID: 2107111248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_10
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 817
+        width: 414
+        height: 414
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -205, y: 207}
+        - {x: -207, y: 205}
+        - {x: -207, y: -203}
+        - {x: -203, y: -207}
+        - {x: 207, y: -207}
+        - {x: 207, y: 207}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 24ff6912be4cbe340904b67215dbe71a
+      internalID: 1451361240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_GreyboxTile_11
+      rect:
+        serializedVersion: 2
+        x: 2051
+        y: 817
+        width: 410
+        height: 412
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 197, y: 168}
+        - {x: 185, y: 106}
+        - {x: 167, y: 58}
+        - {x: 113, y: -40}
+        - {x: 63, y: -94}
+        - {x: 7, y: -136}
+        - {x: -83, y: -178}
+        - {x: -165, y: -196}
+        - {x: -169, y: -200}
+        - {x: -167, y: -206}
+        - {x: 203, y: -206}
+        - {x: 205, y: -202}
+        - {x: 205, y: 166}
+        - {x: 203, y: 170}
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: de10158feba65b74da9147ac85b4ce92
+      internalID: 457051638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: cf4c6573f476a6540a10a9d6355f46e1
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Sp_GreyboxTile_0: -1413652154
+      Sp_GreyboxTile_1: -1188083158
+      Sp_GreyboxTile_10: 1451361240
+      Sp_GreyboxTile_11: 457051638
+      Sp_GreyboxTile_2: -964522915
+      Sp_GreyboxTile_3: 675872561
+      Sp_GreyboxTile_4: 114935296
+      Sp_GreyboxTile_5: -1994390084
+      Sp_GreyboxTile_6: 750959578
+      Sp_GreyboxTile_7: 549974955
+      Sp_GreyboxTile_8: 957065836
+      Sp_GreyboxTile_9: 2107111248
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

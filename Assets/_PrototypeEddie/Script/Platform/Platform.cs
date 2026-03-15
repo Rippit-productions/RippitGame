@@ -4,6 +4,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
+
+[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CompositeCollider2D))]
 public class Platform : MonoBehaviour
 {
