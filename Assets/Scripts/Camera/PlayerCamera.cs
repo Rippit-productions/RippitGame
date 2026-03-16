@@ -80,6 +80,9 @@ public class PlayerCamera : MonoBehaviour
         _CameraComponent = GetComponent<Camera>();
         _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
         _cinemachineTransposer = _cinemachineVirtualCamera.AddCinemachineComponent<CinemachineFramingTransposer>();
+
+        var confine = this.AddComponent<CinemachineConfiner2D>();
+        confine.m_BoundingShape2D = CameraBounds.Instance.Collider;
     }
     
     void Awake()

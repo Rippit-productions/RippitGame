@@ -279,6 +279,7 @@ MonoBehaviour:
   MoveSpeed: 35
   BreakingSpeedScale: 1.4
   JumpForce: 8
+  SoundSet: {fileID: 11400000, guid: eeec8fa6af865d7408d18fa1c26e6ed2, type: 2}
   CameraSetup:
     minZDistance: 40
     zOffset: 50

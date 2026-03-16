@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc53c6b85e18c384b9f7b6cdbae778b8, type: 3}
+  m_Name: SkaterSoundSet
+  m_EditorClassIdentifier: 
+  JumpSFX:
+    Guid:
+      Data1: -1427137854
+      Data2: 1275243358
+      Data3: 143795600
+      Data4: 558050250
+    Path: event:/SFX/Jump
+  GrindOnSFX:
+    Guid:
+      Data1: 1028189968
+      Data2: 1242725865
+      Data3: -1057509484
+      Data4: -2059750480
+    Path: event:/SFX/Grind/GrindOn
+  GrindOffSFX:
+    Guid:
+      Data1: -209485204
+      Data2: 1271227375
+      Data3: -1915132481
+      Data4: 1077458248
+    Path: event:/SFX/Grind/GrindOff
+  GrindSFX:
+    Guid:
+      Data1: -662553556
+      Data2: 1300863639
+      Data3: -1878083409
+      Data4: 415390362
+    Path: event:/SFX/Grind/Grind

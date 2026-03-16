@@ -1,11 +1,78 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using System.Linq;
+using System;
+using System.Runtime.InteropServices.WindowsRuntime;
+
+
+
+public struct AudioSettings
+{
+    public float MasterVolume;
+    public float MusicVolume;
+    public float SFXVolume;
+
+    public float GetMusicVolume() => MusicVolume * MasterVolume;
+    public float GetSFXVolume() => SFXVolume * MasterVolume;
+}
+
 
 public class AudioManager 
 {
+    public class Event
+    {
+        public Event(EventInstance Instance, AudioType Type)
+        {
+            _FmodInstance = Instance;
+            _AudioType = Type;
+        }
+
+        ~Event()
+        {
+            _FmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            _FmodInstance.release();
+        }
+
+
+        private EventInstance _FmodInstance;
+        public AudioType Type => _AudioType;
+        private AudioType _AudioType;
+
+
+        public void Play()
+        {
+            if (_FmodInstance.isValid())
+            {
+                _FmodInstance.start();
+            }
+        }
+
+        public void Stop()
+        {
+            if (_FmodInstance.isValid())
+            {
+                _FmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            }
+        }
+        public void SetVolume(float volume) => _FmodInstance.setVolume(volume);
+        public float GetVolume()
+        {
+            float value;
+            _FmodInstance.getVolume(out value);
+            return value;
+        }
+    }
+
+    public enum AudioType
+    {
+        Music,
+        SFX,
+        Voice,
+        Other
+    }
+    
     private static AudioManager _Instance;
     public static AudioManager Instance
     {
@@ -16,7 +83,14 @@ public class AudioManager
         }
     }
 
-    private List<EventInstance> _Events = new List<EventInstance>();
+    ~AudioManager()
+    {
+        CleanUp();
+    }
+
+    public AudioSettings Settings = new AudioSettings();
+
+    private List<Event> _Events = new List<Event>();
 
     public void PlayOneShot(EventReference Sound, Vector3 WorldPosition)
     {
@@ -27,33 +101,43 @@ public class AudioManager
     /// Create Audio Instance and Play immediate.
     /// Instance will be removed by Garbage Collector
     /// </summary>
-    public EventInstance PlayAudioInstance(EventReference audioEventReference)
+    public AudioManager.Event PlayAudioInstance(EventReference audioEventReference,AudioType type)
     {
         if (audioEventReference.IsNull)
         {
             Debug.LogWarning("No FMOD Audio reference is NULL");
-            return new EventInstance();
+            return null;
         }
-        EventInstance eventI = this.CreateAudioInstance(audioEventReference);
-        _Events.Add(eventI);
-        eventI.start();
-        return eventI;
+        _Events.Add(CreateAudioInstance(audioEventReference,type));
+        _Events.Last().Play();
+        return _Events.Last();
     }
 
-    public EventInstance CreateAudioInstance(EventReference audioEventReference)
+    public AudioManager.Event CreateAudioInstance(EventReference audioEventReference,AudioType type)
     {
         EventInstance eventI = RuntimeManager.CreateInstance(audioEventReference);
-        return eventI;
+        return new AudioManager.Event(eventI,type);
     }
 
-    private void CleanUp()
+    public void RefreshAllAudioVolume()
     {
-        foreach (EventInstance eventI in _Events) {
-            eventI.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-            eventI.release();
-            _Events.Remove(eventI);
+        foreach (var musicInstance in GetAllAudioOfType(AudioType.Music))
+        {
+            musicInstance.SetVolume(this.Settings.GetMusicVolume());
+        }
+        foreach (var SFXInstance in GetAllAudioOfType(AudioType.SFX))
+        {
+            SFXInstance.SetVolume(this.Settings.GetSFXVolume());
         }
     }
 
-    private void OnDestroy() => CleanUp();
+    public Event[] GetAllAudioOfType(AudioType type)
+    {
+        return this._Events.Where(e =>
+        {
+            return e.Type == type;
+        }).ToArray();
+    }
+
+    private void CleanUp() => _Events.Clear();
 }

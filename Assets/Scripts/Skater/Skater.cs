@@ -34,6 +34,7 @@ public struct GrindAction
     public Spline PreviousSpline;
 }
 
+
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Skater : MonoBehaviour
@@ -81,13 +82,6 @@ public class Skater : MonoBehaviour
     [SerializeField] private LayerMask GroundLayerMask;
     private Platform _CurrentPlatform;
 
-    public Vector2 _FeetPosition
-    {
-        get
-        {
-            return this.transform.position - (_UpVector.normalized * _CirlceCollider.radius);
-        }
-    }
 
     [Header ("Stats")]
     [Range(1.0f,100.0f)]
@@ -100,6 +94,14 @@ public class Skater : MonoBehaviour
     public float JumpForce = 3.0f;
 
     private GrindAction _GrindAction = new GrindAction();
+
+
+    [Header("Sounds")]
+    [SerializeField] private SkaterSoundSet SoundSet;
+    private AudioManager.Event JumpSFX;
+    private AudioManager.Event GrindOnSFX;
+    private AudioManager.Event GrindOffSFX;
+    private AudioManager.Event GrindSFX;
 
     [Header("Camera")]
     public PlayerCamera.Setup CameraSetup;
@@ -123,6 +125,17 @@ public class Skater : MonoBehaviour
         playerController = GetComponent<SkateController>();
 
         PlayerCamera.CreateCamera(this);
+
+        _InitSounds();
+    }
+
+    private void _InitSounds()
+    {
+        var Manager = AudioManager.Instance;
+        JumpSFX = Manager.CreateAudioInstance(SoundSet.JumpSFX, AudioManager.AudioType.SFX);
+        GrindOnSFX = Manager.CreateAudioInstance(SoundSet.GrindOnSFX, AudioManager.AudioType.SFX);
+        GrindOffSFX = Manager.CreateAudioInstance(SoundSet.GrindOffSFX, AudioManager.AudioType.SFX);
+        GrindSFX = Manager.CreateAudioInstance(SoundSet.GrindSFX, AudioManager.AudioType.SFX);
     }
 
     // Update is called once per frame
@@ -163,7 +176,8 @@ public class Skater : MonoBehaviour
                     {
                         Jump();
                         this._CharacterState = SkaterState.Jumping;
-                        //this._CurrentPlatform = null;
+
+                        this.JumpSFX.Play();
                     }
 
                     //Animation 
@@ -226,6 +240,8 @@ public class Skater : MonoBehaviour
                         this._GrindAction.grindRailPoint = collidingRailPoint;
                         _RigidBody.velocity = Vector2.zero;
                         this._CharacterState = SkaterState.Grind;
+                        this.GrindOnSFX.Play();
+                        this.GrindSFX.Play();
                     }
                     break; 
                 }
@@ -263,6 +279,8 @@ public class Skater : MonoBehaviour
                         {
                             this._GrindAction.PreviousSpline = _GrindAction.grindRailPoint.RailSpline;
                         }
+                        this.GrindSFX.Stop();
+                        this.GrindOffSFX.Play();
                     }
                     break;
                 }
@@ -309,6 +327,7 @@ public class Skater : MonoBehaviour
         _RigidBody.AddForce(jumpVector * scaledJumpForce, ForceMode2D.Impulse);
 
         this.PlayAnimationState(AnimState_Jump);
+
     }
     public void SetPosition(Vector2 NewPosition)
     {
@@ -488,7 +507,10 @@ public class Skater : MonoBehaviour
         // Closest Grind Rail Point
         Gizmos.color = Color.yellow;
         var closestRailPoint = GrindRail.FindClosestRailToPoint(transform.position);
-        Gizmos.DrawWireCube(closestRailPoint.ResultRailPoint.GetWorldPosition(),Vector3.one * 0.4f);
+        if (closestRailPoint.Success)
+        {
+            Gizmos.DrawWireCube(closestRailPoint.ResultRailPoint.GetWorldPosition(), Vector3.one * 0.75f);
+        }
     }
 
     protected bool _EditorSelected
@@ -504,14 +526,14 @@ public class Skater : MonoBehaviour
         }
     }
 
-    private Rect _GuiRect = new Rect(20, 20, 300, 250);
+    private Rect _GuiRect = new Rect(20, 20, 300, 200);
     void OnGUI()
     {
         _GuiRect = GUILayout.Window(0, _GuiRect, _DrawGUIWindow, $"Skate Player - {this.gameObject.name}");
     }
     void _DrawGUIWindow(int WindowID)
     {
-        GUILayout.Label($"Speed: {_RigidBody.velocity.magnitude.ToString().Truncate(4)} | {(GetNormalisedSpeed() * 100).ToString().Truncate(5)}%");
+        GUILayout.Label($"Speed: {_RigidBody.velocity.magnitude.ToString().Truncate(3)} | {(GetNormalisedSpeed() * 100).ToString().Truncate(3)}%");
         GUILayout.Label($"Speed Vector: {_RigidBody.velocity}");
 
         GUILayout.Label($"State: {_CharacterState}");

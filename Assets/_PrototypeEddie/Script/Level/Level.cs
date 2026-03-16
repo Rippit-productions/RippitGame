@@ -9,7 +9,7 @@ public class Level : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.Instance.PlayAudioInstance(_Song);
+        AudioManager.Instance.PlayAudioInstance(_Song,AudioManager.AudioType.Music);
     }
 
     // Update is called once per frame
