@@ -1,7 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEditor;
 using UnityEditor.Splines;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityEngine.UIElements;
 
 [CustomEditor(typeof(GrindRail))]
 public class GrindRailEditor : Editor
@@ -12,50 +17,103 @@ public class GrindRailEditor : Editor
     {
         _Component = (GrindRail)target;
         EditorSplineUtility.AfterSplineWasModified += OnSplineChange;
-        
     }
 
     private void OnDisable()
     {
-        var _splineComponent = _Component.GetComponent<SplineContainer>();
         EditorSplineUtility.AfterSplineWasModified -= OnSplineChange;
     }
 
-    private void OnSceneGUI()
+
+    public override VisualElement CreateInspectorGUI()
     {
+        VisualElement root = new VisualElement();
+        root.Add(base.CreateInspectorGUI());
+
+        return base.CreateInspectorGUI();
     }
 
-    private void Awake()
+    private SelectableKnot[] GetSelectedKnots()
     {
-        
+        var container = _Component.GetComponent<SplineContainer>();
+        List<SplineInfo> info = new List<SplineInfo>();
+
+        for (int i = 0; i < container.Splines.Count; i++)
+        {
+            info.Add(new SplineInfo(container, i));
+        }
+
+        List<SelectableKnot> Knots = new List<SelectableKnot>();
+        SplineSelection.GetElements<SelectableKnot>(info.ToArray(), Knots);
+
+        return Knots.ToArray();
     }
+
     private void OnSplineChange(Spline spline)
     {
+        if (_Component == null) return;
         Refresh();
     }
 
     void Refresh()
     {
 
-        while (_Component.transform.childCount > 0)
+
+        // Set Spline Objects
+        var splineCount = _Component.GetSplines().Length;
+        for (int  i = 0; i < splineCount; i++)
         {
-            foreach (Transform child in _Component.transform)
+            var SplineObjName = $"Spline: {i}";
+
+            if (i >= _Component.transform.childCount)
             {
-                GameObject.DestroyImmediate(child.gameObject);
+                var newObj = new GameObject($"Spline:{i}");
+                newObj.AddComponent<SpriteRenderer>();
+                newObj.transform.SetParent(_Component.transform);
             }
         }
 
-        foreach (var spline in _Component.GetSplines())
+        // Delete Existing 
+        for (int i = 0; i < _Component.transform.childCount; i++)
         {
-            foreach (var knot in spline)
+            if (i >= splineCount)
             {
-                var newSpriteObj = new GameObject("Sprite Obj");
-                var Spriterender = newSpriteObj.AddComponent<SpriteRenderer>();
-                Spriterender.sortingOrder = -10;
-                Spriterender.sprite = _Component.PointSprite;
-                newSpriteObj.transform.SetParent(_Component.transform);
-                newSpriteObj.transform.localPosition = (Vector3)knot.Position;
+                GameObject.DestroyImmediate(_Component.transform.GetChild(i).gameObject); 
             }
         }
+
+
+        // Set Knot Objects
+        for (int i = 0; i < _Component.transform.childCount; i++)
+        {
+            var parentObject = _Component.transform.GetChild(i);
+            var targetSpline = _Component.GetSplines().ElementAt(i);
+
+            for (int knotI = 0; knotI < targetSpline.Count; knotI++)
+            {
+                var knot = targetSpline.ElementAt(knotI);
+                var knotNPosition = SplineUtility.ConvertIndexUnit(targetSpline, knotI, PathIndexUnit.Knot, PathIndexUnit.Normalized);
+                Vector3 knotTangent = SplineUtility.EvaluateTangent(targetSpline, knotNPosition);
+                Vector3 knotUpVector = Vector3.Cross(knotTangent, Vector3.back);
+
+                if (knotI >= parentObject.transform.childCount)
+                {
+                    var newChildObj = new GameObject($"Knot Sprite{knotI}");
+                    newChildObj.transform.SetParent(parentObject.transform);
+                    newChildObj.AddComponent<SpriteRenderer>();
+                }
+
+                var knotObject = parentObject.transform.GetChild(knotI);
+                knotObject.transform.localPosition = knot.Position;
+
+
+                knotObject.transform.rotation = Quaternion.LookRotation(
+                    Vector3.forward,knotUpVector
+                    );
+            }
+        }
+
+
     }
+
 }

@@ -766,7 +766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SplineComponent: {fileID: 4239607757250200087}
-  CollisionWidth: 0
+  PointSprite: {fileID: 0}
 --- !u!33 &4604656365309122624
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -830,13 +830,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Container: {fileID: 4239607757250200087}
-  m_RebuildOnSplineChange: 0
+  m_RebuildOnSplineChange: 1
   m_RebuildFrequency: 30
   m_UpdateColliders: 1
   m_Sides: 8
   m_SegmentsPerUnit: 4
   m_Capped: 1
-  m_Radius: 0.25
+  m_Radius: 0.2
   m_Range: {x: 0, y: 1}
 --- !u!1 &7751135872779446251
 GameObject:

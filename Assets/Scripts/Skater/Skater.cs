@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 using UnityEditor;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 
 public class SkateTrick
@@ -105,6 +106,9 @@ public class Skater : MonoBehaviour
 
     [Header("Camera")]
     public PlayerCamera.Setup CameraSetup;
+
+    [Header("Events")]
+    public UnityEvent<bool> OnGrind = new UnityEvent<bool>();
 
     public void _InitRigidbody()
     {
@@ -240,6 +244,7 @@ public class Skater : MonoBehaviour
                         this._GrindAction.grindRailPoint = collidingRailPoint;
                         _RigidBody.velocity = Vector2.zero;
                         this._CharacterState = SkaterState.Grind;
+                        this.OnGrind.Invoke(true);
                         this.GrindOnSFX.Play();
                         this.GrindSFX.Play();
                     }
@@ -281,6 +286,8 @@ public class Skater : MonoBehaviour
                         }
                         this.GrindSFX.Stop();
                         this.GrindOffSFX.Play();
+
+                        this.OnGrind.Invoke(false);
                     }
                     break;
                 }
