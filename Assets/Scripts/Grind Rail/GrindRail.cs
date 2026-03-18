@@ -109,6 +109,11 @@ public class GrindRailPoint
 public class GrindRail : MonoBehaviour
 {
     public SplineContainer _SplineComponent;
+    public Sprite PointSprite;
+    public Color Colour = Color.black;
+    public Material Material;
+    public float Width = 0.2f;
+    public int Resolution = 128;
     public Spline[] Splines => GetSplines();
     private void Awake()
     {
@@ -116,7 +121,6 @@ public class GrindRail : MonoBehaviour
     }
 
 
-    public Sprite PointSprite;
 
     public Spline[] GetSplines() => _SplineComponent.Splines.ToArray();
 

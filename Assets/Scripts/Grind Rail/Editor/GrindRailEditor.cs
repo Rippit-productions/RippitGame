@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.Splines;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -11,7 +11,11 @@ using UnityEngine.UIElements;
 [CustomEditor(typeof(GrindRail))]
 public class GrindRailEditor : Editor
 {
+    public VisualTreeAsset InspectorGUI;
+
     private GrindRail _Component;
+    private static bool _AutoRefresh = true;
+    private static LayerMask _GroundCastMask;
 
     private void OnEnable()
     {
@@ -28,92 +32,174 @@ public class GrindRailEditor : Editor
     public override VisualElement CreateInspectorGUI()
     {
         VisualElement root = new VisualElement();
-        root.Add(base.CreateInspectorGUI());
+        root.Add(InspectorGUI.CloneTree());
 
-        return base.CreateInspectorGUI();
-    }
-
-    private SelectableKnot[] GetSelectedKnots()
-    {
-        var container = _Component.GetComponent<SplineContainer>();
-        List<SplineInfo> info = new List<SplineInfo>();
-
-        for (int i = 0; i < container.Splines.Count; i++)
+        FloatField WidthField = (FloatField)root.Q("WidthField");
+        WidthField.value = _Component.Width;
+        WidthField.RegisterValueChangedCallback((eventInfo) =>
         {
-            info.Add(new SplineInfo(container, i));
-        }
+            _Component.Width = (float)eventInfo.newValue;
+            float minWidth = 0.05f;
+            if (_Component.Width <= minWidth) _Component.Width = minWidth;
+            WidthField.value = _Component.Width;
+            Refresh();
+        });
 
-        List<SelectableKnot> Knots = new List<SelectableKnot>();
-        SplineSelection.GetElements<SelectableKnot>(info.ToArray(), Knots);
+        IntegerField ResolutionField = (IntegerField)root.Q("ResolutionField");
+        ResolutionField.value = _Component.Resolution;
+        ResolutionField.RegisterValueChangedCallback((eventInfo) =>
+        {
+            _Component.Resolution = eventInfo.newValue;
+            int minResolution = 10;
+            if (_Component.Resolution <= minResolution) _Component.Resolution = minResolution;
+            ResolutionField.value = _Component.Resolution;
+            Refresh();
+        });
 
-        return Knots.ToArray();
+        ColorField ColourField = (ColorField)root.Q("ColourField");
+        ColourField.value = _Component.Colour;
+        ColourField.RegisterValueChangedCallback((eventInfo) =>
+        {
+            _Component.Colour = (Color)eventInfo.newValue;
+            Refresh();
+        });
+
+        ObjectField SpriteField = (ObjectField)root.Q("SpriteField");
+        SpriteField.value = _Component.PointSprite;
+        SpriteField.RegisterValueChangedCallback((eventInfo) =>
+        {
+            if (_Component)
+            {
+                _Component.PointSprite = (Sprite)eventInfo.newValue;
+                Refresh();
+            }
+        });
+
+        ObjectField MaterialField = (ObjectField)root.Q("MaterialField");
+        MaterialField.value = _Component.Material;
+        MaterialField.RegisterValueChangedCallback((eventInfo) =>
+        {
+            _Component.Material = (Material)eventInfo.newValue;
+            Refresh();
+        });
+
+
+        LayerMaskField layerMaskField = (LayerMaskField)root.Q("GroundLayerMask");
+        layerMaskField.value = _GroundCastMask;
+        layerMaskField.RegisterValueChangedCallback((eventInfo) =>
+        {
+            _GroundCastMask = eventInfo.newValue;
+            Refresh();
+        });
+
+        Toggle AutoRefreshToggle = (Toggle)root.Q("AutoRefresh");
+        AutoRefreshToggle.value = _AutoRefresh;
+        AutoRefreshToggle.RegisterValueChangedCallback((eventInfo) =>
+        {
+            _AutoRefresh = eventInfo.newValue;
+            
+        });
+
+        Button GenerateButton = (Button)root.Q("GenerateButton");
+        GenerateButton.clicked += () =>
+        {
+            Refresh();
+        };
+
+        return root;
     }
 
     private void OnSplineChange(Spline spline)
     {
         if (_Component == null) return;
-        Refresh();
+        else if (_AutoRefresh) Refresh();
     }
 
-    void Refresh()
+    private void OnSceneGUI()
     {
+        Bounds SpriteBounds = _Component.PointSprite.bounds;
 
-
-        // Set Spline Objects
-        var splineCount = _Component.GetSplines().Length;
-        for (int  i = 0; i < splineCount; i++)
+        foreach(var spline in _Component.GetSplines())
         {
-            var SplineObjName = $"Spline: {i}";
 
-            if (i >= _Component.transform.childCount)
+            for (int knotIndex = 0; knotIndex < spline.Count; knotIndex++)
             {
-                var newObj = new GameObject($"Spline:{i}");
-                newObj.AddComponent<SpriteRenderer>();
-                newObj.transform.SetParent(_Component.transform);
+                var knot = spline[knotIndex];
+                var normalPosition = SplineUtility.ConvertIndexUnit(
+                    spline, knotIndex, 
+                    PathIndexUnit.Knot, PathIndexUnit.Normalized
+                    );
+
+                Vector3 knotTangent = SplineUtility.EvaluateTangent(spline, normalPosition);
+
+                Vector3 knotUpVector = Vector3.Cross(knotTangent, Vector3.back).normalized;
+
+                Handles.color = Color.red;
+                Vector3 LineFrom = (Vector3)knot.Position + _Component.transform.position;
+                Handles.DrawLine(LineFrom , LineFrom - (knotUpVector * _Component.PointSprite.bounds.extents.y * 1.25f));
             }
         }
+    }
 
-        // Delete Existing 
-        for (int i = 0; i < _Component.transform.childCount; i++)
+    private void Refresh()
+    {
+        /*
+         * Wish I could do this by foreach loop
+         * But it always leave left over objects.... :(
+         */
+        while (_Component.transform.childCount > 0)
         {
-            if (i >= splineCount)
-            {
-                GameObject.DestroyImmediate(_Component.transform.GetChild(i).gameObject); 
-            }
+            GameObject.DestroyImmediate(_Component.transform.GetChild(0).gameObject);
         }
 
-
-        // Set Knot Objects
-        for (int i = 0; i < _Component.transform.childCount; i++)
+        foreach (var spline in _Component.GetSplines())
         {
-            var parentObject = _Component.transform.GetChild(i);
-            var targetSpline = _Component.GetSplines().ElementAt(i);
+            var newLineRenderObject = new GameObject("LineRenderer");
+            newLineRenderObject.transform.SetParent(_Component.transform);
+            newLineRenderObject.transform.localPosition = Vector3.back * 0.1f;
+            newLineRenderObject.hideFlags = HideFlags.HideInHierarchy;
+            var LineRenderComponent = newLineRenderObject.AddComponent<LineRenderer>();
+            LineRenderComponent.startWidth = _Component.Width;
+            LineRenderComponent.endWidth = _Component.Width;
+            LineRenderComponent.material = _Component.Material;
+            LineRenderComponent.startColor = _Component.Colour;
+            LineRenderComponent.endColor = _Component.Colour;
 
-            for (int knotI = 0; knotI < targetSpline.Count; knotI++)
+
+            int segments = _Component.Resolution;
+            LineRenderComponent.positionCount = segments;
+            for (int i = 0; i < segments; i++)
             {
-                var knot = targetSpline.ElementAt(knotI);
-                var knotNPosition = SplineUtility.ConvertIndexUnit(targetSpline, knotI, PathIndexUnit.Knot, PathIndexUnit.Normalized);
-                Vector3 knotTangent = SplineUtility.EvaluateTangent(targetSpline, knotNPosition);
-                Vector3 knotUpVector = Vector3.Cross(knotTangent, Vector3.back);
+                Vector3 pointPosition = SplineUtility.EvaluatePosition(spline, (float)i/segments);
+                LineRenderComponent.SetPosition(i, pointPosition);
+            }
 
-                if (knotI >= parentObject.transform.childCount)
+            for (int knotIndex = 0 ;knotIndex < spline.Count; knotIndex++)
+            {
+                var knot = spline[knotIndex];
+                float knotNPosition = SplineUtility.ConvertIndexUnit(spline, knotIndex, PathIndexUnit.Knot, PathIndexUnit.Normalized);
+                Vector3 knotTangent = SplineUtility.EvaluateTangent(spline, knotNPosition);
+                Vector3 knotUpVector = Vector3.Cross(knotTangent , Vector3.back).normalized;
+                Vector3 knotWorldPosition = _Component.transform.position + (Vector3)knot.Position;
+
+                var newSpriteObj = new GameObject("Sprite Obj");
+                newSpriteObj.hideFlags = HideFlags.HideInHierarchy;
+                var spriteRenderer = newSpriteObj.AddComponent<SpriteRenderer>();
+                spriteRenderer.sprite = _Component.PointSprite;
+                spriteRenderer.sortingOrder = -50;
+                newSpriteObj.transform.SetParent(_Component.transform);
+                newSpriteObj.transform.localPosition = knot.Position;
+                newSpriteObj.transform.rotation = Quaternion.LookRotation( Vector3.forward, knotUpVector);
+
+                var raycast = Physics2D.Raycast(knotWorldPosition, -knotUpVector, _Component.PointSprite.bounds.size.y, _GroundCastMask);
+                spriteRenderer.color = Color.clear;
+                if (raycast)
                 {
-                    var newChildObj = new GameObject($"Knot Sprite{knotI}");
-                    newChildObj.transform.SetParent(parentObject.transform);
-                    newChildObj.AddComponent<SpriteRenderer>();
+                    spriteRenderer.color = Color.white;
                 }
 
-                var knotObject = parentObject.transform.GetChild(knotI);
-                knotObject.transform.localPosition = knot.Position;
-
-
-                knotObject.transform.rotation = Quaternion.LookRotation(
-                    Vector3.forward,knotUpVector
-                    );
             }
         }
-
-
     }
 
 }
