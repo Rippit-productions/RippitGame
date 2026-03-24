@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEditor.Splines;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -167,12 +165,14 @@ public class GrindRailEditor : Editor
 
 
             int segments = _Component.Resolution;
-            LineRenderComponent.positionCount = segments;
-            for (int i = 0; i < segments; i++)
+            List<Vector3> Points = new List<Vector3>();
+            for (int i = 0; i <= segments; i++)
             {
                 Vector3 pointPosition = SplineUtility.EvaluatePosition(spline, (float)i/segments);
-                LineRenderComponent.SetPosition(i, pointPosition);
+                Points.Add(pointPosition);
             }
+            LineRenderComponent.positionCount = Points.Count;
+            LineRenderComponent.SetPositions(Points.ToArray());
 
             for (int knotIndex = 0 ;knotIndex < spline.Count; knotIndex++)
             {
