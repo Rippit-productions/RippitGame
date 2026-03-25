@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Splines;
 using UnityEditor.UIElements;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.UIElements;
@@ -26,12 +27,6 @@ public class GrindRailEditor : Editor
         EditorSplineUtility.AfterSplineWasModified += OnSplineChange;
     }
 
-    private void OnDisable()
-    {
-        EditorSplineUtility.AfterSplineWasModified -= OnSplineChange;
-    }
-
-
     [MenuItem("GameObject/Rails/Add New")]
     public static void CreateNewGrindRail()
     {
@@ -41,6 +36,8 @@ public class GrindRailEditor : Editor
         {
             newObj.transform.SetParent(Selection.activeGameObject.transform);
         }
+
+        Selection.activeGameObject = newObj;
     }
 
     public override VisualElement CreateInspectorGUI()
@@ -202,14 +199,19 @@ public class GrindRailEditor : Editor
                 
                 var spriteRenderer = newSpriteObj.AddComponent<SpriteRenderer>();
                 spriteRenderer.sprite = _Component.PointSprite;
-                spriteRenderer.sortingOrder = -50;
+                spriteRenderer.sortingOrder = -10;
                 newSpriteObj.transform.SetParent(_Component.transform);
                 newSpriteObj.transform.localPosition = knot.Position;
                 newSpriteObj.transform.rotation = Quaternion.LookRotation( Vector3.forward, knotUpVector);
+                ContactFilter2D filter = new ContactFilter2D();
+                filter.useLayerMask = false;
+                filter.useTriggers = false;
+                filter.useDepth = false;
 
-                var raycast = Physics2D.Raycast(knotWorldPosition, -knotUpVector, _Component.PointSprite.bounds.size.y, _GroundCastMask);
+                RaycastHit2D[] hits = new RaycastHit2D[1]; 
+                var raycast = Physics2D.Raycast(knotWorldPosition, -knotUpVector, filter,hits, _Component.PointSprite.bounds.size.y * 1.2f);
                 spriteRenderer.color = Color.clear;
-                if (raycast)
+                if (raycast != 0)
                 {
                     spriteRenderer.color = Color.white;
                 }

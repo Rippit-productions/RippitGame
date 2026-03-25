@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: fa0ee17c85a5742479b862d7d06f840c
+guid: d170bd3a4c03a71458f5522d9e5e0986
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 7961463184084027955
-    second: City_0
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -37,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
-  spriteExtrude: 1
+  spriteMode: 2
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 19
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,22 +107,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: City_0
+      name: City_NYC_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 2508
         width: 2256
-        height: 2008
+        height: 1006
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 33acda3959ccc7e60800000000000000
-      internalID: 7961463184084027955
+      spriteID: d5f36ba0290f4544b9895ab837c51d04
+      internalID: -1292127401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: City_NYC_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1253
+        width: 2256
+        height: 1008
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5a267ec15b84f04c9e8ee54c6167519
+      internalID: 1725243150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: City_NYC_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2256
+        height: 1006
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad8efbdc672bfc043a89fbbe4eeeaa3e
+      internalID: -1503595473
       vertices: []
       indices: 
       edges: []
@@ -133,7 +172,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 0e8b0368577e35046b218c361d7b0802
     internalID: 0
     vertices: []
     indices: 
@@ -141,7 +180,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      City_0: 7961463184084027955
+      City_NYC_0: -1292127401
+      City_NYC_1: 1725243150
+      City_NYC_2: -1503595473
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -18,7 +18,7 @@ MonoBehaviour:
       Data2: 1275243358
       Data3: 143795600
       Data4: 558050250
-    Path: event:/SFX/Jump
+    Path: event:/SFX/Jump/Jump
   GrindOnSFX:
     Guid:
       Data1: 1028189968
