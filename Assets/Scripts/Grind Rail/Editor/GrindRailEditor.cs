@@ -1,3 +1,4 @@
+using NAudio.CoreAudioApi;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Splines;
@@ -9,11 +10,15 @@ using UnityEngine.UIElements;
 [CustomEditor(typeof(GrindRail))]
 public class GrindRailEditor : Editor
 {
+
+
     public VisualTreeAsset InspectorGUI;
+    public static string EDITORPREF_LayerMask = "LayerMaskSetting";
 
     private GrindRail _Component;
     private static bool _AutoRefresh = true;
     private static LayerMask _GroundCastMask;
+
 
     private void OnEnable()
     {
@@ -26,6 +31,17 @@ public class GrindRailEditor : Editor
         EditorSplineUtility.AfterSplineWasModified -= OnSplineChange;
     }
 
+
+    [MenuItem("GameObject/Rails/Add New")]
+    public static void CreateNewGrindRail()
+    {
+        var newObj = new GameObject("Grind Rail");
+        newObj.AddComponent<GrindRail>();
+        if (Selection.activeGameObject != null)
+        {
+            newObj.transform.SetParent(Selection.activeGameObject.transform);
+        }
+    }
 
     public override VisualElement CreateInspectorGUI()
     {
@@ -83,10 +99,11 @@ public class GrindRailEditor : Editor
 
 
         LayerMaskField layerMaskField = (LayerMaskField)root.Q("GroundLayerMask");
-        layerMaskField.value = _GroundCastMask;
+        layerMaskField.value = EditorPrefs.GetInt(EDITORPREF_LayerMask,~0);
         layerMaskField.RegisterValueChangedCallback((eventInfo) =>
         {
             _GroundCastMask = eventInfo.newValue;
+            EditorPrefs.SetInt(EDITORPREF_LayerMask,eventInfo.newValue);
             Refresh();
         });
 
@@ -115,8 +132,7 @@ public class GrindRailEditor : Editor
 
     private void OnSceneGUI()
     {
-        Bounds SpriteBounds = _Component.PointSprite.bounds;
-
+        if (_Component.PointSprite == null) return;
         foreach(var spline in _Component.GetSplines())
         {
 
@@ -152,10 +168,10 @@ public class GrindRailEditor : Editor
 
         foreach (var spline in _Component.GetSplines())
         {
-            var newLineRenderObject = new GameObject("LineRenderer");
+            var newLineRenderObject = new GameObject("GrindRail LineRenderer");
             newLineRenderObject.transform.SetParent(_Component.transform);
             newLineRenderObject.transform.localPosition = Vector3.back * 0.1f;
-            newLineRenderObject.hideFlags = HideFlags.HideInHierarchy;
+            
             var LineRenderComponent = newLineRenderObject.AddComponent<LineRenderer>();
             LineRenderComponent.startWidth = _Component.Width;
             LineRenderComponent.endWidth = _Component.Width;
@@ -182,8 +198,8 @@ public class GrindRailEditor : Editor
                 Vector3 knotUpVector = Vector3.Cross(knotTangent , Vector3.back).normalized;
                 Vector3 knotWorldPosition = _Component.transform.position + (Vector3)knot.Position;
 
-                var newSpriteObj = new GameObject("Sprite Obj");
-                newSpriteObj.hideFlags = HideFlags.HideInHierarchy;
+                var newSpriteObj = new GameObject("GrindRail Sprite Pole");
+                
                 var spriteRenderer = newSpriteObj.AddComponent<SpriteRenderer>();
                 spriteRenderer.sprite = _Component.PointSprite;
                 spriteRenderer.sortingOrder = -50;
