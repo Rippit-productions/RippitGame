@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,8 +8,21 @@ using UnityEngine.UIElements;
 [CustomEditor(typeof(Track))]
 public class TrackEditor : Editor
 {
+
+    public enum TrackTool
+    {
+        None,
+        Transform,
+        Collider,
+        Add
+    }
+
+    public VisualTreeAsset _InspectorGUI;
+
     private Track _Component;
-    public int selectIndex = -1;
+    public int selectIndex = 0;
+
+    public TrackTool CurrentTool;
     private void OnEnable()
     {
         _Component = (Track)target;
@@ -19,20 +33,34 @@ public class TrackEditor : Editor
         selectIndex = -1;
     }
 
+    public override VisualElement CreateInspectorGUI()
+    {
+        var root = new VisualElement();
+        root.Add(_InspectorGUI.CloneTree());
+        return root;
+    }
     private void OnSceneGUI()
     {
+        var inputEvent = Event.current;
+        if (inputEvent.type == EventType.MouseDown && inputEvent.button == 0)
+        {
+            Debug.Log("Hello");
+        }
+
 
         if (UnityEditor.Tools.current != Tool.None )
         {
+            CurrentTool = TrackTool.None;
             selectIndex = -1;
         }
-
 
         var Ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
 
         var something = HandleUtility.RaySnap(Ray);
         if (something != null) 
         {
+            Debug.Log("Oi");
+            Handles.color = Color.red;
             Handles.DrawWireCube(((RaycastHit)something).point, Vector3.one * 5.0f);
         }
         

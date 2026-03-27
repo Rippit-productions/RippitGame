@@ -9971,7 +9971,7 @@ MonoBehaviour:
     m_Bits: 256
   Maxspeed: 50
   MoveSpeed: 35
-  BreakingSpeedScale: 1.4
+  BreakingSpeedScale: 2
   JumpForce: 8
   SoundSet: {fileID: 11400000, guid: eeec8fa6af865d7408d18fa1c26e6ed2, type: 2}
   CameraSetup:

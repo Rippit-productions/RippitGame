@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - CheckPointIcon: {fileID: 2800000, guid: bbde3753327fcdb4d888d689ed500f9d, type: 3}
+  - _InspectorGUI: {fileID: 9197481963319205126, guid: 5ce256d5006dae140b0fda73e5ba6740, type: 3}
   executionOrder: 0
   icon: {fileID: 2800000, guid: 60a99c809e5a1ae488116ac582042d66, type: 3}
   userData: 

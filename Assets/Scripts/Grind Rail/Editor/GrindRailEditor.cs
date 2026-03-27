@@ -11,15 +11,12 @@ using UnityEngine.UIElements;
 [CustomEditor(typeof(GrindRail))]
 public class GrindRailEditor : Editor
 {
-
-
     public VisualTreeAsset InspectorGUI;
-    public static string EDITORPREF_LayerMask = "LayerMaskSetting";
 
     private GrindRail _Component;
     private static bool _AutoRefresh = true;
-    private static LayerMask _GroundCastMask;
 
+    public static string EDITORPREF_AutoRefresh = "GrindRail_AutoRefresh";
 
     private void OnEnable()
     {
@@ -52,7 +49,6 @@ public class GrindRailEditor : Editor
             _Component.Width = (float)eventInfo.newValue;
             float minWidth = 0.05f;
             if (_Component.Width <= minWidth) _Component.Width = minWidth;
-            WidthField.value = _Component.Width;
             Refresh();
         });
 
@@ -61,9 +57,8 @@ public class GrindRailEditor : Editor
         ResolutionField.RegisterValueChangedCallback((eventInfo) =>
         {
             _Component.Resolution = eventInfo.newValue;
-            int minResolution = 10;
+            int minResolution = 2;
             if (_Component.Resolution <= minResolution) _Component.Resolution = minResolution;
-            ResolutionField.value = _Component.Resolution;
             Refresh();
         });
 
@@ -96,20 +91,17 @@ public class GrindRailEditor : Editor
 
 
         LayerMaskField layerMaskField = (LayerMaskField)root.Q("GroundLayerMask");
-        layerMaskField.value = EditorPrefs.GetInt(EDITORPREF_LayerMask,~0);
         layerMaskField.RegisterValueChangedCallback((eventInfo) =>
         {
-            _GroundCastMask = eventInfo.newValue;
-            EditorPrefs.SetInt(EDITORPREF_LayerMask,eventInfo.newValue);
             Refresh();
         });
 
         Toggle AutoRefreshToggle = (Toggle)root.Q("AutoRefresh");
-        AutoRefreshToggle.value = _AutoRefresh;
+        AutoRefreshToggle.value = EditorPrefs.GetBool(EDITORPREF_AutoRefresh,true);
         AutoRefreshToggle.RegisterValueChangedCallback((eventInfo) =>
         {
             _AutoRefresh = eventInfo.newValue;
-            
+            EditorPrefs.SetBool(EDITORPREF_AutoRefresh, eventInfo.newValue);
         });
 
         Button GenerateButton = (Button)root.Q("GenerateButton");
