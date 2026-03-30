@@ -4,7 +4,7 @@ using UnityEngine;
 public class Track : MonoBehaviour
 {
     public bool IsClosed; // Track Looping
-    [SerializeField] public TrackCheckPoint[] CheckPoints = {new TrackCheckPoint()};
+    public TrackCheckPoint[] CheckPoints = {new TrackCheckPoint()};
 
     public int Count => CheckPoints.Length;
 
@@ -18,15 +18,6 @@ public class Track : MonoBehaviour
     {
         for (int i = 0; i < CheckPoints.Length; i++)
         {
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireCube(
-                GetPointWorldPosition(i),
-                CheckPoints[i].CollisionBoxSize
-                );
-
-            int nextIndex = i + 1;
-            if (nextIndex == CheckPoints.Length) nextIndex = 0;
-
 
             //CheckPoint
             Gizmos.color = Color.yellow;
@@ -38,20 +29,6 @@ public class Track : MonoBehaviour
             Gizmos.DrawWireSphere(
                 GetPointWorldPosition(i),
                 handleSize * 0.25f
-                );
-
-            //Collision Box
-            Gizmos.color = Color.gray;
-            Gizmos.DrawWireCube(
-                GetPointWorldPosition(i),
-                CheckPoints[i].CollisionBoxSize
-                );
-
-            Gizmos.color = Color.white;
-            if (!IsClosed && nextIndex == 0) continue;
-            Gizmos.DrawLine(
-                GetPointWorldPosition(i),
-                GetPointWorldPosition(nextIndex)
                 );
         }
     }
