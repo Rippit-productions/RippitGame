@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      add_24dp_EFEFEF_FILL0_wght400_GRAD0_opsz24_0: 2142075093049826007
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

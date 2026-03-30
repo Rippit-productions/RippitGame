@@ -7,5 +7,5 @@ using UnityEngine;
 public class TrackCheckPoint 
 {
     public Vector3 LocalPosition = Vector3.zero;
-    public Vector3 CollisionBoxSize = Vector3.one * 10.0f;
+    public Vector2 CollisionBoxSize = Vector3.one * 10.0f;
 }

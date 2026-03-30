@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      drag_pan_24dp_EFEFEF_FILL0_wght400_GRAD0_opsz24_0: -6974050519262012820
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

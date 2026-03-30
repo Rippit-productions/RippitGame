@@ -30,6 +30,12 @@ public class Track : MonoBehaviour
                 GetPointWorldPosition(i),
                 handleSize * 0.25f
                 );
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(
+                GetPointWorldPosition(i),
+                (Vector3)CheckPoints[i].CollisionBoxSize 
+                );
         }
     }
 #endif

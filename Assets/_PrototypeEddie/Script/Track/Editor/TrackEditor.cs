@@ -25,6 +25,7 @@ public class TrackEditor : Editor
     private void OnEnable()
     {
         _Component = (Track)target;
+        UnityEditor.Tools.current = Tool.Custom;
     }
 
     private void OnDisable()
@@ -69,8 +70,6 @@ public class TrackEditor : Editor
 
     private void OnSceneGUI()
     {
-        if (Tools.current != Tool.Custom) return;
-
         var currentEvent = Event.current;
         var MouseRay  = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         Vector3 MouseWorldPos = MouseRay.GetPoint(-MouseRay.origin.z);
@@ -98,7 +97,6 @@ public class TrackEditor : Editor
                     );
                 if (pressed)
                 {
-                    UnityEditor.Tools.current = Tool.Custom;
                     this.CurrentTool = TrackTool.Move;
                     selectIndex = i;
                 }
@@ -122,12 +120,49 @@ public class TrackEditor : Editor
                 break;
 
             case TrackTool.Collider:
+                if (selectIndex < 0) break;
+                var selection = _Component.CheckPoints[selectIndex];
+                var worldPos = _Component.GetPointWorldPosition(selectIndex);
+
+
+                float buttonSize = 0.15f;
+                Handles.color = Color.green;
+                var xHandle = Handles.FreeMoveHandle(
+                    _Component.GetPointWorldPosition(selectIndex) +  Vector3.right * selection.CollisionBoxSize.x * 0.5f,
+                    HandleUtility.GetHandleSize(worldPos) * buttonSize,
+                    Vector3.one * 0.0f,
+                    Handles.CubeHandleCap
+                    );
+
+                var yHandle = Handles.FreeMoveHandle(
+                    _Component.GetPointWorldPosition(selectIndex) + Vector3.up * selection.CollisionBoxSize.y * 0.5f,
+                    HandleUtility.GetHandleSize(worldPos) * buttonSize,
+                    Vector3.one * 0.0f,
+                    Handles.CubeHandleCap
+                    );
+
+                var newXValue = (xHandle.x - worldPos.x) * 2.0f;
+                if (newXValue > 0.0f)
+                {
+                    _Component.CheckPoints[selectIndex].CollisionBoxSize.x = newXValue;
+                }
+
+                var newYValue = (yHandle.y - worldPos.y) * 2.0f;
+                if (newYValue > 0.0f)
+                {
+                    _Component.CheckPoints[selectIndex].CollisionBoxSize.y = newYValue;
+                }
+
                 break;
             case TrackTool.Add:
                 HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
 
+                var handleScale = HandleUtility.GetHandleSize(MouseWorldPos);
                 Handles.color = Color.blue;
-                Handles.DrawWireDisc(MouseWorldPos, Vector3.forward, HandleUtility.GetHandleSize(MouseWorldPos) * 0.05f);
+                Handles.DrawWireDisc(MouseWorldPos, Vector3.forward, handleScale * 0.1f);
+
+                Handles.color = Color.white;
+                Handles.DrawWireDisc(MouseWorldPos, Vector3.forward, handleScale * 0.05f);
 
                 if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0)
                 {
