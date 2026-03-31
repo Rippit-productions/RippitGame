@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEditor;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-
+using Unity.VisualScripting;
 
 public class SkateTrick
 {
+
     public SkateTrick() { 
     }
     public SkateTrick(string TrickName, float Score)
@@ -41,6 +41,7 @@ public struct GrindAction
 public class Skater : MonoBehaviour
 {
     public static Skater[] All => FindObjectsByType<Skater>(FindObjectsSortMode.InstanceID);
+    public static Action<Skater> OnSkaterSpawn = (Skater) => { };
 
     public enum SkaterState
     {
@@ -119,6 +120,12 @@ public class Skater : MonoBehaviour
         _physicsMaterial.friction = Friction;
         _physicsMaterial.bounciness = 0.0f;
         _RigidBody.sharedMaterial = _physicsMaterial;
+    }
+
+
+    void Awake()
+    {
+        OnSkaterSpawn.Invoke(this);
     }
 
     void Start()

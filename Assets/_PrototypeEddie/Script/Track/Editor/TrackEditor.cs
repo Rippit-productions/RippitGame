@@ -3,12 +3,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-
-
 [CustomEditor(typeof(Track))]
 public class TrackEditor : Editor
 {
-
     public enum TrackTool
     {
         Move,
@@ -58,12 +55,11 @@ public class TrackEditor : Editor
 
         AddToolButton.clicked += () =>
         {
-            this.CurrentTool = TrackTool.Add;
             this.selectIndex = -1;
+            this.CurrentTool = TrackTool.Add;
             UnityEditor.Tools.current = Tool.Custom;
             SceneView.RepaintAll();
         };
-
         return root;
     }
 
@@ -78,7 +74,7 @@ public class TrackEditor : Editor
 
         for (int i = 0; i < _Component.CheckPoints.Length; i++)
         {
-            var handlePos = _Component.GetPointWorldPosition(i);
+            var handlePos = _Component.GetCheckPointWorldPosition(i);
             Vector3 PointSize = _Component.CheckPoints[i].CollisionBoxSize;
 
             Gizmos.color = Color.black;
@@ -89,7 +85,7 @@ public class TrackEditor : Editor
             {
                 Handles.color = Color.blue;
                 var pressed = Handles.Button(
-                    _Component.GetPointWorldPosition(i),
+                    _Component.GetCheckPointWorldPosition(i),
                     Quaternion.identity,
                     HandleUtility.GetHandleSize(handlePos) * 0.15f,
                     1.2f,
@@ -103,8 +99,6 @@ public class TrackEditor : Editor
             }
         }
 
-        
-
         switch (this.CurrentTool)
         {
             case TrackTool.Move:
@@ -113,8 +107,8 @@ public class TrackEditor : Editor
                 Handles.color = Color.white;
 
                 Vector3 WorldPosition = currentlocalPos + _Component.transform.position;
-                Quaternion someQuat = Quaternion.identity;
-                Handles.TransformHandle(ref WorldPosition, ref someQuat);
+                Quaternion rotation = Quaternion.identity; // Only to fill below method. 
+                Handles.TransformHandle(ref WorldPosition, ref rotation);
 
                 _Component.CheckPoints[selectIndex].LocalPosition = WorldPosition - _Component.transform.position;
                 break;
@@ -122,20 +116,19 @@ public class TrackEditor : Editor
             case TrackTool.Collider:
                 if (selectIndex < 0) break;
                 var selection = _Component.CheckPoints[selectIndex];
-                var worldPos = _Component.GetPointWorldPosition(selectIndex);
-
+                var worldPos = _Component.GetCheckPointWorldPosition(selectIndex);
 
                 float buttonSize = 0.15f;
                 Handles.color = Color.green;
                 var xHandle = Handles.FreeMoveHandle(
-                    _Component.GetPointWorldPosition(selectIndex) +  Vector3.right * selection.CollisionBoxSize.x * 0.5f,
+                    _Component.GetCheckPointWorldPosition(selectIndex) +  Vector3.right * selection.CollisionBoxSize.x * 0.5f,
                     HandleUtility.GetHandleSize(worldPos) * buttonSize,
                     Vector3.one * 0.0f,
                     Handles.CubeHandleCap
                     );
 
                 var yHandle = Handles.FreeMoveHandle(
-                    _Component.GetPointWorldPosition(selectIndex) + Vector3.up * selection.CollisionBoxSize.y * 0.5f,
+                    _Component.GetCheckPointWorldPosition(selectIndex) + Vector3.up * selection.CollisionBoxSize.y * 0.5f,
                     HandleUtility.GetHandleSize(worldPos) * buttonSize,
                     Vector3.one * 0.0f,
                     Handles.CubeHandleCap
@@ -159,7 +152,7 @@ public class TrackEditor : Editor
 
                 var handleScale = HandleUtility.GetHandleSize(MouseWorldPos);
                 Handles.color = Color.blue;
-                Handles.DrawWireDisc(MouseWorldPos, Vector3.forward, handleScale * 0.1f);
+                Handles.DrawWireDisc(MouseWorldPos, Vector3.forward, handleScale * 0.2f);
 
                 Handles.color = Color.white;
                 Handles.DrawWireDisc(MouseWorldPos, Vector3.forward, handleScale * 0.05f);
@@ -180,8 +173,10 @@ public class TrackEditor : Editor
                 break;
         }
 
+        // Delete Func
         if (currentEvent.type == EventType.KeyDown && currentEvent.keyCode == KeyCode.Delete)
         {
+            // Check if element is selected
             if (selectIndex > 0)
             {
                 List<TrackCheckPoint> allPoints = new List<TrackCheckPoint>(_Component.CheckPoints);
@@ -190,7 +185,8 @@ public class TrackEditor : Editor
                 GUIUtility.hotControl = 0;
                 currentEvent.Use();
             }
-
+            
+            // Keep selection within Array.
             if (selectIndex > _Component.CheckPoints.Length - 1)
             {
                 selectIndex = _Component.CheckPoints.Length - 1;
@@ -201,16 +197,13 @@ public class TrackEditor : Editor
 
     private void DrawPathSpline()
     {
-
         List<Vector3> DrawPoints = new List<Vector3>();
-
         foreach(var checkPoint in _Component.CheckPoints)
         {
             DrawPoints.Add(
                 checkPoint.LocalPosition + _Component.transform.position
                 );
         }
-
         Handles.color = Color.white;
         Handles.DrawPolyLine(DrawPoints.ToArray());
     }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6135242, g: 0.73926383, b: 0.71666056, a: 1}
+  m_IndirectSpecularColor: {r: 0.99999946, g: 0.99999946, b: 0.99999946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -780,7 +780,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: -100
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -44880,6 +44880,7 @@ GameObject:
   - component: {fileID: 63028977818313069}
   - component: {fileID: 5708173699909741509}
   - component: {fileID: 4517890539461183181}
+  - component: {fileID: 7751135871984589473}
   m_Layer: 0
   m_Name: Graybox Level
   m_TagString: Untagged
@@ -44887,6 +44888,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7751135871984589473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751135871984589472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb5ddd799d39664b83a6cd9c9521a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0
 --- !u!66 &8845544966932975647
 CompositeCollider2D:
   m_ObjectHideFlags: 0
