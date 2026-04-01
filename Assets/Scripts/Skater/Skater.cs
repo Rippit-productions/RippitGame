@@ -43,6 +43,8 @@ public class Skater : MonoBehaviour
     public static Skater[] All => FindObjectsByType<Skater>(FindObjectsSortMode.InstanceID);
     public static Action<Skater> OnSkaterSpawn = (Skater) => { };
 
+    public int SkaterIndex => GetComponent<PlayerInput>().playerIndex;
+
     public enum SkaterState
     {
         Grounded,
@@ -122,12 +124,6 @@ public class Skater : MonoBehaviour
         _RigidBody.sharedMaterial = _physicsMaterial;
     }
 
-
-    void Awake()
-    {
-        OnSkaterSpawn.Invoke(this);
-    }
-
     void Start()
     {
         _InitRigidbody();
@@ -135,9 +131,21 @@ public class Skater : MonoBehaviour
         _AnimatorComp = GetComponentInChildren<Animator>(); 
         playerController = GetComponent<SkateController>();
 
-        PlayerCamera.CreateCamera(this);
+        var newCamera = PlayerCamera.CreateCamera(this);
 
         _InitSounds();
+        OnSkaterSpawn.Invoke(this);
+
+
+        var im = FindFirstObjectByType<PlayerInputManager>();
+        if (Skater.All.Length > 1)
+        {
+            
+            im.splitScreen = true;
+        }
+        else {
+            im.splitScreen = false; 
+        }
     }
 
     private void _InitSounds()
@@ -500,14 +508,14 @@ public class Skater : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + (GetForwardMoveVector() * GetBounds().size.magnitude)
+            transform.position + GetForwardMoveVector() * 1.2f
             );
 
         //Up Vector 
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.cyan;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + (_UpVector * GetBounds().size.magnitude)
+            transform.position + _UpVector * 1.2f
          );
 
         // Floor Ray
@@ -540,10 +548,11 @@ public class Skater : MonoBehaviour
         }
     }
 
+    private int GuiID = Guid.NewGuid().GetHashCode();
     private Rect _GuiRect = new Rect(20, 20, 300, 200);
     void OnGUI()
     {
-        _GuiRect = GUILayout.Window(0, _GuiRect, _DrawGUIWindow, $"Skate Player - {this.gameObject.name}");
+        _GuiRect = GUILayout.Window(GuiID, _GuiRect, _DrawGUIWindow, $"Skate Player - {this.gameObject.name}");
     }
     void _DrawGUIWindow(int WindowID)
     {
@@ -554,7 +563,16 @@ public class Skater : MonoBehaviour
 
         string PlatformName = this._CurrentPlatform ? this._CurrentPlatform.gameObject.name : "None";
         GUILayout.Label($"Current Platform: {PlatformName}");
+        GUILayout.Label($"PlayerIndex = {this.SkaterIndex}");
+
+        if (GUILayout.Button("Clone Player"))
+        {
+            var newObj = GameObject.Instantiate(this.gameObject);
+            newObj.transform.position = this.transform.position + Vector3.up * 2.0f;
+        }
+
         GUI.DragWindow(new Rect(0,0,float.MaxValue, float.MaxValue));
+        
     }
 #endif
 }

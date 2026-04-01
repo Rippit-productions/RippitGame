@@ -10,7 +10,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CinemachineVirtualCamera))]
 [RequireComponent(typeof(CinemachineBrain))]
 
-
 public class PlayerCamera : MonoBehaviour
 {
     [Serializable]
@@ -26,6 +25,7 @@ public class PlayerCamera : MonoBehaviour
     private PlayerCamera.Setup CameraSetup;
 
     private Camera _CameraComponent;
+    public Camera CameraComponent => _CameraComponent;
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
     private CinemachineFramingTransposer _cinemachineTransposer;
     protected Skater linkedCharacter;
@@ -55,21 +55,18 @@ public class PlayerCamera : MonoBehaviour
             existingCamera._cinemachineVirtualCamera.Follow = null;
             existingCamera.linkedCharacter = null;
         }
-
         this.linkedCharacter = Player;
-        _cinemachineVirtualCamera.Follow = Player.transform;
+        var inputCompo = linkedCharacter.GetComponent<PlayerInput>();
+        inputCompo.camera = this._CameraComponent;
     }
-    
+
     public PlayerCamera GetLinkedCamera(Skater Player)
     {
-        foreach (var playerCharacter in Skater.All)
+        foreach (var camera in PlayerCamera.All)
         {
-            foreach (var camera in PlayerCamera.All)
+            if (camera.linkedCharacter == Player)
             {
-                if (camera.linkedCharacter == playerCharacter)
-                {
-                    return camera;
-                }
+                return camera;
             }
         }
         return null;
@@ -96,6 +93,7 @@ public class PlayerCamera : MonoBehaviour
         if (_cinemachineVirtualCamera == null) return;
         this.gameObject.name = $"Player Camera: {this.linkedCharacter.name}";
 
+        _cinemachineVirtualCamera.Follow = this.linkedCharacter.transform;
         this.CameraSetup = this.linkedCharacter.CameraSetup;
         this._cinemachineTransposer.m_LookaheadSmoothing = this.CameraSetup.LookAheadSmoothing;
         this._cinemachineTransposer.m_LookaheadTime = this.CameraSetup.LookAheadTime;

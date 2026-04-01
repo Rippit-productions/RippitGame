@@ -35,9 +35,22 @@ public class TrackEditor : Editor
         var root = new VisualElement();
         root.Add(_InspectorGUI.CloneTree());
 
+
+        SliderInt LapSlider = (SliderInt)root.Q("LapsSlider");
+
         Button MoveToolButton = (Button)root.Q("MoveButton");
         Button ColliderToolButton = (Button)root.Q("ColliderButon");
         Button AddToolButton = (Button)root.Q("AddButton");
+
+
+        LapSlider.RegisterValueChangedCallback(e =>
+        {
+            if (e.newValue >= 1)
+            {
+                _Component.Laps = e.newValue;
+            }
+        });
+
 
         MoveToolButton.clicked += () =>
         {
@@ -74,7 +87,7 @@ public class TrackEditor : Editor
 
         for (int i = 0; i < _Component.CheckPoints.Length; i++)
         {
-            var handlePos = _Component.GetCheckPointWorldPosition(i);
+            var handlePos = _Component.GetCheckPointPosition(i);
             Vector3 PointSize = _Component.CheckPoints[i].CollisionBoxSize;
 
             Gizmos.color = Color.black;
@@ -85,7 +98,7 @@ public class TrackEditor : Editor
             {
                 Handles.color = Color.blue;
                 var pressed = Handles.Button(
-                    _Component.GetCheckPointWorldPosition(i),
+                    _Component.GetCheckPointPosition(i),
                     Quaternion.identity,
                     HandleUtility.GetHandleSize(handlePos) * 0.15f,
                     1.2f,
@@ -116,19 +129,19 @@ public class TrackEditor : Editor
             case TrackTool.Collider:
                 if (selectIndex < 0) break;
                 var selection = _Component.CheckPoints[selectIndex];
-                var worldPos = _Component.GetCheckPointWorldPosition(selectIndex);
+                var worldPos = _Component.GetCheckPointPosition(selectIndex);
 
                 float buttonSize = 0.15f;
                 Handles.color = Color.green;
                 var xHandle = Handles.FreeMoveHandle(
-                    _Component.GetCheckPointWorldPosition(selectIndex) +  Vector3.right * selection.CollisionBoxSize.x * 0.5f,
+                    _Component.GetCheckPointPosition(selectIndex) +  Vector3.right * selection.CollisionBoxSize.x * 0.5f,
                     HandleUtility.GetHandleSize(worldPos) * buttonSize,
                     Vector3.one * 0.0f,
                     Handles.CubeHandleCap
                     );
 
                 var yHandle = Handles.FreeMoveHandle(
-                    _Component.GetCheckPointWorldPosition(selectIndex) + Vector3.up * selection.CollisionBoxSize.y * 0.5f,
+                    _Component.GetCheckPointPosition(selectIndex) + Vector3.up * selection.CollisionBoxSize.y * 0.5f,
                     HandleUtility.GetHandleSize(worldPos) * buttonSize,
                     Vector3.one * 0.0f,
                     Handles.CubeHandleCap

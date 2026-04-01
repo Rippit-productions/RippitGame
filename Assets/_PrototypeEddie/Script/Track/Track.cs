@@ -9,7 +9,7 @@ public class Track : MonoBehaviour
 
     public int Count => CheckPoints.Length;
 
-    public Vector3 GetCheckPointWorldPosition(int CheckPointIndex)
+    public Vector3 GetCheckPointPosition(int CheckPointIndex)
     {
         return CheckPoints[CheckPointIndex].LocalPosition + transform.position;
     }
@@ -17,7 +17,7 @@ public class Track : MonoBehaviour
     public bool PointOverlapsCheckPoint(Vector3 Position,int CheckPointIndex)
     {
         Bounds CheckPointBounds = new Bounds(
-            GetCheckPointWorldPosition(CheckPointIndex),
+            GetCheckPointPosition(CheckPointIndex),
             CheckPoints[CheckPointIndex].CollisionBoxSize
             );
 
@@ -35,15 +35,17 @@ public class Track : MonoBehaviour
             else if (i == this.Count - 1 && !IsClosed) Gizmos.color = Color.red;
 
             var handleSize = HandleUtility.GetHandleSize(
-                GetCheckPointWorldPosition(i));
+                GetCheckPointPosition(i));
+
+            Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(
-                GetCheckPointWorldPosition(i),
-                handleSize * 0.25f
+                GetCheckPointPosition(i),
+                handleSize * 0.10f
                 );
 
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(
-                GetCheckPointWorldPosition(i),
+                GetCheckPointPosition(i),
                 (Vector3)CheckPoints[i].CollisionBoxSize 
                 );
         }
