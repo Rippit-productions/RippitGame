@@ -12,15 +12,16 @@ public class SkateController : MonoBehaviour
     [SerializeField] private InputActionReference _MoveAction;
     [SerializeField] private InputActionReference _JumpAction;
     [SerializeField] private InputActionReference GrappleAction;
-   
-    public Vector2 Move => _MoveAction.action.ReadValue<Vector2>();
+
+    public Vector2 Move => PlayerInputComponent.actions.FindAction(_MoveAction.name).ReadValue<Vector2>();
     public float NoMoveInput => _NoMoveInputTime;
-    public InputAction Jump => _JumpAction.action;
+    public InputAction Jump => PlayerInputComponent.actions.FindAction(_JumpAction.name);
 
     void _Init() {
         PlayerInputComponent = GetComponent<PlayerInput>();
         PlayerInputComponent.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
         PlayerInputComponent.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
+
     }
 
     private void Update()

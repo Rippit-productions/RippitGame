@@ -136,8 +136,9 @@ public class Skater : MonoBehaviour
         _InitSounds();
         OnSkaterSpawn.Invoke(this);
 
-
+        
         var im = FindFirstObjectByType<PlayerInputManager>();
+        im.splitScreen = false;
         if (Skater.All.Length > 1)
         {
             

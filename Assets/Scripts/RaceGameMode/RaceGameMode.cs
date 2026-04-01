@@ -91,7 +91,7 @@ public class RaceGameMode : MonoBehaviour
         {
             float PlayerValue = - (-playerInfo.Lap * _track.CheckPoints.Length) - playerInfo.CheckPoint;
             var nextCheckPointPosition = _track.GetCheckPointPosition(playerInfo.CheckPoint);
-            PlayerValue += (playerInfo.Component.transform.position - nextCheckPointPosition).magnitude;
+            PlayerValue += 1 / (playerInfo.Component.transform.position - nextCheckPointPosition).magnitude;
             return PlayerValue;
         }).ToArray();
 
