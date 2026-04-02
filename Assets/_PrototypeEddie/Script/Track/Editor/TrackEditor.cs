@@ -85,32 +85,7 @@ public class TrackEditor : Editor
 
         DrawPathSpline();
 
-        for (int i = 0; i < _Component.CheckPoints.Length; i++)
-        {
-            var handlePos = _Component.GetCheckPointPosition(i);
-            Vector3 PointSize = _Component.CheckPoints[i].CollisionBoxSize;
-
-            Gizmos.color = Color.black;
-            string LabelName = $"CheckPoint:{i}";
-
-            // Select Button Mode
-            if (i != selectIndex && this.CurrentTool != TrackTool.Add)
-            {
-                Handles.color = Color.blue;
-                var pressed = Handles.Button(
-                    _Component.GetCheckPointPosition(i),
-                    Quaternion.identity,
-                    HandleUtility.GetHandleSize(handlePos) * 0.15f,
-                    1.2f,
-                    Handles.SphereHandleCap
-                    );
-                if (pressed)
-                {
-                    this.CurrentTool = TrackTool.Move;
-                    selectIndex = i;
-                }
-            }
-        }
+        _HandleSelection();
 
         switch (this.CurrentTool)
         {
@@ -186,7 +161,43 @@ public class TrackEditor : Editor
                 break;
         }
 
-        // Delete Func
+        _HandleEscape();
+        _HandleDelete();
+    }
+
+    private void _HandleSelection()
+    {
+        for (int i = 0; i < _Component.CheckPoints.Length; i++)
+        {
+            var handlePos = _Component.GetCheckPointPosition(i);
+            Vector3 PointSize = _Component.CheckPoints[i].CollisionBoxSize;
+
+            Gizmos.color = Color.black;
+            string LabelName = $"CheckPoint:{i}";
+
+            // Select Button Mode
+            if (i != selectIndex && this.CurrentTool != TrackTool.Add)
+            {
+                Handles.color = Color.blue;
+                var pressed = Handles.Button(
+                    _Component.GetCheckPointPosition(i),
+                    Quaternion.identity,
+                    HandleUtility.GetHandleSize(handlePos) * 0.15f,
+                    1.2f,
+                    Handles.SphereHandleCap
+                    );
+                if (pressed)
+                {
+                    this.CurrentTool = TrackTool.Move;
+                    selectIndex = i;
+                }
+            }
+        }
+    }
+    
+    private void _HandleDelete()
+    {
+        var currentEvent = Event.current;
         if (currentEvent.type == EventType.KeyDown && currentEvent.keyCode == KeyCode.Delete)
         {
             // Check if element is selected
@@ -196,16 +207,27 @@ public class TrackEditor : Editor
                 allPoints.RemoveAt(selectIndex);
                 _Component.CheckPoints = allPoints.ToArray();
                 GUIUtility.hotControl = 0;
-                currentEvent.Use();
+                
             }
-            
+
             // Keep selection within Array.
             if (selectIndex > _Component.CheckPoints.Length - 1)
             {
                 selectIndex = _Component.CheckPoints.Length - 1;
             }
-        }
 
+            currentEvent.Use();
+        }
+    }
+
+    private void _HandleEscape()
+    {
+        var currentEvent = Event.current;
+        if (currentEvent.type == EventType.KeyDown && currentEvent.keyCode == KeyCode.Escape)
+        {
+            this.selectIndex = -1;
+        }
+        currentEvent.Use();
     }
 
     private void DrawPathSpline()

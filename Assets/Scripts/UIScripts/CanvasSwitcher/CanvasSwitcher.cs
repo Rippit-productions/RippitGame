@@ -28,6 +28,7 @@ public class CanvasSwitcher : MonoBehaviour
         {
             GameObject selected = UnityEditor.Selection.activeGameObject;
             
+            
             if (selected != null
                 && selected.transform != transform
                 && selected.transform.IsChildOf(transform))

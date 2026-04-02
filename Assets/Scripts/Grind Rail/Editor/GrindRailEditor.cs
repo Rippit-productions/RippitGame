@@ -118,38 +118,9 @@ public class GrindRailEditor : Editor
         if (_Component == null) return;
         else if (_AutoRefresh) Refresh();
     }
-
-    private void OnSceneGUI()
-    {
-        if (_Component.PointSprite == null) return;
-        foreach(var spline in _Component.GetSplines())
-        {
-
-            for (int knotIndex = 0; knotIndex < spline.Count; knotIndex++)
-            {
-                var knot = spline[knotIndex];
-                var normalPosition = SplineUtility.ConvertIndexUnit(
-                    spline, knotIndex, 
-                    PathIndexUnit.Knot, PathIndexUnit.Normalized
-                    );
-
-                Vector3 knotTangent = SplineUtility.EvaluateTangent(spline, normalPosition);
-
-                Vector3 knotUpVector = Vector3.Cross(knotTangent, Vector3.back).normalized;
-
-                Handles.color = Color.red;
-                Vector3 LineFrom = (Vector3)knot.Position + _Component.transform.position;
-                Handles.DrawLine(LineFrom , LineFrom - (knotUpVector * _Component.PointSprite.bounds.extents.y * 1.25f));
-            }
-        }
-    }
-
     private void Refresh()
     {
-        /*
-         * Wish I could do this by foreach loop
-         * But it always leave left over objects.... :(
-         */
+
         while (_Component.transform.childCount > 0)
         {
             GameObject.DestroyImmediate(_Component.transform.GetChild(0).gameObject);
@@ -167,7 +138,6 @@ public class GrindRailEditor : Editor
             LineRenderComponent.material = _Component.Material;
             LineRenderComponent.startColor = _Component.Colour;
             LineRenderComponent.endColor = _Component.Colour;
-
 
             int segments = _Component.Resolution;
             List<Vector3> Points = new List<Vector3>();
@@ -211,5 +181,31 @@ public class GrindRailEditor : Editor
             }
         }
     }
+
+    private void OnSceneGUI()
+    {
+        if (_Component.PointSprite == null) return;
+        foreach(var spline in _Component.GetSplines())
+        {
+
+            for (int knotIndex = 0; knotIndex < spline.Count; knotIndex++)
+            {
+                var knot = spline[knotIndex];
+                var normalPosition = SplineUtility.ConvertIndexUnit(
+                    spline, knotIndex, 
+                    PathIndexUnit.Knot, PathIndexUnit.Normalized
+                    );
+
+                Vector3 knotTangent = SplineUtility.EvaluateTangent(spline, normalPosition);
+
+                Vector3 knotUpVector = Vector3.Cross(knotTangent, Vector3.back).normalized;
+
+                Handles.color = Color.red;
+                Vector3 LineFrom = (Vector3)knot.Position + _Component.transform.position;
+                Handles.DrawLine(LineFrom , LineFrom - (knotUpVector * _Component.PointSprite.bounds.extents.y * 1.25f));
+            }
+        }
+    }
+
 
 }
