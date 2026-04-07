@@ -1,6 +1,7 @@
 using Cinemachine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Camera))]
 [RequireComponent(typeof(CinemachineVirtualCamera))]
 [RequireComponent(typeof(CinemachineBrain))]
-
 public class PlayerCamera : MonoBehaviour
 {
     [Serializable]
@@ -80,6 +80,8 @@ public class PlayerCamera : MonoBehaviour
 
         var confine = this.AddComponent<CinemachineConfiner2D>();
         confine.m_BoundingShape2D = CameraBounds.Instance.Collider;
+
+        UpdateViewPorts();
     }
     
     void Awake()
@@ -113,5 +115,33 @@ public class PlayerCamera : MonoBehaviour
             newDistance,
             Mathf.Abs(_cinemachineTransposer.m_CameraDistance - newDistance)
             );
+    }
+
+
+    public static void UpdateViewPorts()
+    {
+        PlayerCamera[] cameras = PlayerCamera.All;
+
+        int count = cameras.Length;
+        if (count == 0) return;
+
+        // Determine grid size (rows x cols)
+        int cols = Mathf.CeilToInt(Mathf.Sqrt(count));
+        int rows = Mathf.CeilToInt((float)count / cols);
+
+        float width = 1.0f / cols;
+        float height = 1.0f / rows;
+
+        for (int i = 0; i < count; i++)
+        {
+            int col = i % cols;
+            int row = i / cols;
+
+            // Unity's viewport origin is bottom-left
+            float x = col * width;
+            float y = 1f - ((row + 1) * height);
+
+            cameras[i].CameraComponent.rect = new Rect(x, y, width, height);
+        }
     }
 }

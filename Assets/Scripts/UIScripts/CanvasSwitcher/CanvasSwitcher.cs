@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [ExecuteAlways]
 public class CanvasSwitcher : MonoBehaviour
@@ -9,6 +10,7 @@ public class CanvasSwitcher : MonoBehaviour
     [field:SerializeField]
     public int ActiveIndex;
 
+    public UnityEvent OnCanvasSwitch = new UnityEvent();
     private void Awake()
     {
         _Refresh();
