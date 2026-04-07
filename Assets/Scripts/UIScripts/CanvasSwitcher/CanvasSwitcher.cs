@@ -29,13 +29,17 @@ public class CanvasSwitcher : MonoBehaviour
         if (!Application.isPlaying) 
         {
             GameObject selected = UnityEditor.Selection.activeGameObject;
-            
-            
-            if (selected != null
-                && selected.transform != transform
-                && selected.transform.IsChildOf(transform))
+
+            if (selected != null && selected.transform != transform)
             {
-                ActiveIndex = selected.transform.GetSiblingIndex();
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    if (selected.transform.IsChildOf(transform.GetChild(i)) ||
+                        selected.transform == transform.GetChild(i))
+                    {
+                        ActiveIndex = i;
+                    }
+                }
             }
             else
             {

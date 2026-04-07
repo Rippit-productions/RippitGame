@@ -135,18 +135,6 @@ public class Skater : MonoBehaviour
 
         _InitSounds();
         OnSkaterSpawn.Invoke(this);
-
-        
-        var im = FindFirstObjectByType<PlayerInputManager>();
-        im.splitScreen = false;
-        if (Skater.All.Length > 1)
-        {
-            
-            im.splitScreen = true;
-        }
-        else {
-            im.splitScreen = false; 
-        }
     }
 
     private void _InitSounds()
@@ -412,7 +400,7 @@ public class Skater : MonoBehaviour
         if (!this._CurrentPlatform) return;
         var stickPoint = _CurrentPlatform.ClosestPoint(_RigidBody.position);
         var normal = Physics2D.Raycast(_RigidBody.position, (Vector2)stickPoint - _RigidBody.position, 1000.0f, GroundLayerMask).normal;
-        if (Vector3.Angle(_UpVector, normal) < 22.5f)
+        if (Vector3.Angle(_UpVector, normal) < 10.0f)
         {
             transform.position = (Vector2)stickPoint + (normal * _CirlceCollider.radius);
             _UpVector = normal;

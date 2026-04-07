@@ -16,6 +16,7 @@ public struct AudioSettings
 
     public float GetMusicVolume() => MusicVolume * MasterVolume;
     public float GetSFXVolume() => SFXVolume * MasterVolume;
+
 }
 
 
@@ -29,17 +30,28 @@ public class AudioManager
             _AudioType = Type;
         }
 
+        public Event(EventReference fmodEventRef, AudioType AudioType)
+        {
+            _FmodInstance = RuntimeManager.CreateInstance(fmodEventRef);
+            _AudioType = AudioType;
+        }
+
         ~Event()
         {
             _FmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             _FmodInstance.release();
         }
 
-
         private EventInstance _FmodInstance;
+
         public AudioType Type => _AudioType;
         private AudioType _AudioType;
 
+
+        public void SetParam(string ParamName, float Value)
+        {
+            _FmodInstance.setParameterByName(ParamName, Value,true);
+        }
 
         public void Play()
         {
@@ -108,15 +120,16 @@ public class AudioManager
             Debug.LogWarning("No FMOD Audio reference is NULL");
             return null;
         }
-        _Events.Add(CreateAudioInstance(audioEventReference,type));
-        _Events.Last().Play();
-        return _Events.Last();
+        var newEvent = new AudioManager.Event(audioEventReference, type);
+        newEvent.Play();
+        return newEvent;
     }
 
     public AudioManager.Event CreateAudioInstance(EventReference audioEventReference,AudioType type)
     {
-        EventInstance eventI = RuntimeManager.CreateInstance(audioEventReference);
-        return new AudioManager.Event(eventI,type);
+        var newEvent = new AudioManager.Event(audioEventReference, type);
+        _Events.Append(newEvent);
+        return newEvent;
     }
 
     public void RefreshAllAudioVolume()

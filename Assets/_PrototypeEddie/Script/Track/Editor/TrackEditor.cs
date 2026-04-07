@@ -226,8 +226,9 @@ public class TrackEditor : Editor
         if (currentEvent.type == EventType.KeyDown && currentEvent.keyCode == KeyCode.Escape)
         {
             this.selectIndex = -1;
+            currentEvent.Use();
         }
-        currentEvent.Use();
+        
     }
 
     private void DrawPathSpline()
