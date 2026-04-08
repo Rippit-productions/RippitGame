@@ -10,7 +10,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Track))]
 public class RaceGameMode : MonoBehaviour
 {
-
     public static RaceGameMode Instance => FindFirstObjectByType<RaceGameMode>();
     public enum RaceState
     {
@@ -23,6 +22,8 @@ public class RaceGameMode : MonoBehaviour
 
     public const string FMODParam_RaceEnd = "RaceEnd";
 
+
+    [Header("Events")]
     public UnityEvent OnPlayerFinish = new UnityEvent();
     public UnityEvent OnRaceFinish = new UnityEvent();
 
@@ -34,7 +35,8 @@ public class RaceGameMode : MonoBehaviour
     {
         public Skater SkaterComponent;
         public int Lap;
-        public int CheckPoint;
+        public int TargetCheckPoint;
+        public float Completion;
         public bool Finished;
         public float FinalTime;
 
@@ -58,7 +60,7 @@ public class RaceGameMode : MonoBehaviour
             {
                 SkaterComponent = newPlayer,
                 Lap = 0,
-                CheckPoint = 0,
+                TargetCheckPoint = 0,
                 Finished = false
             });
         };
@@ -76,37 +78,15 @@ public class RaceGameMode : MonoBehaviour
         {
             case RaceState.InProgress:
                 _timer += Time.deltaTime;
+                UpdateLeaderboard();
 
-                for (int i = 0; i < _Players.Count; i++)
+                if (IsRaceFinished())
                 {
-                    var playerPosition = _Players[i].SkaterComponent.transform.position;
-                    var checkPointIndex = _Players[i].CheckPoint;
-
-                    if (_track.PointOverlapsCheckPoint(playerPosition, checkPointIndex))
-                    {
-                        var info = _Players[i];
-                        info.CheckPoint += 1;
-                        if (info.CheckPoint >= _track.CheckPoints.Length)
-                        {
-                            info.Lap += 1;
-                            info.CheckPoint = 0;
-                        }
-
-                        if (info.Lap == _track.Laps)
-                        {
-                            info.Finished = true;
-                            info.FinalTime = _timer;
-                        }
-                        _Players[i] = info;
-
-                        if (IsRaceFinished())
-                        {
-                            Level.GetInstance().LevelMusic.SetParam(FMODParam_RaceEnd, 1.0f);
-                            this._State = RaceState.Finished;
-                        }
-                    }
+                    Level.GetInstance().LevelMusic.SetParam(FMODParam_RaceEnd, 1.0f);
+                    this._State = RaceState.Finished;
                 }
                 break;
+
             default:
                 break;
         }
@@ -126,19 +106,51 @@ public class RaceGameMode : MonoBehaviour
 
     public override string ToString() => GetTimeString();
 
+
+    private void UpdateLeaderboard()
+    {
+        for (int i = 0; i < _Players.Count; i++)
+        {
+            var playerPosition = _Players[i].SkaterComponent.transform.position;
+            var checkPointIndex = _Players[i].TargetCheckPoint;
+
+
+            var info = _Players[i];
+            if (_track.PointOverlapsCheckPoint(playerPosition, checkPointIndex))
+            {
+                info.TargetCheckPoint += 1;
+                if (info.TargetCheckPoint >= _track.CheckPoints.Length)
+                {
+                    info.Lap += 1;
+                    info.TargetCheckPoint = 0;
+                }
+
+                if (info.Lap == _track.Laps)
+                {
+                    info.Finished = true;
+                    info.FinalTime = _timer;
+                }
+            }
+            int TotalCheckPoint = _track.Laps * _track.CheckPoints.Length;
+            float ProgressValue = ((info.Lap * _track.CheckPoints.Length) + info.TargetCheckPoint);
+           
+            info.Completion = ProgressValue / TotalCheckPoint;
+            _Players[i] = info;
+        }
+
+    }
+
+
     public PlayerInfo[] GetLeaderboard()
     {
-
         var finishedPlayers = this._Players.Where(p => p.Finished == true).OrderBy(p => p.FinalTime);
-
         var unfinishedPlayers = this._Players.Where(p => p.Finished == false).OrderBy(playerInfo =>
         {
-            float PlayerValue = - (-playerInfo.Lap * _track.CheckPoints.Length) - playerInfo.CheckPoint;
-            var nextCheckPointPosition = _track.GetCheckPointPosition(playerInfo.CheckPoint);
-            PlayerValue -= 1 / (playerInfo.SkaterComponent.transform.position - nextCheckPointPosition).magnitude;
+            float PlayerValue = 0;
+            int CheckPointCount = _track.CheckPoints.Length * _track.Laps;
+            PlayerValue = CheckPointCount - ((-playerInfo.Lap * CheckPointCount) + playerInfo.TargetCheckPoint);
             return PlayerValue;
-        }).ToArray();
-
+        }).Reverse().ToArray();
 
         var leaderboard = new List<PlayerInfo>();
         leaderboard.AddRange(finishedPlayers);
@@ -147,14 +159,13 @@ public class RaceGameMode : MonoBehaviour
 
     }
 
-
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         foreach (var player in _Players) 
         {
             var playerPos = player.SkaterComponent.transform.position;
-            var targetCheckPoint = _track.GetCheckPointPosition(player.CheckPoint);
+            var targetCheckPoint = _track.GetCheckPointPosition(player.TargetCheckPoint);
 
             var DirectionVector = (targetCheckPoint - playerPos).normalized;
 
@@ -182,14 +193,24 @@ public class RaceGameMode : MonoBehaviour
 
             var playerName = leaderboard[i].SkaterComponent.gameObject.name;
             var lapNum = leaderboard[i].Lap;
-            var CheckPointNum = leaderboard[i].CheckPoint;
+            var CheckPointNum = leaderboard[i].TargetCheckPoint;
 
-            string PlayerString = $"{i + 1}. {playerName} | Lap {lapNum} | CheckPoint {CheckPointNum}";
+            string PlayerString = $"{i + 1}. {playerName} | Lap {lapNum} | CheckPoint {CheckPointNum}|  {leaderboard[i].Completion.ToString().Truncate(4)}%";
+
             if (leaderboard[i].Finished)
             {
-                PlayerString = $"{i + 1}.{playerName} | {leaderboard[i].GetTimeString()}";
+                PlayerString = $"{i + 1}.{playerName} | {leaderboard[i].GetTimeString()} ";
             }
             GUILayout.Label(PlayerString);
+        }
+
+        if (GUILayout.Button("Add Player"))
+        {
+            if (Skater.All.Length == 0) return;
+
+            var ToCopy = Skater.All.First();
+            var newPlayer = GameObject.Instantiate(ToCopy.gameObject);
+            newPlayer.transform.position = ToCopy.transform.position + Vector3.up * 1.0f;
         }
 
         GUI.DragWindow(new Rect(0, 0, float.MaxValue, float.MaxValue));

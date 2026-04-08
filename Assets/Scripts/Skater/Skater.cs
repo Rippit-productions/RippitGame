@@ -554,12 +554,6 @@ public class Skater : MonoBehaviour
         GUILayout.Label($"Current Platform: {PlatformName}");
         GUILayout.Label($"PlayerIndex = {this.SkaterIndex + 1}");
 
-        if (GUILayout.Button("Clone Player"))
-        {
-            var newObj = GameObject.Instantiate(this.gameObject);
-            newObj.transform.position = this.transform.position + Vector3.up * 2.0f;
-        }
-
         GUI.DragWindow(new Rect(0,0,float.MaxValue, float.MaxValue));
         
     }
