@@ -1,15 +1,13 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 
 [RequireComponent(typeof(Camera))]
-[RequireComponent(typeof(CinemachineVirtualCamera))]
-[RequireComponent(typeof(CinemachineBrain))]
+[RequireComponent(typeof(CinemachineCamera))]
 public class PlayerCamera : MonoBehaviour
 {
     [Serializable]
@@ -26,10 +24,12 @@ public class PlayerCamera : MonoBehaviour
 
     private Camera _CameraComponent;
     public Camera CameraComponent => _CameraComponent;
-    private CinemachineVirtualCamera _cinemachineVirtualCamera;
-    private CinemachineFramingTransposer _cinemachineTransposer;
+    private CinemachineCamera _cinemachineVirtualCamera;
+    private CinemachinePositionComposer _cinemachineTransposer;
     protected Skater linkedCharacter;
 
+
+    private CinemachineBrain _Brain;
 
     public static PlayerCamera[] All => FindObjectsByType<PlayerCamera>(FindObjectsInactive.Exclude,FindObjectsSortMode.InstanceID);
 
@@ -75,11 +75,13 @@ public class PlayerCamera : MonoBehaviour
     private void _Init()
     {
         _CameraComponent = GetComponent<Camera>();
-        _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
-        _cinemachineTransposer = _cinemachineVirtualCamera.AddCinemachineComponent<CinemachineFramingTransposer>();
+        _cinemachineVirtualCamera = GetComponent<CinemachineCamera>();
+        _cinemachineTransposer = _cinemachineVirtualCamera.AddComponent<CinemachinePositionComposer>();
 
+
+        _Brain = new GameObject().AddComponent<CinemachineBrain>();
         var confine = this.AddComponent<CinemachineConfiner2D>();
-        confine.m_BoundingShape2D = CameraBounds.Instance.Collider;
+        confine.BoundingShape2D = CameraBounds.Instance.Collider;
 
         UpdateViewPorts();
     }
@@ -97,9 +99,16 @@ public class PlayerCamera : MonoBehaviour
 
         _cinemachineVirtualCamera.Follow = this.linkedCharacter.transform;
         this.CameraSetup = this.linkedCharacter.CameraSetup;
-        this._cinemachineTransposer.m_LookaheadSmoothing = this.CameraSetup.LookAheadSmoothing;
-        this._cinemachineTransposer.m_LookaheadTime = this.CameraSetup.LookAheadTime;
-        this._cinemachineTransposer.m_LookaheadIgnoreY = true;
+        this._cinemachineTransposer.Lookahead.Enabled = true;
+        this._cinemachineTransposer.Lookahead.Smoothing = this.CameraSetup.LookAheadSmoothing;
+        this._cinemachineTransposer.Lookahead.Time = this.CameraSetup.LookAheadTime;
+        this._cinemachineTransposer.Lookahead.IgnoreY = true;
+
+        int index = 1 << linkedCharacter.SkaterIndex + 1;
+        this._cinemachineVirtualCamera.OutputChannel = (OutputChannels)index;
+
+        _Brain.ChannelMask = (OutputChannels) index;
+        _Brain.UpdateMethod = CinemachineBrain.UpdateMethods.SmartUpdate;
         _UpdatePosition();
     }
 
@@ -109,11 +118,11 @@ public class PlayerCamera : MonoBehaviour
         float offset = this.CameraSetup.DistanceCurve.Evaluate(linkedCharacter.GetNormalisedSpeed()) * this.CameraSetup.zOffset;
         float newDistance = CameraSetup.minZDistance +  offset;
 
-        if (newDistance < _cinemachineTransposer.m_CameraDistance && this.linkedCharacter.State != Skater.SkaterState.Grounded) return;
-        _cinemachineTransposer.m_CameraDistance = Mathf.Lerp(
-            _cinemachineTransposer.m_CameraDistance ,
+        if (newDistance < _cinemachineTransposer.CameraDistance && this.linkedCharacter.State != Skater.SkaterState.Grounded) return;
+        _cinemachineTransposer.CameraDistance = Mathf.Lerp(
+            _cinemachineTransposer.CameraDistance,
             newDistance,
-            Mathf.Abs(_cinemachineTransposer.m_CameraDistance - newDistance)
+            Mathf.Abs(_cinemachineTransposer.CameraDistance - newDistance)
             );
     }
 

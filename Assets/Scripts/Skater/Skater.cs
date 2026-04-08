@@ -552,7 +552,7 @@ public class Skater : MonoBehaviour
 
         string PlatformName = this._CurrentPlatform ? this._CurrentPlatform.gameObject.name : "None";
         GUILayout.Label($"Current Platform: {PlatformName}");
-        GUILayout.Label($"PlayerIndex = {this.SkaterIndex}");
+        GUILayout.Label($"PlayerIndex = {this.SkaterIndex + 1}");
 
         if (GUILayout.Button("Clone Player"))
         {

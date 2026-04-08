@@ -8,9 +8,8 @@ public class CanvasSwitcher : MonoBehaviour
 {
     // If you really wanted to use fields this is the way
     [field:SerializeField]
-    public int ActiveIndex;
-
-    public UnityEvent OnCanvasSwitch = new UnityEvent();
+    public int _ActiveIndex;
+    public int DefaultIndex = 0;
     private void Awake()
     {
         _Refresh();
@@ -21,7 +20,7 @@ public class CanvasSwitcher : MonoBehaviour
         _Refresh();
     }
 
-    private void _Refresh()
+    public void _Refresh()
     {
 
 #if UNITY_EDITOR
@@ -37,13 +36,13 @@ public class CanvasSwitcher : MonoBehaviour
                     if (selected.transform.IsChildOf(transform.GetChild(i)) ||
                         selected.transform == transform.GetChild(i))
                     {
-                        ActiveIndex = i;
+                        _ActiveIndex = i;
                     }
                 }
             }
             else
             {
-                ActiveIndex = 0;
+                _ActiveIndex = this.DefaultIndex;
             }
         }
 #endif
@@ -51,15 +50,15 @@ public class CanvasSwitcher : MonoBehaviour
         // Toggle 
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(i == ActiveIndex);
+            transform.GetChild(i).gameObject.SetActive(i == _ActiveIndex);
         }
     }
 
     
     public void SetActiveIndex(int newIndex)
     {
-        ActiveIndex = newIndex;
-        Debug.Log("ActiveIndex: " + ActiveIndex);
+        //if (newIndex < 0 || newIndex >= transform.childCount) return;
+        _ActiveIndex = newIndex;
         _Refresh();
     }
 
