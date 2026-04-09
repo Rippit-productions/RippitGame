@@ -1,5 +1,9 @@
+using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Splines;
+
 
 public class Track : MonoBehaviour
 {
@@ -23,6 +27,36 @@ public class Track : MonoBehaviour
 
         return CheckPointBounds.Contains(Position);
     }
+
+    public Spline GetTrackSpline()
+    {
+        List<BezierKnot> Knots = new List<BezierKnot>();
+        for (int i = 0; i < CheckPoints.Length; i++) 
+        {
+            var position = CheckPoints[i].LocalPosition;
+            var newKnot = new BezierKnot((float3)position);
+            Knots.Add(newKnot);
+        }
+        return new Spline(Knots.ToArray(), false);
+    }
+
+    public (Vector3 Position,float NPosition) GetPointOnSpline(Vector3 Position)
+    {
+        var localPosition = Position - transform.position;
+
+        float3 resultPos;
+        float resultNPos;
+        SplineUtility.GetNearestPoint(
+            GetTrackSpline(),
+            Position,
+            out resultPos,
+            out resultNPos
+            );
+
+        return (resultPos, resultNPos);
+    }
+
+    
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()

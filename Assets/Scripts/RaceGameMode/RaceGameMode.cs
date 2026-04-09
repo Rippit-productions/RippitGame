@@ -131,32 +131,27 @@ public class RaceGameMode : MonoBehaviour
                     info.FinalTime = _timer;
                 }
             }
-            int TotalCheckPoint = _track.Laps * _track.CheckPoints.Length;
-            float ProgressValue = ((info.Lap * _track.CheckPoints.Length) + info.TargetCheckPoint);
-           
-            info.Completion = ProgressValue / TotalCheckPoint;
+            float ProgressValue = info.Lap;
+            ProgressValue += _track.GetPointOnSpline(
+                info.SkaterComponent.transform.position
+                ).NPosition;
+            info.Completion = ProgressValue / _track.Laps;
             _Players[i] = info;
         }
 
     }
 
-
     public PlayerInfo[] GetLeaderboard()
     {
         var finishedPlayers = this._Players.Where(p => p.Finished == true).OrderBy(p => p.FinalTime);
-        var unfinishedPlayers = this._Players.Where(p => p.Finished == false).OrderBy(playerInfo =>
-        {
-            float PlayerValue = 0;
-            int CheckPointCount = _track.CheckPoints.Length * _track.Laps;
-            PlayerValue = CheckPointCount - ((-playerInfo.Lap * CheckPointCount) + playerInfo.TargetCheckPoint);
-            return PlayerValue;
-        }).Reverse().ToArray();
+        var unfinishedPlayers = this._Players.Where(p => p.Finished == false)
+            .OrderBy(playerInfo => playerInfo.Completion)
+            .Reverse().ToArray();
 
         var leaderboard = new List<PlayerInfo>();
         leaderboard.AddRange(finishedPlayers);
         leaderboard.AddRange(unfinishedPlayers);
         return leaderboard.ToArray();
-
     }
 
 #if UNITY_EDITOR
