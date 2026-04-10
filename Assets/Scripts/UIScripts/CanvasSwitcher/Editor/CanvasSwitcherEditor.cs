@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,10 +14,24 @@ public class CanvasSwitcherEditor : Editor
     public DropdownField DefaultIndexDropDown;
     CanvasSwitcher _Component;
 
+
+    private static bool _InPrefabMode;
+    private static PrefabStage _PrefabStage;
+
     static CanvasSwitcherEditor()
     {
-        UnityEditor.Selection.selectionChanged += RefreshAll;
+        Selection.selectionChanged += _EditorRefreshAll;
         EditorApplication.hierarchyChanged += CheckValues;
+        PrefabStage.prefabStageOpened += (stage) =>
+        {
+            _InPrefabMode = true;
+            _PrefabStage = stage;
+        };
+        PrefabStage.prefabStageClosing += (stage) =>
+        {
+            _InPrefabMode = false;
+            _PrefabStage = null;
+        };
     }
 
     public override UnityEngine.UIElements.VisualElement CreateInspectorGUI()
@@ -37,7 +52,6 @@ public class CanvasSwitcherEditor : Editor
         {
             int newIndex = _Component.transform.Find(e.newValue).GetSiblingIndex();
             _Component.DefaultIndex = newIndex;
-            RefreshAll();
         });
         return root;
     }
@@ -45,39 +59,6 @@ public class CanvasSwitcherEditor : Editor
     private void OnEnable()
     {
         _Component = (CanvasSwitcher)target;
-        Selection.selectionChanged += () => { };
-
-        
-    }
-
-    /// <summary>
-    /// Refresh All Canvas Switcher in current scene
-    /// </summary>
-    private static void RefreshAll()
-    {
-        var AllComponents = FindObjectsByType<CanvasSwitcher>(FindObjectsSortMode.InstanceID);
-        if (AllComponents.Length == 0) return;
-        GameObject selected = UnityEditor.Selection.activeGameObject;
-        foreach (var Component in AllComponents)
-        {
-            if (selected != null 
-                && selected.transform.IsChildOf(Component.transform)
-                && selected.transform != Component.transform)
-            {
-                for (int i = 0; i < Component.transform.childCount; i++)
-                {
-                    if (selected.transform.IsChildOf(Component.transform.GetChild(i)) ||
-                        selected.transform == Component.transform.GetChild(i))
-                    {
-                        Component.SetActiveIndex(i);
-                    }
-                }
-            }
-            else
-            {
-                Component.SetActiveIndex(Component.DefaultIndex);
-            }
-        }
     }
 
     private static void CheckValues()
@@ -94,4 +75,49 @@ public class CanvasSwitcherEditor : Editor
             }
         }
     }
+
+
+    private static void _EditorRefresh(CanvasSwitcher Target)
+    {
+
+        var selected = Selection.activeGameObject.transform;
+        for (int i = 0; i < Target.transform.childCount; i++)
+        {
+            var indexTransform = Target.transform.GetChild(i); 
+            if (
+                selected == indexTransform || 
+                selected.IsChildOf(indexTransform))
+            {
+                SceneVisibilityManager.instance.Show(indexTransform.gameObject, true);
+            }
+            else
+            {
+                SceneVisibilityManager.instance.Hide(indexTransform.gameObject, true);
+            }
+        }
+    }
+
+    private static void _EditorRefreshAll()
+    {
+        GameObject[] rootObjs;
+
+        if (_InPrefabMode)
+        {
+            rootObjs = _PrefabStage.scene.GetRootGameObjects();
+        }
+        else {
+            rootObjs = EditorSceneManager.GetActiveScene().GetRootGameObjects();
+        }
+
+
+        foreach (var obj in rootObjs)
+        {
+            CanvasSwitcher[] components = obj.GetComponentsInChildren<CanvasSwitcher>();
+            foreach (var component in components)
+            {
+                _EditorRefresh(component);
+            }
+        }
+    }
+
 }

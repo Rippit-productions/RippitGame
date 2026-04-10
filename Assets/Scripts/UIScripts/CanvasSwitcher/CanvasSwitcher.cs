@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CanvasSwitcher : MonoBehaviour
@@ -9,7 +10,7 @@ public class CanvasSwitcher : MonoBehaviour
     public int ActiveIndex
     {
         get { return _ActiveIndex; }
-        set { SetActiveIndex(value); }
+        set { _ActiveIndex = value; }
     }
     public int DefaultIndex = 0;
 
@@ -59,5 +60,19 @@ public class CanvasSwitcher : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public CanvasSwitcher[] GetParentSwitchers()
+    {
+        return this.GetComponentsInParent<CanvasSwitcher>().Where(s =>
+            s.gameObject != this.gameObject
+        ).ToArray();
+    }
+
+    public CanvasSwitcher[] GetChildSwitchers()
+    {
+        return this.GetComponentsInChildren<CanvasSwitcher>().Where(s =>
+            s.gameObject != this.gameObject
+        ).ToArray();
     }
 }
