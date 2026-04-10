@@ -1,4 +1,4 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,10 +7,7 @@ using UnityEngine.InputSystem;
 
 
 [RequireComponent(typeof(Camera))]
-[RequireComponent(typeof(CinemachineVirtualCamera))]
-[RequireComponent(typeof(CinemachineBrain))]
-
-
+[RequireComponent(typeof(CinemachineCamera))]
 public class PlayerCamera : MonoBehaviour
 {
     [Serializable]
@@ -26,10 +23,13 @@ public class PlayerCamera : MonoBehaviour
     private PlayerCamera.Setup CameraSetup;
 
     private Camera _CameraComponent;
-    private CinemachineVirtualCamera _cinemachineVirtualCamera;
-    private CinemachineFramingTransposer _cinemachineTransposer;
+    public Camera CameraComponent => _CameraComponent;
+    private CinemachineCamera _cinemachineVirtualCamera;
+    private CinemachinePositionComposer _cinemachineTransposer;
     protected Skater linkedCharacter;
 
+
+    private CinemachineBrain _Brain;
 
     public static PlayerCamera[] All => FindObjectsByType<PlayerCamera>(FindObjectsInactive.Exclude,FindObjectsSortMode.InstanceID);
 
@@ -55,21 +55,18 @@ public class PlayerCamera : MonoBehaviour
             existingCamera._cinemachineVirtualCamera.Follow = null;
             existingCamera.linkedCharacter = null;
         }
-
         this.linkedCharacter = Player;
-        _cinemachineVirtualCamera.Follow = Player.transform;
+        var inputCompo = linkedCharacter.GetComponent<PlayerInput>();
+        inputCompo.camera = this._CameraComponent;
     }
-    
+
     public PlayerCamera GetLinkedCamera(Skater Player)
     {
-        foreach (var playerCharacter in Skater.All)
+        foreach (var camera in PlayerCamera.All)
         {
-            foreach (var camera in PlayerCamera.All)
+            if (camera.linkedCharacter == Player)
             {
-                if (camera.linkedCharacter == playerCharacter)
-                {
-                    return camera;
-                }
+                return camera;
             }
         }
         return null;
@@ -78,11 +75,15 @@ public class PlayerCamera : MonoBehaviour
     private void _Init()
     {
         _CameraComponent = GetComponent<Camera>();
-        _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
-        _cinemachineTransposer = _cinemachineVirtualCamera.AddCinemachineComponent<CinemachineFramingTransposer>();
+        _cinemachineVirtualCamera = GetComponent<CinemachineCamera>();
+        _cinemachineTransposer = _cinemachineVirtualCamera.AddComponent<CinemachinePositionComposer>();
 
+
+        _Brain = new GameObject().AddComponent<CinemachineBrain>();
         var confine = this.AddComponent<CinemachineConfiner2D>();
-        confine.m_BoundingShape2D = CameraBounds.Instance.Collider;
+        confine.BoundingShape2D = CameraBounds.Instance.Collider;
+
+        UpdateViewPorts();
     }
     
     void Awake()
@@ -96,10 +97,18 @@ public class PlayerCamera : MonoBehaviour
         if (_cinemachineVirtualCamera == null) return;
         this.gameObject.name = $"Player Camera: {this.linkedCharacter.name}";
 
+        _cinemachineVirtualCamera.Follow = this.linkedCharacter.transform;
         this.CameraSetup = this.linkedCharacter.CameraSetup;
-        this._cinemachineTransposer.m_LookaheadSmoothing = this.CameraSetup.LookAheadSmoothing;
-        this._cinemachineTransposer.m_LookaheadTime = this.CameraSetup.LookAheadTime;
-        this._cinemachineTransposer.m_LookaheadIgnoreY = true;
+        this._cinemachineTransposer.Lookahead.Enabled = true;
+        this._cinemachineTransposer.Lookahead.Smoothing = this.CameraSetup.LookAheadSmoothing;
+        this._cinemachineTransposer.Lookahead.Time = this.CameraSetup.LookAheadTime;
+        this._cinemachineTransposer.Lookahead.IgnoreY = true;
+
+        int index = 1 << linkedCharacter.SkaterIndex + 1;
+        this._cinemachineVirtualCamera.OutputChannel = (OutputChannels)index;
+
+        _Brain.ChannelMask = (OutputChannels) index;
+        _Brain.UpdateMethod = CinemachineBrain.UpdateMethods.SmartUpdate;
         _UpdatePosition();
     }
 
@@ -109,11 +118,39 @@ public class PlayerCamera : MonoBehaviour
         float offset = this.CameraSetup.DistanceCurve.Evaluate(linkedCharacter.GetNormalisedSpeed()) * this.CameraSetup.zOffset;
         float newDistance = CameraSetup.minZDistance +  offset;
 
-        if (newDistance < _cinemachineTransposer.m_CameraDistance && this.linkedCharacter.State != Skater.SkaterState.Grounded) return;
-        _cinemachineTransposer.m_CameraDistance = Mathf.Lerp(
-            _cinemachineTransposer.m_CameraDistance ,
+        if (newDistance < _cinemachineTransposer.CameraDistance && this.linkedCharacter.State != Skater.SkaterState.Grounded) return;
+        _cinemachineTransposer.CameraDistance = Mathf.Lerp(
+            _cinemachineTransposer.CameraDistance,
             newDistance,
-            Mathf.Abs(_cinemachineTransposer.m_CameraDistance - newDistance)
+            Mathf.Abs(_cinemachineTransposer.CameraDistance - newDistance)
             );
+    }
+
+
+    public static void UpdateViewPorts()
+    {
+        PlayerCamera[] cameras = PlayerCamera.All;
+
+        int count = cameras.Length;
+        if (count == 0) return;
+
+        // Determine grid size (rows x cols)
+        int cols = Mathf.CeilToInt(Mathf.Sqrt(count));
+        int rows = Mathf.CeilToInt((float)count / cols);
+
+        float width = 1.0f / cols;
+        float height = 1.0f / rows;
+
+        for (int i = 0; i < count; i++)
+        {
+            int col = i % cols;
+            int row = i / cols;
+
+            // Unity's viewport origin is bottom-left
+            float x = col * width;
+            float y = 1.0f - ((row + 1) * height);
+
+            cameras[i].CameraComponent.rect = new Rect(x, y, width, height);
+        }
     }
 }

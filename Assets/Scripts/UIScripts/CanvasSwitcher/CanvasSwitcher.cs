@@ -1,61 +1,45 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-[ExecuteAlways]
 public class CanvasSwitcher : MonoBehaviour
 {
-    // If you really wanted to use fields this is the way
-    [field:SerializeField]
-    public int ActiveIndex;
+    private int _ActiveIndex;
+    public int ActiveIndex
+    {
+        get { return _ActiveIndex; }
+        set { _ActiveIndex = value; }
+    }
+    public int DefaultIndex = 0;
 
+    public Action OnCanvasSwitch = () => { };
     private void Awake()
     {
-        _Refresh();
-    }
-    
-    private void Update()
-    {
-        _Refresh();
+        SetActiveIndex(DefaultIndex);
+        Refresh();
     }
 
-    private void _Refresh()
+    public void Refresh()
     {
-
-#if UNITY_EDITOR
-        // Can't referance editor in game builds
-        if (!Application.isPlaying) 
-        {
-            GameObject selected = UnityEditor.Selection.activeGameObject;
-            
-            if (selected != null
-                && selected.transform != transform
-                && selected.transform.IsChildOf(transform))
-            {
-                ActiveIndex = selected.transform.GetSiblingIndex();
-            }
-            else
-            {
-                ActiveIndex = 0;
-            }
-        }
-#endif
-
-        // Toggle 
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(i == ActiveIndex);
+            transform.GetChild(i).gameObject.SetActive(i == _ActiveIndex);
         }
     }
-
     
     public void SetActiveIndex(int newIndex)
     {
-        ActiveIndex = newIndex;
-        Debug.Log("ActiveIndex: " + ActiveIndex);
-        _Refresh();
+        if (transform.childCount == 0) return;
+        else if (newIndex < 0 || newIndex >= transform.childCount) return;
+        else if (_ActiveIndex != newIndex)
+        {
+            OnCanvasSwitch.Invoke();
+            _ActiveIndex = newIndex;
+            Refresh();
+        }
     }
-
 
     /// <summary>
     /// Set Canvas layer to show target Child Object.
@@ -64,14 +48,31 @@ public class CanvasSwitcher : MonoBehaviour
     /// <param name="targetObj">The Child Object to Show</param>
     public void SwitchToObject(GameObject targetObj)
     {
-        if (targetObj.transform.IsChildOf(this.gameObject.transform))
+        if (targetObj == null) return;
+        var targetTransform = targetObj.transform; 
+
+        for (int i = 0; i < transform.childCount;i++)
         {
-            SetActiveIndex(this.transform.GetSiblingIndex());
+            var layerTransform = transform.GetChild(i).transform;
+            if (layerTransform == targetTransform || targetTransform.IsChildOf(layerTransform))
+            {
+                SetActiveIndex(i);
+                break;
+            }
         }
-        // Target Object is not child of Switcher. Do nothing.
-        else
-        {
-            return;
-        }
+    }
+
+    public CanvasSwitcher[] GetParentSwitchers()
+    {
+        return this.GetComponentsInParent<CanvasSwitcher>().Where(s =>
+            s.gameObject != this.gameObject
+        ).ToArray();
+    }
+
+    public CanvasSwitcher[] GetChildSwitchers()
+    {
+        return this.GetComponentsInChildren<CanvasSwitcher>().Where(s =>
+            s.gameObject != this.gameObject
+        ).ToArray();
     }
 }

@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEditor;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-
+using Unity.VisualScripting;
 
 public class SkateTrick
 {
+
     public SkateTrick() { 
     }
     public SkateTrick(string TrickName, float Score)
@@ -41,6 +41,9 @@ public struct GrindAction
 public class Skater : MonoBehaviour
 {
     public static Skater[] All => FindObjectsByType<Skater>(FindObjectsSortMode.InstanceID);
+    public static Action<Skater> OnSkaterSpawn = (Skater) => { };
+
+    public int SkaterIndex => GetComponent<PlayerInput>().playerIndex;
 
     public enum SkaterState
     {
@@ -128,9 +131,10 @@ public class Skater : MonoBehaviour
         _AnimatorComp = GetComponentInChildren<Animator>(); 
         playerController = GetComponent<SkateController>();
 
-        PlayerCamera.CreateCamera(this);
+        var newCamera = PlayerCamera.CreateCamera(this);
 
         _InitSounds();
+        OnSkaterSpawn.Invoke(this);
     }
 
     private void _InitSounds()
@@ -396,7 +400,7 @@ public class Skater : MonoBehaviour
         if (!this._CurrentPlatform) return;
         var stickPoint = _CurrentPlatform.ClosestPoint(_RigidBody.position);
         var normal = Physics2D.Raycast(_RigidBody.position, (Vector2)stickPoint - _RigidBody.position, 1000.0f, GroundLayerMask).normal;
-        if (Vector3.Angle(_UpVector, normal) < 22.5f)
+        if (Vector3.Angle(_UpVector, normal) < 10.0f)
         {
             transform.position = (Vector2)stickPoint + (normal * _CirlceCollider.radius);
             _UpVector = normal;
@@ -493,14 +497,14 @@ public class Skater : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + (GetForwardMoveVector() * GetBounds().size.magnitude)
+            transform.position + GetForwardMoveVector() * 1.2f
             );
 
         //Up Vector 
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.cyan;
         Gizmos.DrawLine(
             transform.position,
-            transform.position + (_UpVector * GetBounds().size.magnitude)
+            transform.position + _UpVector * 1.2f
          );
 
         // Floor Ray
@@ -533,10 +537,11 @@ public class Skater : MonoBehaviour
         }
     }
 
+    private int GuiID = Guid.NewGuid().GetHashCode();
     private Rect _GuiRect = new Rect(20, 20, 300, 200);
     void OnGUI()
     {
-        _GuiRect = GUILayout.Window(0, _GuiRect, _DrawGUIWindow, $"Skate Player - {this.gameObject.name}");
+        _GuiRect = GUILayout.Window(GuiID, _GuiRect, _DrawGUIWindow, $"Skate Player - {this.gameObject.name}");
     }
     void _DrawGUIWindow(int WindowID)
     {
@@ -547,7 +552,10 @@ public class Skater : MonoBehaviour
 
         string PlatformName = this._CurrentPlatform ? this._CurrentPlatform.gameObject.name : "None";
         GUILayout.Label($"Current Platform: {PlatformName}");
+        GUILayout.Label($"PlayerIndex = {this.SkaterIndex + 1}");
+
         GUI.DragWindow(new Rect(0,0,float.MaxValue, float.MaxValue));
+        
     }
 #endif
 }

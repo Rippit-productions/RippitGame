@@ -1,9 +1,9 @@
+using NAudio.CoreAudioApi;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEditor.Splines;
 using UnityEditor.UIElements;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.UIElements;
@@ -15,7 +15,8 @@ public class GrindRailEditor : Editor
 
     private GrindRail _Component;
     private static bool _AutoRefresh = true;
-    private static LayerMask _GroundCastMask;
+
+    public static string EDITORPREF_AutoRefresh = "GrindRail_AutoRefresh";
 
     private void OnEnable()
     {
@@ -23,11 +24,18 @@ public class GrindRailEditor : Editor
         EditorSplineUtility.AfterSplineWasModified += OnSplineChange;
     }
 
-    private void OnDisable()
+    [MenuItem("GameObject/Rails/Add New")]
+    public static void CreateNewGrindRail()
     {
-        EditorSplineUtility.AfterSplineWasModified -= OnSplineChange;
-    }
+        var newObj = new GameObject("Grind Rail");
+        newObj.AddComponent<GrindRail>();
+        if (Selection.activeGameObject != null)
+        {
+            newObj.transform.SetParent(Selection.activeGameObject.transform);
+        }
 
+        Selection.activeGameObject = newObj;
+    }
 
     public override VisualElement CreateInspectorGUI()
     {
@@ -41,7 +49,6 @@ public class GrindRailEditor : Editor
             _Component.Width = (float)eventInfo.newValue;
             float minWidth = 0.05f;
             if (_Component.Width <= minWidth) _Component.Width = minWidth;
-            WidthField.value = _Component.Width;
             Refresh();
         });
 
@@ -50,9 +57,8 @@ public class GrindRailEditor : Editor
         ResolutionField.RegisterValueChangedCallback((eventInfo) =>
         {
             _Component.Resolution = eventInfo.newValue;
-            int minResolution = 10;
+            int minResolution = 2;
             if (_Component.Resolution <= minResolution) _Component.Resolution = minResolution;
-            ResolutionField.value = _Component.Resolution;
             Refresh();
         });
 
@@ -85,19 +91,17 @@ public class GrindRailEditor : Editor
 
 
         LayerMaskField layerMaskField = (LayerMaskField)root.Q("GroundLayerMask");
-        layerMaskField.value = _GroundCastMask;
         layerMaskField.RegisterValueChangedCallback((eventInfo) =>
         {
-            _GroundCastMask = eventInfo.newValue;
             Refresh();
         });
 
         Toggle AutoRefreshToggle = (Toggle)root.Q("AutoRefresh");
-        AutoRefreshToggle.value = _AutoRefresh;
+        AutoRefreshToggle.value = EditorPrefs.GetBool(EDITORPREF_AutoRefresh,true);
         AutoRefreshToggle.RegisterValueChangedCallback((eventInfo) =>
         {
             _AutoRefresh = eventInfo.newValue;
-            
+            EditorPrefs.SetBool(EDITORPREF_AutoRefresh, eventInfo.newValue);
         });
 
         Button GenerateButton = (Button)root.Q("GenerateButton");
@@ -114,11 +118,73 @@ public class GrindRailEditor : Editor
         if (_Component == null) return;
         else if (_AutoRefresh) Refresh();
     }
+    private void Refresh()
+    {
+
+        while (_Component.transform.childCount > 0)
+        {
+            GameObject.DestroyImmediate(_Component.transform.GetChild(0).gameObject);
+        }
+
+        foreach (var spline in _Component.GetSplines())
+        {
+            var newLineRenderObject = new GameObject("GrindRail LineRenderer");
+            newLineRenderObject.transform.SetParent(_Component.transform);
+            newLineRenderObject.transform.localPosition = Vector3.back * 0.1f;
+            
+            var LineRenderComponent = newLineRenderObject.AddComponent<LineRenderer>();
+            LineRenderComponent.startWidth = _Component.Width;
+            LineRenderComponent.endWidth = _Component.Width;
+            LineRenderComponent.material = _Component.Material;
+            LineRenderComponent.startColor = _Component.Colour;
+            LineRenderComponent.endColor = _Component.Colour;
+
+            int segments = _Component.Resolution;
+            List<Vector3> Points = new List<Vector3>();
+            for (int i = 0; i <= segments; i++)
+            {
+                Vector3 pointPosition = SplineUtility.EvaluatePosition(spline, (float)i/segments);
+                Points.Add(pointPosition);
+            }
+            LineRenderComponent.positionCount = Points.Count;
+            LineRenderComponent.SetPositions(Points.ToArray());
+
+            for (int knotIndex = 0 ;knotIndex < spline.Count; knotIndex++)
+            {
+                var knot = spline[knotIndex];
+                float knotNPosition = SplineUtility.ConvertIndexUnit(spline, knotIndex, PathIndexUnit.Knot, PathIndexUnit.Normalized);
+                Vector3 knotTangent = SplineUtility.EvaluateTangent(spline, knotNPosition);
+                Vector3 knotUpVector = Vector3.Cross(knotTangent , Vector3.back).normalized;
+                Vector3 knotWorldPosition = _Component.transform.position + (Vector3)knot.Position;
+
+                var newSpriteObj = new GameObject("GrindRail Sprite Pole");
+                
+                var spriteRenderer = newSpriteObj.AddComponent<SpriteRenderer>();
+                spriteRenderer.sprite = _Component.PointSprite;
+                spriteRenderer.sortingOrder = -10;
+                newSpriteObj.transform.SetParent(_Component.transform);
+                newSpriteObj.transform.localPosition = knot.Position;
+                newSpriteObj.transform.rotation = Quaternion.LookRotation( Vector3.forward, knotUpVector);
+                ContactFilter2D filter = new ContactFilter2D();
+                filter.useLayerMask = false;
+                filter.useTriggers = false;
+                filter.useDepth = false;
+
+                RaycastHit2D[] hits = new RaycastHit2D[1]; 
+                var raycast = Physics2D.Raycast(knotWorldPosition, -knotUpVector, filter,hits, _Component.PointSprite.bounds.size.y * 1.2f);
+                spriteRenderer.color = Color.clear;
+                if (raycast != 0)
+                {
+                    spriteRenderer.color = Color.white;
+                }
+
+            }
+        }
+    }
 
     private void OnSceneGUI()
     {
-        Bounds SpriteBounds = _Component.PointSprite.bounds;
-
+        if (_Component.PointSprite == null) return;
         foreach(var spline in _Component.GetSplines())
         {
 
@@ -141,65 +207,5 @@ public class GrindRailEditor : Editor
         }
     }
 
-    private void Refresh()
-    {
-        /*
-         * Wish I could do this by foreach loop
-         * But it always leave left over objects.... :(
-         */
-        while (_Component.transform.childCount > 0)
-        {
-            GameObject.DestroyImmediate(_Component.transform.GetChild(0).gameObject);
-        }
-
-        foreach (var spline in _Component.GetSplines())
-        {
-            var newLineRenderObject = new GameObject("LineRenderer");
-            newLineRenderObject.transform.SetParent(_Component.transform);
-            newLineRenderObject.transform.localPosition = Vector3.back * 0.1f;
-            newLineRenderObject.hideFlags = HideFlags.HideInHierarchy;
-            var LineRenderComponent = newLineRenderObject.AddComponent<LineRenderer>();
-            LineRenderComponent.startWidth = _Component.Width;
-            LineRenderComponent.endWidth = _Component.Width;
-            LineRenderComponent.material = _Component.Material;
-            LineRenderComponent.startColor = _Component.Colour;
-            LineRenderComponent.endColor = _Component.Colour;
-
-
-            int segments = _Component.Resolution;
-            LineRenderComponent.positionCount = segments;
-            for (int i = 0; i < segments; i++)
-            {
-                Vector3 pointPosition = SplineUtility.EvaluatePosition(spline, (float)i/segments);
-                LineRenderComponent.SetPosition(i, pointPosition);
-            }
-
-            for (int knotIndex = 0 ;knotIndex < spline.Count; knotIndex++)
-            {
-                var knot = spline[knotIndex];
-                float knotNPosition = SplineUtility.ConvertIndexUnit(spline, knotIndex, PathIndexUnit.Knot, PathIndexUnit.Normalized);
-                Vector3 knotTangent = SplineUtility.EvaluateTangent(spline, knotNPosition);
-                Vector3 knotUpVector = Vector3.Cross(knotTangent , Vector3.back).normalized;
-                Vector3 knotWorldPosition = _Component.transform.position + (Vector3)knot.Position;
-
-                var newSpriteObj = new GameObject("Sprite Obj");
-                newSpriteObj.hideFlags = HideFlags.HideInHierarchy;
-                var spriteRenderer = newSpriteObj.AddComponent<SpriteRenderer>();
-                spriteRenderer.sprite = _Component.PointSprite;
-                spriteRenderer.sortingOrder = -50;
-                newSpriteObj.transform.SetParent(_Component.transform);
-                newSpriteObj.transform.localPosition = knot.Position;
-                newSpriteObj.transform.rotation = Quaternion.LookRotation( Vector3.forward, knotUpVector);
-
-                var raycast = Physics2D.Raycast(knotWorldPosition, -knotUpVector, _Component.PointSprite.bounds.size.y, _GroundCastMask);
-                spriteRenderer.color = Color.clear;
-                if (raycast)
-                {
-                    spriteRenderer.color = Color.white;
-                }
-
-            }
-        }
-    }
 
 }

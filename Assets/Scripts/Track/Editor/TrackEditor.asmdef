@@ -1,0 +1,19 @@
+{
+    "name": "TrackEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8a7aff7d519f3444f95c92ee331f0833",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,18 @@
+{
+    "name": "CanvasSwitcherEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:70ac04ec9cb243e49aa0ab77f5400bc2"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
