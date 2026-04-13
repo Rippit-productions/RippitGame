@@ -76,23 +76,29 @@ public class CanvasSwitcherEditor : Editor
         }
     }
 
-
     private static void _EditorRefresh(CanvasSwitcher Target)
     {
 
-        var selected = Selection.activeGameObject.transform;
+        var selectedTransform = Selection.activeGameObject.transform;
         for (int i = 0; i < Target.transform.childCount; i++)
         {
             var indexTransform = Target.transform.GetChild(i); 
             if (
-                selected == indexTransform || 
-                selected.IsChildOf(indexTransform))
+                selectedTransform == indexTransform || 
+                selectedTransform.IsChildOf(indexTransform))
             {
                 SceneVisibilityManager.instance.Show(indexTransform.gameObject, true);
             }
             else
             {
-                SceneVisibilityManager.instance.Hide(indexTransform.gameObject, true);
+                if (i == Target.DefaultIndex)
+                {
+                    SceneVisibilityManager.instance.Show(indexTransform.gameObject, true);
+                }
+                else
+                {
+                    SceneVisibilityManager.instance.Hide(indexTransform.gameObject, true);
+                }
             }
         }
     }
