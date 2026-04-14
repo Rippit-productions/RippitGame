@@ -16,7 +16,6 @@ public class GameManagerController : MonoBehaviour
     {
         
     }
-
     
     public void LoadScene(string SceneName)
     {

@@ -78,11 +78,9 @@ public class PlayerCamera : MonoBehaviour
         _cinemachineVirtualCamera = GetComponent<CinemachineCamera>();
         _cinemachineTransposer = _cinemachineVirtualCamera.AddComponent<CinemachinePositionComposer>();
 
-
         _Brain = new GameObject().AddComponent<CinemachineBrain>();
         var confine = this.AddComponent<CinemachineConfiner2D>();
         confine.BoundingShape2D = CameraBounds.Instance.Collider;
-
         UpdateViewPorts();
     }
     
@@ -118,14 +116,20 @@ public class PlayerCamera : MonoBehaviour
         float offset = this.CameraSetup.DistanceCurve.Evaluate(linkedCharacter.GetNormalisedSpeed()) * this.CameraSetup.zOffset;
         float newDistance = CameraSetup.minZDistance +  offset;
 
-        if (newDistance < _cinemachineTransposer.CameraDistance && this.linkedCharacter.State != Skater.SkaterState.Grounded) return;
+        // Only zoom in camera when on flat ground
+        // Should reduce sharp changes in camera zoom
+        if (
+            newDistance < _cinemachineTransposer.CameraDistance && 
+            this.linkedCharacter.State != Skater.SkaterState.Grounded
+            && Vector3.Dot(this.linkedCharacter.Upvector,Vector3.up) < 0.95f
+            ) return;
+
         _cinemachineTransposer.CameraDistance = Mathf.Lerp(
             _cinemachineTransposer.CameraDistance,
             newDistance,
             Mathf.Abs(_cinemachineTransposer.CameraDistance - newDistance)
             );
     }
-
 
     public static void UpdateViewPorts()
     {
@@ -141,7 +145,7 @@ public class PlayerCamera : MonoBehaviour
         float width = 1.0f / cols;
         float height = 1.0f / rows;
 
-        for (int i = 0; i < count; i++)
+        for (int i = count - 1; i > 0; i--)
         {
             int col = i % cols;
             int row = i / cols;

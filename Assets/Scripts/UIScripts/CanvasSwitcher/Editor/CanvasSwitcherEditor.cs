@@ -43,13 +43,23 @@ public class CanvasSwitcherEditor : Editor
         DefaultIndexDropDown.label = "Default Layer";
         root.Add(DefaultIndexDropDown);
 
-        foreach (Transform t in _Component.transform)
+
+        if (_Component.transform.childCount > 0)
         {
-            DefaultIndexDropDown.choices.Add(t.gameObject.name);
+            foreach (Transform t in _Component.transform)
+            {
+                DefaultIndexDropDown.choices.Add(t.gameObject.name);
+            }
+
+            int currentDefault = _Component.DefaultIndex;
+            DefaultIndexDropDown.value = _Component.transform.GetChild(currentDefault).gameObject.name;
+        }
+        else
+        {
+            DefaultIndexDropDown.value = "----";
+            DefaultIndexDropDown.SetEnabled(false);
         }
 
-        int currentDefault = _Component.DefaultIndex;
-        DefaultIndexDropDown.value = _Component.transform.GetChild(currentDefault).gameObject.name;
         DefaultIndexDropDown.RegisterValueChangedCallback(e =>
         {
             int newIndex = _Component.transform.Find(e.newValue).GetSiblingIndex();
