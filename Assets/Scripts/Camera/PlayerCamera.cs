@@ -36,6 +36,7 @@ public class PlayerCamera : MonoBehaviour
     public static PlayerCamera CreateCamera()
     {
         var newGameObject = new GameObject();
+        newGameObject.name = "Player Camera";
         var component = newGameObject.AddComponent<PlayerCamera>();
         return component;
     }
@@ -145,7 +146,7 @@ public class PlayerCamera : MonoBehaviour
         float width = 1.0f / cols;
         float height = 1.0f / rows;
 
-        for (int i = count - 1; i > 0; i--)
+        for (int i = 0 ; i < count; i++)
         {
             int col = i % cols;
             int row = i / cols;

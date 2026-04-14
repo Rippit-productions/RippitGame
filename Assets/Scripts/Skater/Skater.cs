@@ -46,6 +46,7 @@ public struct SkaterGrappleAction
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(LineRenderer))]
 public class Skater : MonoBehaviour
 {
     public static Skater[] All => FindObjectsByType<Skater>(FindObjectsSortMode.InstanceID);
@@ -141,7 +142,6 @@ public class Skater : MonoBehaviour
         _SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _AnimatorComp = GetComponentInChildren<Animator>(); 
         _PlayerController = GetComponent<SkateController>();
-        _LineRenderer = this.AddComponent<LineRenderer>();
 
         var newCamera = PlayerCamera.CreateCamera(this);
 
