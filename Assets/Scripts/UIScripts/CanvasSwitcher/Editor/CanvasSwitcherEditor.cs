@@ -95,7 +95,7 @@ public class CanvasSwitcherEditor : Editor
 
         if (Selection.activeTransform)
         {
-            if (Selection.activeTransform.IsChildOf(Target.transform))
+            if (Selection.activeTransform.IsChildOf(Target.transform) && Selection.activeTransform != Target.transform)
             {
                 ShowDefault = false;
             }
