@@ -1,7 +1,7 @@
 ## Made With: 
 
-- Unity 2023.2.22f1
-- FMOD Studio 2.02.04
+- [Unity 2023.2.22f1](https://unity.com/releases/editor/whats-new/2023.2.22f1#installs)
+- [FMOD Studio 2.02.04](https://www.fmod.com/download#fmodforunity)
 
 ## Unity Package Depencies
 
