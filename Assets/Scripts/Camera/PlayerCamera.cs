@@ -152,7 +152,7 @@ public class PlayerCamera : MonoBehaviour
             int row = i / cols;
 
             // Unity's viewport origin is bottom-left
-            float x = col * width;
+            float x = 1.0f - (col * width);
             float y = 1.0f - ((row + 1) * height);
 
             cameras[i].CameraComponent.rect = new Rect(x, y, width, height);

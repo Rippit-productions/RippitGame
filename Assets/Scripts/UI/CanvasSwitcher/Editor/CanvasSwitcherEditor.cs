@@ -24,6 +24,8 @@ public class CanvasSwitcherEditor : Editor
     {
         Selection.selectionChanged += _EditorRefreshAll;
         EditorApplication.hierarchyChanged += CheckValues;
+        EditorApplication.hierarchyChanged += _EditorRefreshAll;
+
         PrefabStage.prefabStageOpened += (stage) =>
         {
             _InPrefabMode = true;
