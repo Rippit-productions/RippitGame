@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Animator))]
 public class SelectAnim : MonoBehaviour
 {
-    public string EnterAnimationState;
-    public string ExitAnimationState;
-
     private Animator _animatorComponent;
 
-    public
+    [Tooltip("Include selection of Children to trigger animation.")]
+    public bool IncludeChildren = false;
+    public string AnimatorVariableName = "";
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,15 @@ public class SelectAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var controller = _animatorComponent.runtimeAnimatorController as AnimatorController;
-        
+        GameObject SelectedObj = EventSystem.current.currentSelectedGameObject;
+        if (SelectedObj == null) return;
+
+        Transform SelectedTransform = SelectedObj.transform;
+        bool Selected = SelectedTransform == this.transform;
+        if (IncludeChildren)
+        {
+            Selected = SelectedTransform == this.transform || SelectedTransform.IsChildOf(this.transform);
+        }
+        _animatorComponent.SetBool(AnimatorVariableName, Selected);
     }
 }
