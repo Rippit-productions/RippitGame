@@ -4774,6 +4774,8 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9605,6 +9607,8 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9765,6 +9769,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9975,9 +9981,9 @@ MonoBehaviour:
   JumpForce: 8
   SoundSet: {fileID: 11400000, guid: eeec8fa6af865d7408d18fa1c26e6ed2, type: 2}
   CameraSetup:
-    minZDistance: 40
-    zOffset: 30
-    LookAheadTime: 1
+    minZDistance: 30
+    zOffset: 25
+    LookAheadTime: 0.5
     LookAheadSmoothing: 10
     DistanceCurve:
       serializedVersion: 2

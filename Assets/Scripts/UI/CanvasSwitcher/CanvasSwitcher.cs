@@ -7,11 +7,7 @@ using UnityEngine;
 public class CanvasSwitcher : MonoBehaviour
 {
     private int _ActiveIndex;
-    public int ActiveIndex
-    {
-        get { return _ActiveIndex; }
-        set { _ActiveIndex = value; }
-    }
+
     public int DefaultIndex = 0;
 
     public Action OnCanvasSwitch = () => { };
@@ -43,9 +39,7 @@ public class CanvasSwitcher : MonoBehaviour
 
     /// <summary>
     /// Set Canvas layer to show target Child Object.
-    /// Object must be child of this Canvas Switcher
     /// </summary>
-    /// <param name="targetObj">The Child Object to Show</param>
     public void SwitchToObject(GameObject targetObj)
     {
         if (targetObj == null) return;

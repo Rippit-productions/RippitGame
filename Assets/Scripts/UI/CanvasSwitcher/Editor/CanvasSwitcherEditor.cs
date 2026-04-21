@@ -1,3 +1,5 @@
+using Mono.Cecil;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,8 @@ public class CanvasSwitcherEditor : Editor
     {
         Selection.selectionChanged += _EditorRefreshAll;
         EditorApplication.hierarchyChanged += CheckValues;
+        EditorApplication.hierarchyChanged += _EditorRefreshAll;
+
         PrefabStage.prefabStageOpened += (stage) =>
         {
             _InPrefabMode = true;
@@ -41,13 +45,23 @@ public class CanvasSwitcherEditor : Editor
         DefaultIndexDropDown.label = "Default Layer";
         root.Add(DefaultIndexDropDown);
 
-        foreach (Transform t in _Component.transform)
+
+        if (_Component.transform.childCount > 0)
         {
-            DefaultIndexDropDown.choices.Add(t.gameObject.name);
+            foreach (Transform t in _Component.transform)
+            {
+                DefaultIndexDropDown.choices.Add(t.gameObject.name);
+            }
+
+            int currentDefault = _Component.DefaultIndex;
+            DefaultIndexDropDown.value = _Component.transform.GetChild(currentDefault).gameObject.name;
+        }
+        else
+        {
+            DefaultIndexDropDown.value = "----";
+            DefaultIndexDropDown.SetEnabled(false);
         }
 
-        int currentDefault = _Component.DefaultIndex;
-        DefaultIndexDropDown.value = _Component.transform.GetChild(currentDefault).gameObject.name;
         DefaultIndexDropDown.RegisterValueChangedCallback(e =>
         {
             int newIndex = _Component.transform.Find(e.newValue).GetSiblingIndex();
@@ -78,26 +92,35 @@ public class CanvasSwitcherEditor : Editor
 
     private static void _EditorRefresh(CanvasSwitcher Target)
     {
+        if (Target == null) return;
+        bool ShowDefault = true;
 
-        var selectedTransform = Selection.activeGameObject.transform;
+        if (Selection.activeTransform)
+        {
+            if (Selection.activeTransform.IsChildOf(Target.transform) && Selection.activeTransform != Target.transform)
+            {
+                ShowDefault = false;
+            }
+        }
+
         for (int i = 0; i < Target.transform.childCount; i++)
         {
-            var indexTransform = Target.transform.GetChild(i); 
-            if (
-                selectedTransform == indexTransform || 
-                selectedTransform.IsChildOf(indexTransform))
+            GameObject indexObj = Target.transform.GetChild(i).gameObject;
+            Transform indexTransform = Target.transform.GetChild(i);
+            if (ShowDefault)
             {
-                SceneVisibilityManager.instance.Show(indexTransform.gameObject, true);
+                SceneVisibilityManager.instance.Hide(indexObj, true);
+                if (i == Target.DefaultIndex)
+                {
+                    SceneVisibilityManager.instance.Show(indexObj, true);
+                }
             }
             else
             {
-                if (i == Target.DefaultIndex)
-                {
-                    SceneVisibilityManager.instance.Show(indexTransform.gameObject, true);
-                }
-                else
-                {
-                    SceneVisibilityManager.instance.Hide(indexTransform.gameObject, true);
+                SceneVisibilityManager.instance.Hide(indexObj, true);
+                if (Selection.activeTransform == indexTransform ||
+                    Selection.activeTransform.IsChildOf(indexTransform)){
+                    SceneVisibilityManager.instance.Show(indexObj, true);
                 }
             }
         }

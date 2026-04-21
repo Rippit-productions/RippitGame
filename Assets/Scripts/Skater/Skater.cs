@@ -27,7 +27,9 @@ public class SkateTrick
     }
 }
 
-public struct GrindAction
+
+
+public struct SkaterGrindAction
 {
     public bool InSplineDirection;
     public float GrindSpeed;
@@ -35,9 +37,16 @@ public struct GrindAction
     public Spline PreviousSpline;
 }
 
+public struct SkaterGrappleAction
+{
+    public float GrappleLength;
+    public Vector3 HookPoint;
+}
+
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(LineRenderer))]
 public class Skater : MonoBehaviour
 {
     public static Skater[] All => FindObjectsByType<Skater>(FindObjectsSortMode.InstanceID);
@@ -54,17 +63,19 @@ public class Skater : MonoBehaviour
         Grapple
     }
 
+
     public SkaterState State => _CharacterState;
     [field:SerializeField] protected SkaterState _CharacterState = SkaterState.Grounded;
     public bool IsGrounded => _CharacterState == SkaterState.Grounded;
 
     [Header("Components")]
-    public SkateController playerController;
+    public SkateController _PlayerController;
     protected Rigidbody2D _RigidBody;
     protected CircleCollider2D _CirlceCollider;
 
     public Animator _AnimatorComp;
     public SpriteRenderer _SpriteRenderer;
+    public LineRenderer _LineRenderer;
 
     //Animation
     public const string AnimState_Stand = "Stand";
@@ -97,7 +108,8 @@ public class Skater : MonoBehaviour
     [Range(0.0f,20.0f)]
     public float JumpForce = 3.0f;
 
-    private GrindAction _GrindAction = new GrindAction();
+    private SkaterGrindAction _GrindAction = new SkaterGrindAction();
+    private SkaterGrappleAction _GrappleAction = new SkaterGrappleAction();
 
 
     [Header("Sounds")]
@@ -129,7 +141,7 @@ public class Skater : MonoBehaviour
         _InitRigidbody();
         _SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _AnimatorComp = GetComponentInChildren<Animator>(); 
-        playerController = GetComponent<SkateController>();
+        _PlayerController = GetComponent<SkateController>();
 
         var newCamera = PlayerCamera.CreateCamera(this);
 
@@ -155,18 +167,18 @@ public class Skater : MonoBehaviour
             case SkaterState.Grounded:
                 {
                     bool solidGround = Vector2.Angle(_UpVector, Vector2.up) < 45.0f;
-                    bool wallRunning = !solidGround && playerController.NoMoveInput < 0.2f && _RigidBody.velocity.magnitude >= 0.3f;
+                    bool wallRunning = !solidGround && _PlayerController.NoMoveInput < 0.2f && _RigidBody.velocity.magnitude >= 0.3f;
                     if (wallRunning || solidGround )
                     {
                         StickToFloor();
                     }
 
 
-                    if (playerController.NoMoveInput < 0.2f || _RigidBody.velocity.magnitude < 0.5f && wallRunning)
+                    if (_PlayerController.NoMoveInput < 0.2f || _RigidBody.velocity.magnitude < 0.5f && wallRunning)
                     {
                         StickToFloor();
                     }
-                    Move(playerController.Move);
+                    Move(_PlayerController.Move);
                     ApplyGravity(Vector2.down);
                     
 
@@ -180,7 +192,7 @@ public class Skater : MonoBehaviour
                         this._UpVector = floorCast.Result.normal;
                     }
 
-                    if (playerController.Jump.WasPressedThisFrame())
+                    if (_PlayerController.Jump.WasPressedThisFrame())
                     {
                         Jump();
                         this._CharacterState = SkaterState.Jumping;
@@ -202,13 +214,13 @@ public class Skater : MonoBehaviour
                 }
             case SkaterState.Jumping:
                 {
-                    Move(playerController.Move);
+                    Move(_PlayerController.Move);
                     ApplyGravity(Vector2.down);
 
                     // Add AirTime
                     _UpVector = Vector3.up;
 
-                    if (playerController.Jump.WasReleasedThisFrame())
+                    if (_PlayerController.Jump.WasReleasedThisFrame())
                     {
                         if (_RigidBody.velocity.y > 0.0f)
                         {
@@ -270,7 +282,7 @@ public class Skater : MonoBehaviour
                     newPosition += (Vector2)_GrindAction.grindRailPoint.GetUpVector() * this.GetBounds().extents.y;
                     SetPosition(newPosition);
 
-                    bool JumpPresssed = this.playerController.Jump.WasPressedThisFrame();
+                    bool JumpPresssed = this._PlayerController.Jump.WasPressedThisFrame();
                     bool breakGrind = JumpPresssed || !this._GrindAction.grindRailPoint.OnSpline;
 
                     if (breakGrind)
@@ -555,7 +567,6 @@ public class Skater : MonoBehaviour
         GUILayout.Label($"PlayerIndex = {this.SkaterIndex + 1}");
 
         GUI.DragWindow(new Rect(0,0,float.MaxValue, float.MaxValue));
-        
     }
 #endif
 }

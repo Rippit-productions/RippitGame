@@ -418,6 +418,8 @@ TilemapRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -681,7 +683,14 @@ MonoBehaviour:
       Data2: 1245231615
       Data3: -1922117982
       Data4: 415561329
-    Path: event:/Music/Metaroom - My Escape
+    Path: event:/Music/Race Tracks/Metaroom - My Escape
+  _AmbienceTrack:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &4517890538662083462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,10 +703,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b7e061ab54e1146b833557e0b15599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Laps: 1
   IsClosed: 0
   CheckPoints:
   - LocalPosition: {x: 0, y: 0, z: 0}
-    CollisionBoxSize: {x: 10, y: 10, z: 10}
+    CollisionBoxSize: {x: 10, y: 10}
 --- !u!1001 &4920784598379494910
 PrefabInstance:
   m_ObjectHideFlags: 0
