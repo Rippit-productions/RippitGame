@@ -10,17 +10,14 @@ public class AnyKeyButton : MonoBehaviour
 {
     private Button _ButtonComponent;
     public InputActionReference CancelAction;
-    private InputSystemUIInputModule _InputComponenet;
 
     // Start is called before the first frame update
     void Start()
     {
-        _InputComponenet = GetComponent<InputSystemUIInputModule>();
     }
 
     private void Update()
     {
-       
     }
 
     private void Awake()
