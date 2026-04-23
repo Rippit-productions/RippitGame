@@ -106,7 +106,6 @@ public class RaceGameMode : MonoBehaviour
 
     public override string ToString() => GetTimeString();
 
-
     private void UpdateLeaderboard()
     {
         for (int i = 0; i < _Players.Count; i++)
@@ -152,6 +151,12 @@ public class RaceGameMode : MonoBehaviour
         leaderboard.AddRange(finishedPlayers);
         leaderboard.AddRange(unfinishedPlayers);
         return leaderboard.ToArray();
+    }
+
+    public PlayerInfo GetPlayerRaceInfo(Skater player)
+    {
+        var board = GetLeaderboard();
+        return board.Where(info => info.SkaterComponent == player).FirstOrDefault();
     }
 
 #if UNITY_EDITOR
