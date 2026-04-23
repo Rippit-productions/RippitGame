@@ -188,7 +188,6 @@ public class TrackEditor : Editor
                     );
                 if (pressed)
                 {
-                    this.CurrentTool = TrackTool.Move;
                     selectIndex = i;
                 }
             }

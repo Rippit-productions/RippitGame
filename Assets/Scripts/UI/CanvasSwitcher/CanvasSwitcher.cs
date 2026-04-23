@@ -8,7 +8,7 @@ public class CanvasSwitcher : MonoBehaviour
 {
     private int _ActiveIndex;
 
-    public int DefaultIndex = 0;
+    [SerializeField]public int DefaultIndex = 0;
 
     public Action OnCanvasSwitch = () => { };
     private void Awake()

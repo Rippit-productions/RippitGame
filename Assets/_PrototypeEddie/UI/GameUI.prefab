@@ -342,6 +342,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4128742355076914877, guid: 487c1f14bb19bd74a87c304b11e83101, type: 3}
+      propertyPath: DefaultIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6130832907549957600, guid: 487c1f14bb19bd74a87c304b11e83101, type: 3}
       propertyPath: m_Name
       value: RaceGameModeUI

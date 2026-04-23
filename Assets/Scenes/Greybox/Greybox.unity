@@ -847,18 +847,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2770954132124288160, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 3516596946507224281, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3516596946507224281, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5208934616941111148, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
       propertyPath: m_Name
       value: 'GameUI '
@@ -942,6 +930,14 @@ PrefabInstance:
     - target: {fileID: 5412814465660551490, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6741913231472523482, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755429072101782828, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.5105743
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -68139,6 +68135,16 @@ MonoBehaviour:
     CollisionBoxSize: {x: 11.77772, y: 25.476095}
   - LocalPosition: {x: 97.77731, y: 23.113567, z: 0}
     CollisionBoxSize: {x: 10, y: 34.524574}
+  - LocalPosition: {x: 207.33109, y: -7.012574, z: 0}
+    CollisionBoxSize: {x: 10, y: 43.19008}
+  - LocalPosition: {x: 408.39407, y: -24.38506, z: 0}
+    CollisionBoxSize: {x: 10, y: 69.39233}
+  - LocalPosition: {x: 539.2741, y: -130.0004, z: 0}
+    CollisionBoxSize: {x: 10, y: 69.39235}
+  - LocalPosition: {x: 851.0497, y: -133.89023, z: 0}
+    CollisionBoxSize: {x: 4.035034, y: 39.825043}
+  - LocalPosition: {x: 722.2868, y: -214.46048, z: 0}
+    CollisionBoxSize: {x: 10, y: 27.31366}
 --- !u!1 &4688326214777659474
 GameObject:
   m_ObjectHideFlags: 0

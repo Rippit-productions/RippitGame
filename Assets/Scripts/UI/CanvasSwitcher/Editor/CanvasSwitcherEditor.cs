@@ -64,6 +64,7 @@ public class CanvasSwitcherEditor : Editor
 
         DefaultIndexDropDown.RegisterValueChangedCallback(e =>
         {
+            Undo.RecordObject(_Component, "Default Index Change");
             int newIndex = _Component.transform.Find(e.newValue).GetSiblingIndex();
             _Component.DefaultIndex = newIndex;
         });

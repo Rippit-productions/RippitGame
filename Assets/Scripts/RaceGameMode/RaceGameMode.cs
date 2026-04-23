@@ -84,6 +84,7 @@ public class RaceGameMode : MonoBehaviour
                 {
                     Level.GetInstance().LevelMusic.SetParam(FMODParam_RaceEnd, 1.0f);
                     this._State = RaceState.Finished;
+                    this.OnRaceFinish.Invoke();
                 }
                 break;
 

@@ -373,6 +373,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6389639032062811071}
+  - component: {fileID: 739191046100710445}
   m_Layer: 5
   m_Name: Intro Card
   m_TagString: Untagged
@@ -401,6 +402,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 285.4166, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &739191046100710445
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2894116883366198469}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3459537666920854115
 GameObject:
   m_ObjectHideFlags: 0
