@@ -47,7 +47,6 @@ public class AudioManager
         public AudioType Type => _AudioType;
         private AudioType _AudioType;
 
-
         public void SetParam(string ParamName, float Value)
         {
             _FmodInstance.setParameterByName(ParamName, Value,true);
@@ -152,5 +151,5 @@ public class AudioManager
         }).ToArray();
     }
 
-    private void CleanUp() => _Events.Clear();
+    public void CleanUp() => _Events.Clear();
 }

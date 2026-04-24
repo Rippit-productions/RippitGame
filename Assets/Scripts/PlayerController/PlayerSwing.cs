@@ -43,9 +43,7 @@ public class PlayerSwing : MonoBehaviour
         {
             lineRenderer.positionCount = 0;
         }
-
     }
-
 
     /// <summary>
     /// Raycasts upward to check for objects to swing from and attaches to them.

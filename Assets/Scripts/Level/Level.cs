@@ -5,7 +5,7 @@ public class Level : MonoBehaviour
     public static Level GetInstance() => FindFirstObjectByType<Level>(FindObjectsInactive.Exclude);
 
     [SerializeField]private FMODUnity.EventReference _Song;
-    [SerializeField] private FMODUnity.EventReference _AmbienceTrack;
+    [SerializeField]private FMODUnity.EventReference _AmbienceTrack;
 
     private AudioManager.Event _LevelMusic;
     public AudioManager.Event LevelMusic => _LevelMusic;

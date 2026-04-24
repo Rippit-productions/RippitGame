@@ -11,17 +11,17 @@ public class SelectAnim : MonoBehaviour
     [Tooltip("Include selection of Children to trigger animation.")]
     public bool IncludeChildren = false;
     public string AnimatorVariableName = "";
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
         _animatorComponent = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        GameObject SelectedObj = EventSystem.current.currentSelectedGameObject;
+        GameObject SelectedObj = EventSystem.current.currentSelectedGameObject ;
         if (SelectedObj == null) return;
 
         Transform SelectedTransform = SelectedObj.transform;
@@ -32,4 +32,5 @@ public class SelectAnim : MonoBehaviour
         }
         _animatorComponent.SetBool(AnimatorVariableName, Selected);
     }
+    
 }

@@ -76,7 +76,6 @@ public class TrackEditor : Editor
         return root;
     }
 
-
     private void OnSceneGUI()
     {
         var currentEvent = Event.current;
@@ -91,6 +90,8 @@ public class TrackEditor : Editor
         {
             case TrackTool.Move:
                 if (selectIndex < 0) break;
+
+                EditorGUI.BeginChangeCheck();
                 var currentlocalPos = _Component.CheckPoints[selectIndex].LocalPosition;
                 Handles.color = Color.white;
 
@@ -98,7 +99,12 @@ public class TrackEditor : Editor
                 Quaternion rotation = Quaternion.identity; // Only to fill below method. 
                 Handles.TransformHandle(ref WorldPosition, ref rotation);
 
-                _Component.CheckPoints[selectIndex].LocalPosition = WorldPosition - _Component.transform.position;
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(_Component, $"Track({_Component.gameObject.name}) - Checkpoint.{selectIndex} Position");
+                    Vector3 LocalPosition = WorldPosition - _Component.transform.position;
+                    _Component.CheckPoints[selectIndex].LocalPosition = LocalPosition;
+                }
                 break;
 
             case TrackTool.Collider:
@@ -108,6 +114,9 @@ public class TrackEditor : Editor
 
                 float buttonSize = 0.15f;
                 Handles.color = Color.green;
+
+                EditorGUI.BeginChangeCheck();
+
                 var xHandle = Handles.FreeMoveHandle(
                     _Component.GetCheckPointPosition(selectIndex) +  Vector3.right * selection.CollisionBoxSize.x * 0.5f,
                     HandleUtility.GetHandleSize(worldPos) * buttonSize,
@@ -122,16 +131,20 @@ public class TrackEditor : Editor
                     Handles.CubeHandleCap
                     );
 
-                var newXValue = (xHandle.x - worldPos.x) * 2.0f;
-                if (newXValue > 0.0f)
+                if (EditorGUI.EndChangeCheck())
                 {
-                    _Component.CheckPoints[selectIndex].CollisionBoxSize.x = newXValue;
-                }
+                    var newXValue = (xHandle.x - worldPos.x) * 2.0f;
+                    if (newXValue > 0.0f)
+                    {
+                        _Component.CheckPoints[selectIndex].CollisionBoxSize.x = newXValue;
+                    }
 
-                var newYValue = (yHandle.y - worldPos.y) * 2.0f;
-                if (newYValue > 0.0f)
-                {
-                    _Component.CheckPoints[selectIndex].CollisionBoxSize.y = newYValue;
+                    var newYValue = (yHandle.y - worldPos.y) * 2.0f;
+                    if (newYValue > 0.0f)
+                    {
+                        _Component.CheckPoints[selectIndex].CollisionBoxSize.y = newYValue;
+                    }
+                    Undo.RecordObject(_Component, $"Track({_Component.gameObject.name}) - Checkpoint.{selectIndex} Collider");
                 }
 
                 break;
@@ -147,6 +160,7 @@ public class TrackEditor : Editor
 
                 if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0)
                 {
+                    Undo.RecordObject(_Component, $"Track({_Component.gameObject.name}) - Add Checkpoint");
                     List<TrackCheckPoint> allPoints = new List<TrackCheckPoint>(_Component.CheckPoints);
 
                     var newPoint = new TrackCheckPoint();
@@ -154,7 +168,6 @@ public class TrackEditor : Editor
                     allPoints.Add(newPoint);
                     _Component.CheckPoints = allPoints.ToArray();
                 }
-
                 SceneView.RepaintAll();
                 break;
             default:
@@ -179,11 +192,12 @@ public class TrackEditor : Editor
             if (i != selectIndex && this.CurrentTool != TrackTool.Add)
             {
                 Handles.color = Color.blue;
+                var ButtonSize = HandleUtility.GetHandleSize(handlePos) * 0.3f;
                 var pressed = Handles.Button(
                     _Component.GetCheckPointPosition(i),
                     Quaternion.identity,
-                    HandleUtility.GetHandleSize(handlePos) * 0.15f,
-                    1.2f,
+                    ButtonSize,
+                    ButtonSize * 2.0f,
                     Handles.SphereHandleCap
                     );
                 if (pressed)
@@ -202,19 +216,18 @@ public class TrackEditor : Editor
             // Check if element is selected
             if (selectIndex > 0)
             {
+                Undo.RecordObject(_Component, $"Track({_Component.gameObject.name}) - Checkpoint.{selectIndex} Delete");
                 List<TrackCheckPoint> allPoints = new List<TrackCheckPoint>(_Component.CheckPoints);
                 allPoints.RemoveAt(selectIndex);
                 _Component.CheckPoints = allPoints.ToArray();
                 GUIUtility.hotControl = 0;
                 
             }
-
             // Keep selection within Array.
             if (selectIndex > _Component.CheckPoints.Length - 1)
             {
                 selectIndex = _Component.CheckPoints.Length - 1;
             }
-
             currentEvent.Use();
         }
     }

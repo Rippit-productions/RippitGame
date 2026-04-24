@@ -1,8 +1,5 @@
-using Mono.Cecil;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -64,7 +61,7 @@ public class CanvasSwitcherEditor : Editor
 
         DefaultIndexDropDown.RegisterValueChangedCallback(e =>
         {
-            Undo.RecordObject(_Component, "Default Index Change");
+            Undo.RecordObject(_Component, $"CanvasSwitcher({_Component.gameObject.name}) - Default Layer");
             int newIndex = _Component.transform.Find(e.newValue).GetSiblingIndex();
             _Component.DefaultIndex = newIndex;
         });

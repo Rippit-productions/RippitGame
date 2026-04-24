@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerController : MonoBehaviour
 {
-   
     public void LoadScene(string SceneName)
     {
+        AudioManager.Instance.CleanUp();
         SceneManager.LoadScene(SceneName);
     }
 
