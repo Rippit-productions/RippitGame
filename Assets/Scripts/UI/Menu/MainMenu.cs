@@ -6,7 +6,7 @@ public class MainMenu : Menu
 {
     [SerializeField] private FMODUnity.EventReference _MusicTrack;
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         base.Start();
         AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);

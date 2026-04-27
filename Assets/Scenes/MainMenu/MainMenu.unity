@@ -496,6 +496,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1623886332285543497, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
+      propertyPath: BankReferene.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3419763994637379910, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
