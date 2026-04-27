@@ -30,7 +30,6 @@ public class Menu : MonoBehaviour
     {
         if (!TargetObj.transform.IsChildOf(this.transform)) return;
         EventSystem.current.SetSelectedGameObject(TargetObj);
-        Debug.Log($"Selected - {EventSystem.current.currentSelectedGameObject}");
         foreach (var switcher in _CanvasSwitchers)
         {
             switcher.SwitchToObject(TargetObj);

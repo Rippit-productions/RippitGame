@@ -12,7 +12,6 @@ public class SelectAnim : MonoBehaviour
     public bool IncludeChildren = false;
     public string AnimatorVariableName = "";
 
-
     // Start is called before the first frame update
     void Start()
     {

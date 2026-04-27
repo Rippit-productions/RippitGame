@@ -4,11 +4,9 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System;
-
-
-
-
-
+using FMODUnity;
+using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 
 // ALL SUBJECT TO A CODE REVIEW:
@@ -46,6 +44,15 @@ public class GameManager
     private List<Resolution> filteredResolutions = new List<Resolution>();
 
     public Action<bool> OnPause = new Action<bool>((bool IsPaused) => { });
+
+    private static Coroutine _LoadingSceneCoroutine;
+
+    public static AsyncOperation LoadScene(string sceneName)
+    {
+        var loading = SceneManager.LoadSceneAsync(sceneName);
+        loading.allowSceneActivation = false;
+        return loading;
+    }
 
     public void TogglePause(bool Pause)
     {
