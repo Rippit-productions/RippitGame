@@ -47,13 +47,6 @@ public class GameManager
 
     private static Coroutine _LoadingSceneCoroutine;
 
-    public static AsyncOperation LoadScene(string sceneName)
-    {
-        var loading = SceneManager.LoadSceneAsync(sceneName);
-        loading.allowSceneActivation = false;
-        return loading;
-    }
-
     public void TogglePause(bool Pause)
     {
         Time.timeScale = 1.0f;
