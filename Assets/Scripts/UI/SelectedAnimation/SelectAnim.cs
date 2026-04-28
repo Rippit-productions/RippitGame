@@ -31,5 +31,5 @@ public class SelectAnim : MonoBehaviour
         }
         _animatorComponent.SetBool(AnimatorVariableName, Selected);
     }
-    
+
 }

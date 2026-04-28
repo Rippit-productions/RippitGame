@@ -8,15 +8,9 @@ public class GameManagerController : MonoBehaviour
 {
     private static Coroutine SceneLoadingCoroutine = null;
 
-    public async void LoadScene(string SceneName)
+    public void LoadScene(string SceneName)
     {
-        var operation =  SceneLoader.LoadScene(SceneName);
-
-        LoadingScreen.WaitFor(operation);
-
-        if (!operation.IsCompleted) await operation;
-
-        operation.Result.allowSceneActivation = true;
+        StartCoroutine(SceneLoader.LoadScene(SceneName));
     }
 
     public void QuitGame() => Application.Quit();

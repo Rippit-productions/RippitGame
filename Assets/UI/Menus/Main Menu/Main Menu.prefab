@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1623886332285543497}
   - component: {fileID: 8225404774171370501}
   - component: {fileID: 2006443107211269617}
-  - component: {fileID: 6713488737678603395}
+  - component: {fileID: 2212682712854808016}
   - component: {fileID: 8431432050886314701}
   m_Layer: 5
   m_Name: Main Menu
@@ -75,10 +75,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63af53c6a9da36043910a56685728617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BankReferene:
+  Banks:
   - Master
-  - SFX
   - Music
+  - SFX
 --- !u!223 &8225404774171370501
 Canvas:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &6713488737678603395
+--- !u!114 &2212682712854808016
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
