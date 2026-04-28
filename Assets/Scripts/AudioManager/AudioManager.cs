@@ -5,6 +5,7 @@ using FMOD.Studio;
 using System.Linq;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEngine.SceneManagement;
 
 
 
@@ -16,7 +17,6 @@ public struct AudioSettings
 
     public float GetMusicVolume() => MusicVolume * MasterVolume;
     public float GetSFXVolume() => SFXVolume * MasterVolume;
-
 }
 
 
@@ -24,19 +24,14 @@ public class AudioManager
 {
     public class Event
     {
-        public Event(EventInstance Instance, AudioType Type)
-        {
-            _FmodInstance = Instance;
-            _AudioType = Type;
-        }
-
         public Event(EventReference fmodEventRef, AudioType AudioType)
         {
             _FmodInstance = RuntimeManager.CreateInstance(fmodEventRef);
             _AudioType = AudioType;
+            SceneManager.activeSceneChanged += (oldScene, newScene) => { this.Release(); };
         }
 
-        ~Event()
+        private void Release()
         {
             _FmodInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             _FmodInstance.release();

@@ -58,11 +58,11 @@ MonoBehaviour:
   DefaultObj: {fileID: 0}
   _MusicTrack:
     Guid:
-      Data1: 1894197752
-      Data2: 1308065330
-      Data3: 1748531119
-      Data4: 1547582539
-    Path: event:/Music/Menu Tracks/Lordsun and CubeNatural - Prince of the Moon
+      Data1: -1011846861
+      Data2: 1146584192
+      Data3: 1386897040
+      Data4: -1534676055
+    Path: event:/Music/Menu Tracks/Cubenatural - Eto
 --- !u!114 &1623886332285543497
 MonoBehaviour:
   m_ObjectHideFlags: 0
