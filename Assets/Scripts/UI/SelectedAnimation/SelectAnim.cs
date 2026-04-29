@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Animator))]
-public class SelectAnim : MonoBehaviour
+public class SelectAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private Animator _animatorComponent;
 
@@ -12,6 +12,7 @@ public class SelectAnim : MonoBehaviour
     public bool IncludeChildren = false;
     public string AnimatorVariableName = "";
 
+    private bool _PointerHover = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,16 @@ public class SelectAnim : MonoBehaviour
         {
             Selected = SelectedTransform == this.transform || SelectedTransform.IsChildOf(this.transform);
         }
-        _animatorComponent.SetBool(AnimatorVariableName, Selected);
+        _animatorComponent.SetBool(AnimatorVariableName, Selected || _PointerHover);
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _PointerHover = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _PointerHover = false;
+    }
 }

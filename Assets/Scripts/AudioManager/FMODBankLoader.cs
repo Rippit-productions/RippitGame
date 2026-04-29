@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// FMOD Async Bank Loading
+/// To be used on platforms that don't support Streaming of FMOD Assets
+/// See : https://www.fmod.com/docs/2.03/unity/platform-specifics.html#async-loading
+/// </summary>
 public class FMODBankLoader : MonoBehaviour
 {
 #if UNITY_ADDRESSABLES_EXIST

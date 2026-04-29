@@ -10,6 +10,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Track))]
 public class RaceGameMode : MonoBehaviour
 {
+    public const int MaxPlayerCount = 4;
     public static RaceGameMode Instance => FindFirstObjectByType<RaceGameMode>();
     public enum RaceState
     {
@@ -54,7 +55,7 @@ public class RaceGameMode : MonoBehaviour
     private void Awake()
     {
         // Add Player to tracker
-        Skater.OnSkaterSpawn += (newPlayer) =>
+        Skater.OnSkaterSpawn += (Skater newPlayer) =>
         {
             _Players.Add(new PlayerInfo
             {
@@ -64,6 +65,19 @@ public class RaceGameMode : MonoBehaviour
                 Finished = false
             });
         };
+
+        Skater.OnSkateDestroy += (Skater) =>
+        {
+            for (int i = 0; i < _Players.Count; i++)
+            {
+                if (_Players[i].SkaterComponent == Skater)
+                {
+                    _Players.RemoveAt(i);
+                }
+            }
+        };
+
+
     }
 
     void Start()
@@ -153,7 +167,6 @@ public class RaceGameMode : MonoBehaviour
         leaderboard.AddRange(unfinishedPlayers);
         return leaderboard.ToArray();
     }
-
     public PlayerInfo GetPlayerRaceInfo(Skater player)
     {
         var board = GetLeaderboard();
@@ -202,7 +215,22 @@ public class RaceGameMode : MonoBehaviour
             {
                 PlayerString = $"{i + 1}.{playerName} | {leaderboard[i].GetTimeString()} ";
             }
+
+            GUILayout.BeginHorizontal();
             GUILayout.Label(PlayerString);
+            if (GUILayout.Button("Clone"))
+            {
+                var toCopy = leaderboard[i].SkaterComponent.gameObject;
+                var newPlayer = GameObject.Instantiate(toCopy.gameObject);
+                newPlayer.transform.position = toCopy.transform.position;
+            }
+            if (GUILayout.Button("Delete"))
+            {
+                if (_Players.Count <= 1) return;
+                var toDelete = leaderboard[i].SkaterComponent.gameObject;
+                GameObject.Destroy(toDelete);
+            }
+            GUILayout.EndHorizontal();
         }
 
         if (GUILayout.Button("Add Player"))

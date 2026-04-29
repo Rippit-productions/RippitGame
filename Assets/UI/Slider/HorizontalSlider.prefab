@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 4395784786871196802}
   - component: {fileID: 3369143863385475334}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: HorizontalSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -51,7 +51,7 @@ public class Skater : MonoBehaviour
 {
     public static Skater[] All => FindObjectsByType<Skater>(FindObjectsSortMode.InstanceID);
     public static Action<Skater> OnSkaterSpawn = (Skater) => { };
-
+    public static Action<Skater> OnSkateDestroy = (Skater) => { };
     public int SkaterIndex => GetComponent<PlayerInput>().playerIndex;
 
     public enum SkaterState
@@ -492,6 +492,11 @@ public class Skater : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    private void OnDestroy()
+    {
+        OnSkateDestroy.Invoke(this);
     }
 
 #if UNITY_EDITOR

@@ -26,10 +26,11 @@ public class PlayerCamera : MonoBehaviour
     public Camera CameraComponent => _CameraComponent;
     private CinemachineCamera _cinemachineVirtualCamera;
     private CinemachinePositionComposer _cinemachineTransposer;
+    private CinemachineBrain _CinemachineBrain;
+
     protected Skater linkedCharacter;
 
 
-    private CinemachineBrain _Brain;
 
     public static PlayerCamera[] All => FindObjectsByType<PlayerCamera>(FindObjectsInactive.Exclude,FindObjectsSortMode.InstanceID);
 
@@ -61,6 +62,12 @@ public class PlayerCamera : MonoBehaviour
         inputCompo.camera = this._CameraComponent;
     }
 
+    public void DisconnectFromPlayer()
+    {
+        this.linkedCharacter = null;
+    }
+
+    
     public PlayerCamera GetLinkedCamera(Skater Player)
     {
         foreach (var camera in PlayerCamera.All)
@@ -79,10 +86,22 @@ public class PlayerCamera : MonoBehaviour
         _cinemachineVirtualCamera = GetComponent<CinemachineCamera>();
         _cinemachineTransposer = _cinemachineVirtualCamera.AddComponent<CinemachinePositionComposer>();
 
-        _Brain = new GameObject().AddComponent<CinemachineBrain>();
+        _CinemachineBrain = new GameObject().AddComponent<CinemachineBrain>();
         var confine = this.AddComponent<CinemachineConfiner2D>();
         confine.BoundingShape2D = CameraBounds.Instance.Collider;
         UpdateViewPorts();
+
+        Skater.OnSkateDestroy += this.OnPlayerDestroy;
+    }
+
+    private void OnPlayerDestroy(Skater skater)
+    {
+        if (skater == this.linkedCharacter)
+        {
+            this.DisconnectFromPlayer();
+            GameObject.Destroy(_CinemachineBrain.gameObject);
+            GameObject.Destroy(this.gameObject);
+        }
     }
     
     void Awake()
@@ -94,7 +113,9 @@ public class PlayerCamera : MonoBehaviour
     void Update()
     {
         if (_cinemachineVirtualCamera == null) return;
+        else if (this.linkedCharacter == null) return;
         this.gameObject.name = $"Player Camera: {this.linkedCharacter.name}";
+        _CinemachineBrain.gameObject.name = $"Player Camera Brain {this.linkedCharacter.name}";
 
         _cinemachineVirtualCamera.Follow = this.linkedCharacter.transform;
         this.CameraSetup = this.linkedCharacter.CameraSetup;
@@ -106,8 +127,8 @@ public class PlayerCamera : MonoBehaviour
         int index = 1 << linkedCharacter.SkaterIndex + 1;
         this._cinemachineVirtualCamera.OutputChannel = (OutputChannels)index;
 
-        _Brain.ChannelMask = (OutputChannels) index;
-        _Brain.UpdateMethod = CinemachineBrain.UpdateMethods.SmartUpdate;
+        _CinemachineBrain.ChannelMask = (OutputChannels) index;
+        _CinemachineBrain.UpdateMethod = CinemachineBrain.UpdateMethods.SmartUpdate;
         _UpdatePosition();
     }
 
@@ -158,4 +179,6 @@ public class PlayerCamera : MonoBehaviour
             cameras[i].CameraComponent.rect = new Rect(x, y, width, height);
         }
     }
+
+    private void OnDestroy() => UpdateViewPorts();
 }
