@@ -33,24 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Grab ",
-                    "type": "Button",
-                    "id": "18cfb7de-1b29-4637-a739-555ccd5793a3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "TrickDirection",
-                    "type": "Value",
-                    "id": "c39316a3-ab6f-488b-945f-d8b032304bf5",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Grapple",
                     "type": "Button",
                     "id": "e4a356ce-8a26-4f4b-8709-51903cfaa2ad",
@@ -70,61 +52,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "Keyboard",
-                    "id": "342bfd68-c18c-4699-a3cb-e13cf76d8473",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TrickDirection",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "fa70e846-abe9-4b7f-a45f-5c093f687970",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TrickDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "f71d352c-ea46-4809-8228-ba110769db40",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TrickDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "e4c13931-6bea-482a-804b-51c48c788e6f",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TrickDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "5de36918-feb9-48b5-bc0e-72dd8e8b35cf",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TrickDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
                 {
                     "name": "",
                     "id": "8f8c6ee9-3b86-4589-8e6b-9810ba2c3553",
@@ -281,17 +208,6 @@
                 },
                 {
                     "name": "",
-                    "id": "c42df018-29a2-44bd-b591-bcea31a6a420",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Grab ",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a8b011d6-1897-4f6a-9192-f6e497ea54a9",
                     "path": "<Keyboard>/l",
                     "interactions": "",
@@ -308,6 +224,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9aefd974-d205-4012-89ef-a22f966becda",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
