@@ -45,12 +45,12 @@ public class TrackEditor : Editor
 
         LapSlider.RegisterValueChangedCallback(e =>
         {
+            Undo.RecordObject(_Component, $"Track({_Component.gameObject.name}) - Lap Count");
             if (e.newValue >= 1)
             {
                 _Component.Laps = e.newValue;
             }
         });
-
 
         MoveToolButton.clicked += () =>
         {
