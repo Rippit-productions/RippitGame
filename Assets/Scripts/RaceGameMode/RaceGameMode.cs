@@ -23,7 +23,6 @@ public class RaceGameMode : MonoBehaviour
 
     public const string FMODParam_RaceEnd = "RaceEnd";
 
-
     [Header("Events")]
     public UnityEvent OnPlayerFinish = new UnityEvent();
     public UnityEvent OnRaceFinish = new UnityEvent();
@@ -32,13 +31,15 @@ public class RaceGameMode : MonoBehaviour
     public float Timer => _timer;
 
     private Track _track;
-    public struct PlayerInfo
+    
+    public class PlayerInfo
     {
         public Skater SkaterComponent;
         public int Lap;
         public int TargetCheckPoint;
         public float Completion;
         public bool Finished;
+        public bool DNF;
         public float FinalTime;
 
         public string GetTimeString()
@@ -62,7 +63,8 @@ public class RaceGameMode : MonoBehaviour
                 SkaterComponent = newPlayer,
                 Lap = 0,
                 TargetCheckPoint = 0,
-                Finished = false
+                Finished = false,
+                DNF = false
             });
         };
 
@@ -119,8 +121,6 @@ public class RaceGameMode : MonoBehaviour
         return timerString;
     }
 
-    public override string ToString() => GetTimeString();
-
     private void UpdateLeaderboard()
     {
         for (int i = 0; i < _Players.Count; i++)
@@ -167,11 +167,23 @@ public class RaceGameMode : MonoBehaviour
         leaderboard.AddRange(unfinishedPlayers);
         return leaderboard.ToArray();
     }
-    public PlayerInfo GetPlayerRaceInfo(Skater player)
+
+    /// <summary>
+    /// Finish all players.
+    /// Any places that haven't finished get DNF
+    /// </summary>
+    public void ForceFinish()
     {
-        var board = GetLeaderboard();
-        return board.Where(info => info.SkaterComponent == player).FirstOrDefault();
+        foreach (var info in this._Players)
+        {
+            if (info.Finished == false)
+            {
+                info.DNF = true;
+                info.Finished = true;
+            }
+        }
     }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()

@@ -19,6 +19,6 @@ public class RaceUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timerText.text = GameMode.ToString();
+        timerText.text = GameMode.GetTimeString();
     }
 }

@@ -7,27 +7,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using Unity.VisualScripting;
 
-public class SkateTrick
-{
-
-    public SkateTrick() { 
-    }
-    public SkateTrick(string TrickName, float Score)
-    {
-        _Name = TrickName;
-        _Score = Score;
-    }
-    string _Name;
-    float _Score;
-    public string Name => _Name;
-    public float Score => _Score;
-    public void SetScore(float Value)
-    {
-        _Score = Value;
-    }
-}
-
-
 
 public struct SkaterGrindAction
 {
@@ -56,10 +35,11 @@ public class Skater : MonoBehaviour
 
     public enum SkaterState
     {
+        Idle,
+        GodMode,
         Grounded,
         Jumping,
         Grind,
-        Trick,
         Grapple
     }
 
@@ -135,6 +115,14 @@ public class Skater : MonoBehaviour
         _physicsMaterial.bounciness = 0.0f;
         _RigidBody.sharedMaterial = _physicsMaterial;
     }
+    private void _InitSounds()
+    {
+        var Manager = AudioManager.Instance;
+        JumpSFX = Manager.CreateAudioInstance(SoundSet.JumpSFX, AudioManager.AudioType.SFX);
+        GrindOnSFX = Manager.CreateAudioInstance(SoundSet.GrindOnSFX, AudioManager.AudioType.SFX);
+        GrindOffSFX = Manager.CreateAudioInstance(SoundSet.GrindOffSFX, AudioManager.AudioType.SFX);
+        GrindSFX = Manager.CreateAudioInstance(SoundSet.GrindSFX, AudioManager.AudioType.SFX);
+    }
 
     void Start()
     {
@@ -147,15 +135,9 @@ public class Skater : MonoBehaviour
 
         _InitSounds();
         OnSkaterSpawn.Invoke(this);
-    }
 
-    private void _InitSounds()
-    {
-        var Manager = AudioManager.Instance;
-        JumpSFX = Manager.CreateAudioInstance(SoundSet.JumpSFX, AudioManager.AudioType.SFX);
-        GrindOnSFX = Manager.CreateAudioInstance(SoundSet.GrindOnSFX, AudioManager.AudioType.SFX);
-        GrindOffSFX = Manager.CreateAudioInstance(SoundSet.GrindOffSFX, AudioManager.AudioType.SFX);
-        GrindSFX = Manager.CreateAudioInstance(SoundSet.GrindSFX, AudioManager.AudioType.SFX);
+
+        this._CharacterState = SkaterState.Grounded;
     }
 
     // Update is called once per frame
@@ -172,7 +154,6 @@ public class Skater : MonoBehaviour
                     {
                         StickToFloor();
                     }
-
 
                     if (_PlayerController.NoMoveInput < 0.2f || _RigidBody.velocity.magnitude < 0.5f && wallRunning)
                     {
@@ -305,6 +286,11 @@ public class Skater : MonoBehaviour
 
                         this.OnGrind.Invoke(false);
                     }
+                    break;
+                }
+            case SkaterState.GodMode:
+                {
+                    this.transform.position += (Vector3)(_PlayerController.Move * this.MoveSpeed * Time.fixedDeltaTime);
                     break;
                 }
             default:
@@ -455,7 +441,6 @@ public class Skater : MonoBehaviour
         _AnimatorComp.Play(StateName);
     }
     // Set Sprite Direction and Rotation Transform
-    
     private void SetSpriteRotation(Vector2 upVector)
     {
         Quaternion ObjRotation = Quaternion.Euler(0, 0, transform.rotation.z);
@@ -570,6 +555,27 @@ public class Skater : MonoBehaviour
         string PlatformName = this._CurrentPlatform ? this._CurrentPlatform.gameObject.name : "None";
         GUILayout.Label($"Current Platform: {PlatformName}");
         GUILayout.Label($"PlayerIndex = {this.SkaterIndex + 1}");
+
+
+        if (GUILayout.Button("Respawn")) 
+        {
+            //To-do
+        }
+        if (GUILayout.Button("Godmode"))
+        {
+            Debug.Log("Huh Button please work");
+            if (_CharacterState != SkaterState.GodMode)
+            {
+                _CharacterState = SkaterState.GodMode;
+                _RigidBody.velocity = Vector2.zero;
+                _RigidBody.bodyType = RigidbodyType2D.Static;
+            }
+            else
+            {
+                _CharacterState = SkaterState.Grounded;
+                _RigidBody.bodyType = RigidbodyType2D.Dynamic;
+            }
+        }
 
         GUI.DragWindow(new Rect(0,0,float.MaxValue, float.MaxValue));
     }
