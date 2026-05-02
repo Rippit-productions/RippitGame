@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -44,6 +45,7 @@ public class RaceGameMode : MonoBehaviour
 
         public string GetTimeString()
         {
+            if (DNF) return "DNF";
             var timespan = System.TimeSpan.FromSeconds(FinalTime);
             var resultString = timespan.Duration().ToString(@"mm\:ss\.ff");
 
@@ -78,8 +80,6 @@ public class RaceGameMode : MonoBehaviour
                 }
             }
         };
-
-
     }
 
     void Start()
@@ -99,6 +99,10 @@ public class RaceGameMode : MonoBehaviour
                 if (IsRaceFinished())
                 {
                     Level.GetInstance().LevelMusic.SetParam(FMODParam_RaceEnd, 1.0f);
+                    foreach (Skater skater in Skater.All)
+                    {
+                        skater.ToggleIdle(false);
+                    }
                     this._State = RaceState.Finished;
                     this.OnRaceFinish.Invoke();
                 }
@@ -179,6 +183,7 @@ public class RaceGameMode : MonoBehaviour
             if (info.Finished == false)
             {
                 info.DNF = true;
+                info.FinalTime = float.MaxValue;
                 info.Finished = true;
             }
         }
@@ -202,7 +207,7 @@ public class RaceGameMode : MonoBehaviour
     }
 
     private int GuiID = Guid.NewGuid().GetHashCode();
-    private Rect _GuiRect = new Rect(20, 100, 300, 50);
+    private Rect _GuiRect = new Rect(20, 500, 300, 50);
 
     private void OnGUI()
     {
@@ -232,6 +237,7 @@ public class RaceGameMode : MonoBehaviour
             GUILayout.Label(PlayerString);
             if (GUILayout.Button("Clone"))
             {
+                if (Skater.All.Length >= MaxPlayerCount) return;
                 var toCopy = leaderboard[i].SkaterComponent.gameObject;
                 var newPlayer = GameObject.Instantiate(toCopy.gameObject);
                 newPlayer.transform.position = toCopy.transform.position;
@@ -245,13 +251,9 @@ public class RaceGameMode : MonoBehaviour
             GUILayout.EndHorizontal();
         }
 
-        if (GUILayout.Button("Add Player"))
+        if (GUILayout.Button("EndRace"))
         {
-            if (Skater.All.Length == 0) return;
-
-            var ToCopy = Skater.All.First();
-            var newPlayer = GameObject.Instantiate(ToCopy.gameObject);
-            newPlayer.transform.position = ToCopy.transform.position + Vector3.up * 1.0f;
+            this.ForceFinish();
         }
 
         GUI.DragWindow(new Rect(0, 0, float.MaxValue, float.MaxValue));

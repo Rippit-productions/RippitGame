@@ -11,5 +11,4 @@ public class SkaterSoundSet : ScriptableObject
     public EventReference GrindOnSFX;
     public EventReference GrindOffSFX;
     public EventReference GrindSFX;
-
 }

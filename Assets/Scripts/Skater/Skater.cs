@@ -35,14 +35,13 @@ public class Skater : MonoBehaviour
 
     public enum SkaterState
     {
-        Idle,
         GodMode,
         Grounded,
         Jumping,
         Grind,
         Grapple
     }
-
+    
 
     public SkaterState State => _CharacterState;
     [field:SerializeField] protected SkaterState _CharacterState = SkaterState.Grounded;
@@ -356,7 +355,12 @@ public class Skater : MonoBehaviour
         }
         return _RigidBody.velocity.magnitude / Maxspeed;
     }
-    
+
+    public void ToggleIdle(bool on)
+    {
+        this._PlayerController.PlayerInputComponent.enabled = on;
+    }
+
     //Floor Raycasting
     protected (bool Success, RaycastHit2D Result) RaycastFloor()
     {
