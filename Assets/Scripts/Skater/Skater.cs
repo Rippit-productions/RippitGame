@@ -347,7 +347,6 @@ public class Skater : MonoBehaviour
         _RigidBody.AddForce(GravityVector * this.Gravity * Time.deltaTime, ForceMode2D.Impulse);
         return;
     }
-
     public float GetNormalisedSpeed()
     {
         if (this._CharacterState == SkaterState.Grind) {
@@ -355,7 +354,6 @@ public class Skater : MonoBehaviour
         }
         return _RigidBody.velocity.magnitude / Maxspeed;
     }
-
     public void ToggleIdle(bool on)
     {
         this._PlayerController.PlayerInputComponent.enabled = on;
@@ -529,7 +527,6 @@ public class Skater : MonoBehaviour
             Gizmos.DrawWireCube(closestRailPoint.ResultRailPoint.GetWorldPosition(), Vector3.one * 0.75f);
         }
     }
-
     protected bool _EditorSelected
     {
         get

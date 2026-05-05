@@ -15,11 +15,12 @@ public class RaceGameMode : MonoBehaviour
     public static RaceGameMode Instance => FindFirstObjectByType<RaceGameMode>();
     public enum RaceState
     {
+        Intro,
         InProgress,
         Finished
     }
 
-    private RaceState _State = RaceState.InProgress;
+    private RaceState _State = RaceState.Intro;
     public RaceState Stae => _State;
 
     public const string FMODParam_RaceEnd = "RaceEnd";
@@ -84,6 +85,7 @@ public class RaceGameMode : MonoBehaviour
 
     void Start()
     {
+        _State = RaceState.InProgress;
         _track = GetComponent<Track>();
     }
 
@@ -112,17 +114,16 @@ public class RaceGameMode : MonoBehaviour
                 break;
         }
     }
-
-    public bool IsRaceFinished()
-    {
-        return !_Players.Where(p => p.Finished == false).Any();
-    }
-
     public string GetTimeString()
     {
         var timespan = System.TimeSpan.FromSeconds(_timer);
         var timerString = timespan.Duration().ToString(@"mm\:ss\.ff");
         return timerString;
+    }
+
+    public bool IsRaceFinished()
+    {
+        return !_Players.Where(p => p.Finished == false).Any();
     }
 
     private void UpdateLeaderboard()
@@ -170,6 +171,14 @@ public class RaceGameMode : MonoBehaviour
         leaderboard.AddRange(finishedPlayers);
         leaderboard.AddRange(unfinishedPlayers);
         return leaderboard.ToArray();
+    }
+
+    public void ToggleSkaterIdle(bool on)
+    {
+        foreach (var skater in Skater.All)
+        {
+            skater.ToggleIdle(on);
+        }
     }
 
     /// <summary>
