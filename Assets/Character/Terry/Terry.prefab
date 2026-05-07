@@ -9950,7 +9950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ae27019097a1564db93e89e6384a614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerInputComponent: {fileID: 1056550372952988897}
   _MoveAction: {fileID: -196028678538658963, guid: ce8b708d3b1c306439392ad72a7ba5fd, type: 3}
   _JumpAction: {fileID: -543132210360157408, guid: ce8b708d3b1c306439392ad72a7ba5fd, type: 3}
   _GrappleAction: {fileID: 0}
@@ -9971,6 +9970,11 @@ MonoBehaviour:
   _AnimatorComp: {fileID: 0}
   _SpriteRenderer: {fileID: 341918765305817330}
   _LineRenderer: {fileID: 0}
+  JumpState:
+    Controller: {fileID: 9100000, guid: 8ee630cc3cb5ece428fd8024b6c90ced, type: 2}
+    path:
+      LayerName: Base Layer
+      StateName: Jump
   Friction: 0.05
   Gravity: 15
   _FloorRayLength: 1

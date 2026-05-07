@@ -2,115 +2,172 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
+using AnimationStateReference;
+
+
+
+
 
 [CustomEditor(typeof(AnimatorStateReference))]
-public class AnimatorStateReferenceEditor : Editor
+public class AnimatorStateReferenceEditor : EditorWindow
 {
-    public VisualTreeAsset _EditorGUI;
+    [SerializeField]private VisualTreeAsset _EditorGUI;
 
-    private AnimatorStateReference _Asset;
-
+    private GameObject _InitSelectedGameObj;
 
     private ObjectField ControllerField;
-    private TextField StateNameField;
-    private TreeView StateNamesView;
+    private ScrollView StateScrollView;
 
-    private Action OnAnyChange = () => { };
+    public AnimatorStateReference returnData => _returnData;
+    private AnimatorStateReference _returnData;
 
-    public override VisualElement CreateInspectorGUI()
+    private class StateLabel : Label
     {
-        var root = new VisualElement();
-        var GUI = _EditorGUI.CloneTree();
+        private string _LayerName;
+        private string _StateName;
 
-        root.Add(GUI);
-
-        ControllerField = GUI.Q<ObjectField>("ControllerObjectField");
-        StateNameField = GUI.Q<TextField>("StateNameField");
-        StateNamesView = GUI.Q<TreeView>("StatesTreeView");
-
-        _Asset = (AnimatorStateReference)target;
-        OnAnyChange += () =>
+        public string LayerName
         {
-            EditorUtility.SetDirty(_Asset);
-        };
-
-        if (_Asset.Controller != null)
-        {
-            ControllerField.value = _Asset.Controller;
+            set
+            {
+                _LayerName = value;
+                text = GetFullString();
+            }
         }
-        ControllerField.RegisterValueChangedCallback(change => {
-            _Asset.Controller = (AnimatorController)change.newValue;
-            _RefreshOptionList();
-            OnAnyChange.Invoke();
-        });
 
-        StateNameField.value = _Asset.StateName.GetFullStateName();
-
-
-        StateNamesView.makeItem = () => new Label();
-        StateNamesView.bindItem = (element, id) =>
+        public string StateName
         {
-            var data = StateNamesView.GetItemDataForIndex<(bool IsLayer, AnimatorStateName StateString)>(id);
-            if (data.IsLayer) 
+            set
             {
-                ((Label)element).text =  data.StateString.LayerName;
+                _StateName = value;
+                text = GetFullString();
             }
-            else
-            {
-                ((Label)element).text = StateNamesView.GetItemDataForIndex<(bool IsLayer, AnimatorStateName StateString)>(id).StateString.GetFullStateName();
-            }
-        };
+        }
 
-        StateNamesView.selectedIndicesChanged += (selectIndex) =>
+        public string GetFullString()
         {
-            _Asset.StateName = StateNamesView.GetItemDataForIndex<(bool IsLayer, AnimatorStateName StateString)>(selectIndex.First()).StateString;
-            StateNameField.value = _Asset.StateName.GetFullStateName();
-            OnAnyChange.Invoke();
-        };
-
-        
-        _RefreshOptionList();
-        return root;
-        
+            return $"{_LayerName}.{_StateName}";
+        }
     }
 
-    private void _RefreshOptionList()
+    private class LayerGroup : Foldout
     {
-        if (ControllerField.value == null) return;
-        AnimatorController controller = ControllerField.value as AnimatorController;
+        private ListView LayerStateView;
+        private List<AnimationStatePath> items = new List<AnimationStatePath>();
 
-        List<TreeViewItemData<(bool IsLayer,AnimatorStateName StateString)>> Items = new List<TreeViewItemData<(bool IsLayer, AnimatorStateName StateString)>>();
-        foreach (var layer in controller.layers) 
+        public Action<AnimationStatePath> OnSelectionChange = newData => { };
+        public LayerGroup(AnimatorControllerLayer Layer) 
         {
-            List<TreeViewItemData<(bool IsLayer, AnimatorStateName StateString)>> childItems = new List<TreeViewItemData<(bool IsLayer, AnimatorStateName StateString)>>();
-            foreach (var child in layer.stateMachine.states)
+            this.value = false;
+            this.text = Layer.name;
+
+            foreach (var state in Layer.stateMachine.states)
             {
-                int childGuid = Guid.NewGuid().GetHashCode();
-                TreeViewItemData<(bool IsLayer, AnimatorStateName StateString)> childData = new TreeViewItemData<(bool IsLayer, AnimatorStateName StateString)>(
-                    childGuid,
-                    (false, new AnimatorStateName()
-                    {
-                        LayerName = layer.name,
-                        StateName = child.state.name
-                    }
-                    ));
-                childItems.Add(childData);
+                items.Add(new AnimationStatePath()
+                {
+                    LayerName = Layer.name,
+                    StateName = state.state.name
+                });
             }
-            int LayerGUID = Guid.NewGuid().GetHashCode();
-            AnimatorStateName LayerData = new AnimatorStateName
+
+            Func<VisualElement> makeItem = () => new StateLabel();
+            Action<VisualElement, int> bindItem = (Element, Index) =>
             {
-                LayerName = layer.name,
-                StateName = null,
+                StateLabel label = (StateLabel)Element;
+                label.LayerName = items[Index].LayerName;
+                label.StateName = items[Index].StateName;
             };
-            TreeViewItemData<(bool IsLayer, AnimatorStateName StateString)> item = new TreeViewItemData<(bool IsLayer, AnimatorStateName StateString)>(LayerGUID,(true,LayerData),childItems);
-            Items.Add(item);
+            
+            LayerStateView = new ListView(items,16,makeItem,bindItem);
+
+            LayerStateView.selectedIndicesChanged += selection =>
+            {
+                var newData = items[LayerStateView.selectedIndices.First()];
+                this.OnSelectionChange.Invoke(newData); 
+            };
+
+            this.Add(LayerStateView);
+
+            this.RegisterValueChangedCallback(eventCallback =>
+            {
+                LayerStateView.Rebuild();
+            });
+        }
+    }
+
+    public Action<AnimatorStateReference> OnReturn = returnValue => { };
+    public static  AnimatorStateReference PopUp(GameObject selectedGameObj = null)
+    {
+        var newWindow = ScriptableObject.CreateInstance<AnimatorStateReferenceEditor>();
+        newWindow.titleContent.text = "Select State";
+        newWindow._InitSelectedGameObj = selectedGameObj;
+        newWindow.ShowModal();
+        return newWindow.returnData;
+    }
+
+    private void CreateGUI()
+    {
+        var editorGUI = _EditorGUI.CloneTree();
+        ControllerField = editorGUI.Q<ObjectField>("ControllerObjectField");
+        StateScrollView = editorGUI.Q<ScrollView>("SateScrollView");
+
+        ControllerField.RegisterValueChangedCallback(eventCallback =>
+        {
+            _Refresh();
+        });
+
+        if (this._InitSelectedGameObj) 
+        {
+            Animator animator = _InitSelectedGameObj.GetComponentInChildren<Animator>();
+            AnimatorController controller = null;
+            if (animator) 
+            {
+                controller = (AnimatorController)animator.runtimeAnimatorController;
+                if (controller)
+                {
+                    ControllerField.value = controller;
+                    _Refresh();
+                }
+            }
         }
 
-        StateNamesView.SetRootItems(Items);
-        StateNamesView.Rebuild();
+        rootVisualElement.style.flexGrow = 1;
+        editorGUI.style.flexGrow = 1;
+        rootVisualElement.Add(editorGUI);
+    }
+
+    private void _Refresh()
+    {
+        if (ControllerField.value != null)
+        {
+            StateScrollView.Clear();
+            var controller = (AnimatorController)ControllerField.value;
+            foreach (var layer in controller.layers)
+            {
+                var newItem = new LayerGroup(layer);
+                newItem.OnSelectionChange += (AnimationStatePath data) =>
+                {
+                    _returnData = new AnimatorStateReference
+                    {
+                        Controller = (AnimatorController)ControllerField.value,
+                        path = data
+                    };
+
+                    this.Close();
+                };
+                StateScrollView.Add(newItem);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 }

@@ -1,29 +1,58 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
 
-public struct AnimatorStateName
+namespace AnimationStateReference
 {
-    public string LayerName;
-    public string StateName;
+    [Serializable]
+    public struct AnimationStatePath{
+        public string LayerName;
+        public string StateName;
 
-    public string GetFullStateName()
-    {
-        return $"{LayerName}.{StateName}";
+        public string Get()
+        {
+            return $"{LayerName}.{StateName}";
+        }
     }
-}
 
-[CreateAssetMenu(fileName = "AnimatorStateReference", menuName = "ScriptableObjects/Animator State Reference", order = 1)]
-public class AnimatorStateReference : ScriptableObject
-{
-    public AnimatorController Controller;
-    public AnimatorStateName StateName;
-
-    public string GetStateName()
+    [Serializable]
+    public struct AnimatorStateReference
     {
-        return StateName.GetFullStateName();
+        public AnimatorController Controller;
+        public AnimationStatePath path;
+
+        public string GetStatePath() => path.Get();
+
+        public bool IsValid()
+        {
+            string LayerName = path.LayerName;
+            string StateName = path.StateName;
+            if (Controller == null) return false;
+            else
+            {
+                var matchedLayer = Controller.layers.Where(layer =>
+                {
+                    return layer.name == LayerName;
+                }).FirstOrDefault();
+
+                if (matchedLayer != null)
+                {
+                    var states = matchedLayer.stateMachine.states;
+                    bool stateMatch = states.Where(s =>
+                    {
+                        return s.state.name == StateName;
+                    }).Any();
+
+                    if (stateMatch) return true;
+                }
+            }
+            return true;
+        }
     }
 }

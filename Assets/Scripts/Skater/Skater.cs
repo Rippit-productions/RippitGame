@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using Unity.VisualScripting;
+using AnimationStateReference;
 
 
 public struct SkaterGrindAction
@@ -60,6 +61,9 @@ public class Skater : MonoBehaviour
     public const string AnimState_Stand = "Stand";
     public const string AnimState_Skate = "Skate";
     public const string AnimState_Jump = "Jump";
+
+    [Header("Animation")]
+    public AnimatorStateReference JumpState;
 
     public const string AnimVar_SkateSpeed = "SkateSpeed";
 
@@ -172,14 +176,6 @@ public class Skater : MonoBehaviour
                         this._UpVector = floorCast.Result.normal;
                     }
 
-                    if (_PlayerController.Jump.WasPressedThisFrame())
-                    {
-                        Jump();
-                        this._CharacterState = SkaterState.Jumping;
-
-                        this.JumpSFX.Play();
-                    }
-
                     //Animation 
                     if (this.GetNormalisedSpeed() > 0.1f && this.GetNormalisedSpeed() < 0.7f)
                     {
@@ -190,6 +186,15 @@ public class Skater : MonoBehaviour
                     {
                         this.PlayAnimationState(AnimState_Stand);
                     }
+
+                    if (_PlayerController.Jump.WasPressedThisFrame())
+                    {
+                        Jump();
+                        this._CharacterState = SkaterState.Jumping;
+
+                        this.JumpSFX.Play();
+                    }
+
                     break;
                 }
             case SkaterState.Jumping:
