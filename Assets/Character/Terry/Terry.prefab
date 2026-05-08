@@ -9970,9 +9970,19 @@ MonoBehaviour:
   _AnimatorComp: {fileID: 0}
   _SpriteRenderer: {fileID: 341918765305817330}
   _LineRenderer: {fileID: 0}
-  JumpState:
-    Controller: {fileID: 9100000, guid: 8ee630cc3cb5ece428fd8024b6c90ced, type: 2}
-    path:
+  StandAnimation:
+    _Controller: {fileID: 9100000, guid: 8ee630cc3cb5ece428fd8024b6c90ced, type: 2}
+    _path:
+      LayerName: Base Layer
+      StateName: Stand
+  SkateAnimation:
+    _Controller: {fileID: 9100000, guid: 8ee630cc3cb5ece428fd8024b6c90ced, type: 2}
+    _path:
+      LayerName: Base Layer
+      StateName: Skate
+  JumpAnimation:
+    _Controller: {fileID: 9100000, guid: 8ee630cc3cb5ece428fd8024b6c90ced, type: 2}
+    _path:
       LayerName: Base Layer
       StateName: Jump
   Friction: 0.05

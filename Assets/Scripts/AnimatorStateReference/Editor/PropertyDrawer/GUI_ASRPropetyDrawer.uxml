@@ -1,0 +1,16 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <engine:VisualElement name="Container" style="flex-grow: 0; flex-direction: row;">
+        <engine:Label text="Propety Name" name="PropertyLabel" style="-unity-text-align: middle-left; padding-right: 10px;" />
+        <engine:VisualElement name="PropertyList" style="flex-grow: 1; width: auto; height: initial; overflow: hidden;">
+            <engine:VisualElement name="VisualElement" style="flex-grow: 0; flex-direction: row; overflow: visible;">
+                <engine:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Scripts/AnimatorStateReference/Editor/GUI%20Icons/Sp_UnityAnimController.png?fileID=2800000&amp;guid=0fef24736867ea94e9423133a294b29f&amp;type=3#Sp_UnityAnimController&quot;); width: 30px; -unity-background-scale-mode: scale-to-fit; flex-shrink: 0;" />
+                <engine:TextField readonly="false" name="ControllerName" style="flex-grow: 1; width: auto;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="VisualElement" style="flex-grow: 0; flex-direction: row;">
+                <engine:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Scripts/AnimatorStateReference/Editor/GUI%20Icons/Sp_UnityMotion.png?fileID=2800000&amp;guid=ef8fe52e7a7c42c40a589504c2f0b46c&amp;type=3#Sp_UnityMotion&quot;); width: 30px; -unity-background-scale-mode: scale-to-fit; flex-shrink: 0;" />
+                <engine:TextField readonly="true" name="StateName" hide-placeholder-on-focus="true" style="flex-grow: 1; width: auto;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:Button name="SearchButton" style="flex-grow: 0; flex-shrink: 1; background-image: url(&quot;project://database/Assets/Scripts/AnimatorStateReference/Editor/GUI%20Icons/Sp_UnityFolder.png?fileID=2800000&amp;guid=d93499ae49c83fe489ece95669538f3a&amp;type=3#Sp_UnityFolder&quot;); width: 20px; -unity-background-scale-mode: scale-to-fit; height: auto; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; -unity-slice-scale: 2px; -unity-background-image-tint-color: rgb(138, 138, 138);" />
+    </engine:VisualElement>
+</engine:UXML>

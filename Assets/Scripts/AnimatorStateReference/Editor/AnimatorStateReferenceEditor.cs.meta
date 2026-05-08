@@ -6,7 +6,7 @@ MonoImporter:
   defaultReferences:
   - _EditorGUI: {fileID: 9197481963319205126, guid: 85e7c5d46ce030440934db8c0edb9d33, type: 3}
   executionOrder: 0
-  icon: {instanceID: 0}
+  icon: {fileID: 2800000, guid: 0fef24736867ea94e9423133a294b29f, type: 3}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -2,15 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using AnimationStateReference;
-
-
 
 
 
@@ -153,12 +150,7 @@ public class AnimatorStateReferenceEditor : EditorWindow
                 var newItem = new LayerGroup(layer);
                 newItem.OnSelectionChange += (AnimationStatePath data) =>
                 {
-                    _returnData = new AnimatorStateReference
-                    {
-                        Controller = (AnimatorController)ControllerField.value,
-                        path = data
-                    };
-
+                    _returnData = new AnimatorStateReference(controller,data);
                     this.Close();
                 };
                 StateScrollView.Add(newItem);

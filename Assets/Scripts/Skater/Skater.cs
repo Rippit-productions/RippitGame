@@ -57,13 +57,10 @@ public class Skater : MonoBehaviour
     public SpriteRenderer _SpriteRenderer;
     public LineRenderer _LineRenderer;
 
-    //Animation
-    public const string AnimState_Stand = "Stand";
-    public const string AnimState_Skate = "Skate";
-    public const string AnimState_Jump = "Jump";
-
     [Header("Animation")]
-    public AnimatorStateReference JumpState;
+    public AnimatorStateReference StandAnimation;
+    public AnimatorStateReference SkateAnimation;
+    public AnimatorStateReference JumpAnimation;
 
     public const string AnimVar_SkateSpeed = "SkateSpeed";
 
@@ -180,11 +177,11 @@ public class Skater : MonoBehaviour
                     if (this.GetNormalisedSpeed() > 0.1f && this.GetNormalisedSpeed() < 0.7f)
                     {
                         this._AnimatorComp.SetFloat(AnimVar_SkateSpeed, 1.0f);
-                        this.PlayAnimationState(AnimState_Skate);
+                        this.PlayAnimationState(SkateAnimation);
                     }
                     else
                     {
-                        this.PlayAnimationState(AnimState_Stand);
+                        this.PlayAnimationState(StandAnimation);
                     }
 
                     if (_PlayerController.Jump.WasPressedThisFrame())
@@ -339,8 +336,7 @@ public class Skater : MonoBehaviour
         Vector2 jumpVector = Vector2.zero + (Vector2)_UpVector;
         _RigidBody.AddForce(jumpVector * scaledJumpForce, ForceMode2D.Impulse);
 
-        this.PlayAnimationState(AnimState_Jump);
-
+        this.PlayAnimationState(JumpAnimation);
     }
     public void SetPosition(Vector2 NewPosition)
     {
