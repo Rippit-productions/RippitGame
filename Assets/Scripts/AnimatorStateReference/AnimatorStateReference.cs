@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Animations;
 
 
 namespace AnimationStateReference
@@ -28,46 +27,17 @@ namespace AnimationStateReference
     [System.Serializable]
     public class AnimatorStateReference
     {
-        public AnimatorStateReference(AnimatorController Controller, AnimationStatePath path)
+        public AnimatorStateReference(RuntimeAnimatorController Controller, AnimationStatePath path)
         {
             this._Controller = Controller;
             this._path = path; 
         }
 
-        public AnimatorController AnimController => _Controller;
-        [SerializeField]private AnimatorController _Controller;
+        public RuntimeAnimatorController AnimController => _Controller;
+        [SerializeField]private RuntimeAnimatorController _Controller;
         [SerializeField]private AnimationStatePath _path;
 
         public string GetStatePath() => _path;
-
-        public bool IsValid()
-        {
-            if (_Controller == null)
-            {
-                return false;
-            }
-            else
-            {
-                var matchedLayer = _Controller.layers.Where(layer =>
-                {
-                    return layer.name == this._path.LayerName;
-                }).FirstOrDefault();
-
-                if (matchedLayer != null)
-                {
-                    var states = matchedLayer.stateMachine.states;
-                    bool stateMatch = states.Where(s =>
-                    {
-                        return s.state.name == this._path.StateName;
-                    }).Any();
-
-                    // Layer and State name match. Reference is valid
-                    if (stateMatch) return true;
-                }
-            }
-            // Layer name or State name don't match. Reference is invalid
-            return true;
-        }
 
         public override string ToString() => _path;
 

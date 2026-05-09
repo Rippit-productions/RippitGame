@@ -45,7 +45,7 @@ public class Skater : MonoBehaviour
     
 
     public SkaterState State => _CharacterState;
-    [field:SerializeField] protected SkaterState _CharacterState = SkaterState.Grounded;
+    private SkaterState _CharacterState = SkaterState.Grounded;
     public bool IsGrounded => _CharacterState == SkaterState.Grounded;
 
     [Header("Components")]

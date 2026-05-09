@@ -99,8 +99,11 @@ public class PlayerCamera : MonoBehaviour
         if (skater == this.linkedCharacter)
         {
             this.DisconnectFromPlayer();
-            GameObject.Destroy(_CinemachineBrain.gameObject);
-            GameObject.Destroy(this.gameObject);
+            if (this != null)
+            {
+                GameObject.Destroy(_CinemachineBrain.gameObject);
+                GameObject.Destroy(this.gameObject);
+            }
         }
     }
     

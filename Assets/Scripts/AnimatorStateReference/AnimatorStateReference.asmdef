@@ -1,7 +1,10 @@
 {
     "name": "AnimatorStateReference",
     "rootNamespace": "AnimationStateReference",
-    "references": [],
+    "references": [
+        "GUID:41524c21c95e5fe4dbc5b48bd21995a4",
+        "GUID:c3352a8bbbe14fb4ab52ae7bfff927ea"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

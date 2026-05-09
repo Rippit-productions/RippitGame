@@ -215,7 +215,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Sp_UnityMotion_0: 1471935008736452279
+      Sp_UnityMotion_1: 8618746777607397577
+      Sp_UnityMotion_2: -1120480146439763256
+      Sp_UnityMotion_3: -1790780759157701065
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

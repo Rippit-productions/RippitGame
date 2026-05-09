@@ -55,7 +55,6 @@ public class AnimatorStateReferencePropDrawerGUI : ScriptableObject
         if (_Property.boxedValue != null)
         {
             var property = (AnimatorStateReference)_Property.boxedValue;
-            if (property.IsValid())
             _ControllerTextField.value = property.AnimController.name;
             _StateNameTextField.value = property;
 

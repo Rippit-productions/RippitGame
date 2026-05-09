@@ -167,7 +167,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Sp_UnityAnimController_0: -28104206823508703
+      Sp_UnityAnimController_1: 3655236133096271339
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

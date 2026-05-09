@@ -14527,12 +14527,12 @@ MonoBehaviour:
   Laps: 1
   IsClosed: 0
   CheckPoints:
-  - LocalPosition: {x: -5, y: 15, z: 0}
+  - LocalPosition: {x: 0.6677933, y: 8.48204, z: 0}
     CollisionBoxSize: {x: 11.77772, y: 48.84659}
-  - LocalPosition: {x: 85, y: 23.372131, z: 0}
+  - LocalPosition: {x: 95.56051, y: 16.995975, z: 0}
     CollisionBoxSize: {x: 10, y: 21.250214}
-  - LocalPosition: {x: 15, y: 55, z: 0}
-    CollisionBoxSize: {x: 7.187393, y: 61.21012}
+  - LocalPosition: {x: 22.486916, y: 51.506104, z: 0}
+    CollisionBoxSize: {x: 7.187393, y: 31.761566}
   - LocalPosition: {x: -74.37089, y: 38.68809, z: 0}
     CollisionBoxSize: {x: 66.0332, y: 5.6052475}
   - LocalPosition: {x: -30.755226, y: -3.101799, z: 0}
