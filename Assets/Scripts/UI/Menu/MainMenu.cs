@@ -32,6 +32,8 @@ public class MainMenu : Menu
         }
 #endif
         AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);
+
+        return null;
     }
 
 
