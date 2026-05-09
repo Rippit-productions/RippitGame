@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -33,7 +34,7 @@ public class MainMenu : Menu
 #endif
         AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);
 
-        return null;
+        yield break;
     }
 
 
