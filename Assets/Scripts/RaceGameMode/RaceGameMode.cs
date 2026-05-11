@@ -151,9 +151,15 @@ public class RaceGameMode : MonoBehaviour
                 info.SkaterComponent.RespawnPosition = _track.GetRespawnPosition(checkPointIndex);
             }
             float ProgressValue = info.Lap;
-            ProgressValue += _track.GetPointOnTrack(
+
+            float splineValue = _track.GetPointOnTrack(
                 info.SkaterComponent.transform.position
                 ).NPosition;
+
+            float maxSplineValue = (float)info.TargetCheckPoint / (float)_track.CheckPointCount;
+            if (splineValue > maxSplineValue) splineValue = maxSplineValue;
+
+            ProgressValue += splineValue;
             info.Completion = ProgressValue / _track.Laps;
             _Players[i] = info;
         }
@@ -171,6 +177,11 @@ public class RaceGameMode : MonoBehaviour
         leaderboard.AddRange(finishedPlayers);
         leaderboard.AddRange(unfinishedPlayers);
         return leaderboard.ToArray();
+    }
+
+    public PlayerInfo GetProgressOfPlayer(Skater target)
+    {
+        return _Players.Where(info => info.SkaterComponent == target).FirstOrDefault();
     }
 
     public void ToggleSkaterIdle(bool on)

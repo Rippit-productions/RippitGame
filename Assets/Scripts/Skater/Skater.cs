@@ -133,7 +133,6 @@ public class Skater : MonoBehaviour
 
         _InitSounds();
         OnSkaterSpawn.Invoke(this);
-
         this._CharacterState = SkaterState.Grounded;
         this.RespawnPosition = transform.position;
     }
@@ -345,6 +344,7 @@ public class Skater : MonoBehaviour
     public void GotoRespawnPoint()
     {
         _RigidBody.position = RespawnPosition;
+        _RigidBody.velocity = Vector2.zero; 
     }
 
     protected void ApplyGravity(Vector2 GravityVector)

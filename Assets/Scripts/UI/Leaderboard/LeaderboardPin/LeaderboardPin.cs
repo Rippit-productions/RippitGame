@@ -8,6 +8,7 @@ public class LeaderboardPin : MonoBehaviour
     public TMPro.TMP_Text PositionText;
     public TMPro.TMP_Text TimeText;
     public Image CharacterBanner;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -11,7 +11,7 @@ public class Leaderboard : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        RaceGameMode.Instance.OnRaceFinish.AddListener(Init);
+        Init();
     }
 
     private void Init()
