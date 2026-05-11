@@ -146,7 +146,6 @@ public class PlayerCamera : MonoBehaviour
         if (
             newDistance < _cinemachineTransposer.CameraDistance && 
             this.linkedCharacter.State != Skater.SkaterState.Grounded
-            && Vector3.Dot(this.linkedCharacter.Upvector,Vector3.up) < 0.95f
             ) return;
 
         _cinemachineTransposer.CameraDistance = Mathf.Lerp(
@@ -179,7 +178,14 @@ public class PlayerCamera : MonoBehaviour
             float x = (col * width);
             float y = 1.0f - ((row + 1) * height);
 
-            cameras[i].CameraComponent.rect = new Rect(x, y, width, height);
+            if (i >= PlayerCamera.All.Length - 1)
+            {
+                cameras[i].CameraComponent.rect = new Rect(x, y, 1.0f - x, height);
+            }
+            else
+            {
+                cameras[i].CameraComponent.rect = new Rect(x, y, width, height);
+            }
         }
     }
 

@@ -42,7 +42,6 @@ public class Skater : MonoBehaviour
         Grind,
         Grapple
     }
-    
 
     public SkaterState State => _CharacterState;
     private SkaterState _CharacterState = SkaterState.Grounded;
@@ -76,7 +75,7 @@ public class Skater : MonoBehaviour
     private Vector3 _UpVector = Vector3.up;
     [SerializeField] private LayerMask GroundLayerMask;
     private Platform _CurrentPlatform;
-
+    public Vector3 RespawnPosition;
 
     [Header ("Stats")]
     [Range(1.0f,100.0f)]
@@ -90,7 +89,6 @@ public class Skater : MonoBehaviour
 
     private SkaterGrindAction _GrindAction = new SkaterGrindAction();
     private SkaterGrappleAction _GrappleAction = new SkaterGrappleAction();
-
 
     [Header("Sounds")]
     [SerializeField] private SkaterSoundSet SoundSet;
@@ -136,8 +134,8 @@ public class Skater : MonoBehaviour
         _InitSounds();
         OnSkaterSpawn.Invoke(this);
 
-
         this._CharacterState = SkaterState.Grounded;
+        this.RespawnPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -262,7 +260,7 @@ public class Skater : MonoBehaviour
                     this._UpVector = _GrindAction.grindRailPoint.GetUpVector();
                     Vector2 newPosition = this._GrindAction.grindRailPoint.GetWorldPosition();
                     newPosition += (Vector2)_GrindAction.grindRailPoint.GetUpVector() * this.GetBounds().extents.y;
-                    SetPosition(newPosition);
+                    _RigidBody.position = newPosition ;
 
                     bool JumpPresssed = this._PlayerController.Jump.WasPressedThisFrame();
                     bool breakGrind = JumpPresssed || !this._GrindAction.grindRailPoint.OnSpline;
@@ -343,6 +341,12 @@ public class Skater : MonoBehaviour
         _RigidBody.position = NewPosition;
         transform.position = NewPosition; 
     }
+
+    public void GotoRespawnPoint()
+    {
+        _RigidBody.position = RespawnPosition;
+    }
+
     protected void ApplyGravity(Vector2 GravityVector)
     {
         _RigidBody.AddForce(GravityVector * this.Gravity * Time.deltaTime, ForceMode2D.Impulse);
@@ -561,7 +565,7 @@ public class Skater : MonoBehaviour
 
         if (GUILayout.Button("Respawn")) 
         {
-            //To-do
+            GotoRespawnPoint();
         }
         if (GUILayout.Button("Godmode"))
         {

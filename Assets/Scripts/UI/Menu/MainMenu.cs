@@ -10,7 +10,7 @@ public class MainMenu : Menu
     private bool FirstClick = false;
     [SerializeField] private FMODUnity.EventReference _MusicTrack;
     // Start is called before the first frame update
-    private async void Start()
+    private new void Start()
     {
         base.Start();
         StartCoroutine(Init());
@@ -36,7 +36,6 @@ public class MainMenu : Menu
 
         yield break;
     }
-
 
     private void ClickActionCallback(InputAction.CallbackContext callbackContext)
     {

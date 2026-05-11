@@ -9,13 +9,26 @@ public class Track : MonoBehaviour
 {
     public int Laps = 1;
     public bool IsClosed; // Track Looping
-    public TrackCheckPoint[] CheckPoints = {new TrackCheckPoint()};
+    public TrackCheckPoint[] CheckPoints = {new TrackCheckPoint(Vector3.zero)};
 
-    public int Count => CheckPoints.Length;
+    public int CheckPointCount => CheckPoints.Length;
+
+    public TrackCheckPoint this[int index]
+    {
+        get
+        {
+            return CheckPoints[index];
+        }
+    }
 
     public Vector3 GetCheckPointPosition(int CheckPointIndex)
     {
         return CheckPoints[CheckPointIndex].LocalPosition + transform.position;
+    }
+
+    public Vector3 GetRespawnPosition(int CheckPointIndex)
+    {
+        return GetCheckPointPosition(CheckPointIndex) + CheckPoints[CheckPointIndex].LocalRespawnPos;
     }
 
     public bool PointOverlapsCheckPoint(Vector3 Position,int CheckPointIndex)
@@ -40,7 +53,10 @@ public class Track : MonoBehaviour
         return new Spline(Knots.ToArray(), false);
     }
 
-    public (Vector3 Position,float NPosition) GetPointOnSpline(Vector3 Position)
+    /// <summary>
+    /// Get closest point on Track's spline.
+    /// </summary>
+    public (Vector3 Position,float NPosition) GetPointOnTrack(Vector3 Position)
     {
         var localPosition = Position - transform.position;
 
@@ -55,7 +71,6 @@ public class Track : MonoBehaviour
 
         return (resultPos, resultNPos);
     }
-
     
 
 #if UNITY_EDITOR
@@ -66,21 +81,21 @@ public class Track : MonoBehaviour
             //CheckPoint
             Gizmos.color = Color.yellow;
             if (i == 0) Gizmos.color = Color.green;
-            else if (i == this.Count - 1 && !IsClosed) Gizmos.color = Color.red;
+            else if (i == this.CheckPointCount - 1 && !IsClosed) Gizmos.color = Color.red;
 
             var handleSize = HandleUtility.GetHandleSize(
                 GetCheckPointPosition(i));
-
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(
-                GetCheckPointPosition(i),
-                handleSize * 0.10f
-                );
 
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(
                 GetCheckPointPosition(i),
                 (Vector3)CheckPoints[i].CollisionBoxSize 
+                );
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(
+                GetRespawnPosition(i),
+                Vector3.one * handleSize * 0.1f
                 );
         }
     }

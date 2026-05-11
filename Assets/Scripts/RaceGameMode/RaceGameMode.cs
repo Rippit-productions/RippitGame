@@ -148,9 +148,10 @@ public class RaceGameMode : MonoBehaviour
                     info.Finished = true;
                     info.FinalTime = _timer;
                 }
+                info.SkaterComponent.RespawnPosition = _track.GetRespawnPosition(checkPointIndex);
             }
             float ProgressValue = info.Lap;
-            ProgressValue += _track.GetPointOnSpline(
+            ProgressValue += _track.GetPointOnTrack(
                 info.SkaterComponent.transform.position
                 ).NPosition;
             info.Completion = ProgressValue / _track.Laps;
