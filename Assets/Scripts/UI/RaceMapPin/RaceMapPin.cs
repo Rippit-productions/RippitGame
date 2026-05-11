@@ -25,12 +25,13 @@ public class RaceMapPin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdatePosition();
     }
 
     private void UpdatePosition()
     {
-
+        var if asd
+        _rectTransform.anchorMin
     }
 
     private void Refresh()
