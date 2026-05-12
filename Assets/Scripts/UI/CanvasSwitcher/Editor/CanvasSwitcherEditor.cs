@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -139,7 +140,7 @@ public class CanvasSwitcherEditor : Editor
 
         foreach (var obj in rootObjs)
         {
-            CanvasSwitcher[] components = obj.GetComponentsInChildren<CanvasSwitcher>();
+            CanvasSwitcher[] components = obj.GetComponentsInChildren<CanvasSwitcher>().Reverse().ToArray();
             foreach (var component in components)
             {
                 _EditorRefresh(component);

@@ -159,7 +159,7 @@ public class RaceGameMode : MonoBehaviour
             float maxSplineValue = (float)info.TargetCheckPoint / (float)_track.CheckPointCount;
             if (splineValue > maxSplineValue) splineValue = maxSplineValue;
 
-            ProgressValue += splineValue;
+            ProgressValue += Mathf.Clamp( splineValue,0.0f,1.0f);
             info.Completion = ProgressValue / _track.Laps;
             _Players[i] = info;
         }
