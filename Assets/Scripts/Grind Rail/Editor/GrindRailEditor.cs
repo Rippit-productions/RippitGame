@@ -120,7 +120,7 @@ public class GrindRailEditor : Editor
     }
     private void Refresh()
     {
-
+        EditorUtility.SetDirty(_Component.gameObject);
         while (_Component.transform.childCount > 0)
         {
             GameObject.DestroyImmediate(_Component.transform.GetChild(0).gameObject);

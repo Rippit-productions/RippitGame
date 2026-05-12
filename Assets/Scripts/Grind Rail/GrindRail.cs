@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 using UnityEngine.Splines;
+using FMODUnity;
 using System.Linq;
 using System;
 
@@ -17,6 +18,7 @@ public struct GrailPoint
     public Vector3 Tangent;
     public float NormalisedPosition;
 }
+
 
 public class GrindRailPoint
 {
@@ -104,10 +106,21 @@ public class GrindRailPoint
     }
 }
 
+
+public struct GrindRailSoundSet
+{
+    public EventReference GrindOnSFX;
+    public EventReference GrindOffSFX;
+    public EventReference GrindFX;
+}
+
 [ExecuteAlways]
 [RequireComponent(typeof(SplineContainer))]
 public class GrindRail : MonoBehaviour
 {
+    public GrindRailSoundSet SoundSet => _SoundSet;
+    [SerializeField]private GrindRailSoundSet _SoundSet;
+
     public SplineContainer _SplineComponent;
     public Sprite PointSprite;
     public Color Colour = Color.black;
@@ -119,8 +132,6 @@ public class GrindRail : MonoBehaviour
     {
         _SplineComponent = GetComponent<SplineContainer>();
     }
-
-
 
     public Spline[] GetSplines() => _SplineComponent.Splines.ToArray();
 

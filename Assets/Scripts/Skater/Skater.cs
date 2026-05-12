@@ -42,7 +42,6 @@ public class Skater : MonoBehaviour
         Grind,
         Grapple
     }
-
     public SkaterState State => _CharacterState;
     private SkaterState _CharacterState = SkaterState.Grounded;
     public bool IsGrounded => _CharacterState == SkaterState.Grounded;
@@ -237,6 +236,7 @@ public class Skater : MonoBehaviour
                         }
                         this._GrindAction.GrindSpeed = _RigidBody.velocity.magnitude;
                         this._GrindAction.grindRailPoint = collidingRailPoint;
+                        _RigidBody.bodyType = RigidbodyType2D.Kinematic;
                         _RigidBody.velocity = Vector2.zero;
                         this._CharacterState = SkaterState.Grind;
                         this.OnGrind.Invoke(true);
@@ -282,6 +282,7 @@ public class Skater : MonoBehaviour
                         this.GrindSFX.Stop();
                         this.GrindOffSFX.Play();
 
+                        _RigidBody.bodyType = RigidbodyType2D.Dynamic;
                         this.OnGrind.Invoke(false);
                     }
                     break;
