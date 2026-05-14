@@ -47,7 +47,7 @@ public class Skater : MonoBehaviour
     public bool IsGrounded => _CharacterState == SkaterState.Grounded;
 
     [Header("Components")]
-    public SkateController _PlayerController;
+    public PlayerController _PlayerController;
     protected Rigidbody2D _RigidBody;
     protected CircleCollider2D _CirlceCollider;
 
@@ -126,7 +126,7 @@ public class Skater : MonoBehaviour
         _InitRigidbody();
         _SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _AnimatorComp = GetComponentInChildren<Animator>(); 
-        _PlayerController = GetComponent<SkateController>();
+        _PlayerController = GetComponent<PlayerController>();
 
         var newCamera = PlayerCamera.CreateCamera(this);
 

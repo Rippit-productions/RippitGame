@@ -1,51 +1,57 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
 using System;
-using FMODUnity;
-using UnityEngine.SceneManagement;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 
-// ALL SUBJECT TO A CODE REVIEW:
-// Stephen McGuinness
 
-/// <summary>
-/// Manages the overall state of the game including pausing, volume controls, and graphic quality.
-/// </summary>
-/// 
-public class GameManager 
+public enum GameMode
 {
+    Race,
+    Practise,
+}
+
+public class GameManager : MonoBehaviour
+{
+    public static GameMode Mode = GameMode.Race;
+    public const int MaxPlayerCount = 6;
+    //Singleton
     public static GameManager Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = new GameManager();
+                _instance = new GameObject("GameManager").AddComponent<GameManager>();
+                DontDestroyOnLoad(_instance.gameObject);
             }
-
             return _instance;
         }
     }
-    /// <value>Singleton instance of the game manager</value>
     private static GameManager _instance;
+
+    //Events
+    public Action<bool> OnPause = new Action<bool>((bool IsPaused) => { });
 
     public bool IsPaused => _paused;
     private bool _paused;
-    /// <value>Indicates whether the game is paused</value>
-
 
     public CanvasSwitcher canvasSwitcher;
     public Toggle[] qualitySettings;
-    public TMP_Dropdown resolutionDropdown;
-    private List<Resolution> filteredResolutions = new List<Resolution>();
 
-    public Action<bool> OnPause = new Action<bool>((bool IsPaused) => { });
-
-    private static Coroutine _LoadingSceneCoroutine;
+    private void Start()
+    {
+        if (_instance == null)
+        {
+            _instance = GetComponent<GameManager>();
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     public void TogglePause(bool Pause)
     {
@@ -57,21 +63,5 @@ public class GameManager
         }
     }
 
-    /// <summary>
-    /// Sets the quality of the graphics.
-    /// </summary>
-    /// <param name="qualityIndex">Index representing the desired quality level</param>
-    public void SetQuality(int qualityIndex) {
-        for (int i = 0; i < qualitySettings.Length; i++) 
-        { 
-            if (i != qualityIndex) qualitySettings[i].isOn = false; 
-        } 
-        QualitySettings.SetQualityLevel(qualityIndex, true); 
-    }
-
-    /// <summary>
-    /// Sets the resolution of the game.
-    /// </summary>
-    /// <param name="resolutionIndex">Index of the selected resolution</param>
-    public void SetResolution(int resolutionIndex) => Screen.SetResolution(filteredResolutions[resolutionIndex].width, filteredResolutions[resolutionIndex].height, Screen.fullScreen);
+    
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SkateController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public PlayerInput PlayerInputComponent => _PlayerInputComponent;
     private PlayerInput _PlayerInputComponent;
@@ -25,7 +25,6 @@ public class SkateController : MonoBehaviour
         _PlayerInputComponent = GetComponent<PlayerInput>();
         _PlayerInputComponent.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
         _PlayerInputComponent.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
-
     }
 
     private void Update()

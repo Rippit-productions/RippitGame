@@ -10,7 +10,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Track))]
 public class RaceGameMode : MonoBehaviour
 {
-    public const int MaxPlayerCount = 4;
     public static RaceGameMode Instance => FindFirstObjectByType<RaceGameMode>();
     public enum RaceState
     {
@@ -257,7 +256,7 @@ public class RaceGameMode : MonoBehaviour
             GUILayout.Label(PlayerString);
             if (GUILayout.Button("Clone"))
             {
-                if (Skater.All.Length >= MaxPlayerCount) return;
+                if (Skater.All.Length >= GameManager.MaxPlayerCount) return;
                 var toCopy = leaderboard[i].SkaterComponent.gameObject;
                 var newPlayer = GameObject.Instantiate(toCopy.gameObject);
                 newPlayer.transform.position = toCopy.transform.position;
