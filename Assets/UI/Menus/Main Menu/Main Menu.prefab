@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8225404774171370501}
   - component: {fileID: 2006443107211269617}
   - component: {fileID: 2212682712854808016}
-  - component: {fileID: 8431432050886314701}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -64,6 +63,8 @@ MonoBehaviour:
       Data3: 1386897040
       Data4: -1534676055
     Path: event:/Music/Menu Tracks/Cubenatural - Eto
+  _CharacterSelectScene: {fileID: 0}
+  _GreyboxScene: {fileID: 0}
 --- !u!114 &1623886332285543497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,18 +144,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8431432050886314701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 385762712900460377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5d8b961b14638740a79857c9e8c244d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1372357173527533738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1578,10 +1567,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7690202863731589511, guid: 8cb4ffe459e743449af9d637db1ed0a3, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 8431432050886314701}
     - target: {fileID: 8421453984846780021, guid: 8cb4ffe459e743449af9d637db1ed0a3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

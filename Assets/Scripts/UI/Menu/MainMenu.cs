@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -9,6 +10,9 @@ public class MainMenu : Menu
 {
     private bool FirstClick = false;
     [SerializeField] private FMODUnity.EventReference _MusicTrack;
+
+    [SerializeField] private SceneAsset _CharacterSelectScene;
+    [SerializeField] private SceneAsset _GreyboxScene;
     // Start is called before the first frame update
     private new void Start()
     {

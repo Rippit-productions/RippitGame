@@ -1,10 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-
-
+using UnityEditor;
 
 public enum GameMode
 {
@@ -37,21 +34,33 @@ public class GameManager : MonoBehaviour
     public bool IsPaused => _paused;
     private bool _paused;
 
-    public CanvasSwitcher canvasSwitcher;
-    public Toggle[] qualitySettings;
-
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         if (_instance == null)
         {
             _instance = GetComponent<GameManager>();
-            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
             Destroy(this.gameObject);
         }
     }
+
+    public void QuitGame() => Application.Quit();
+
+#if UNITY_EDITOR
+    [MenuItem("GameObject/GameManager", false, 10)]
+    public static void _EditorCreateGameManager()
+    {
+        if (FindFirstObjectByType<GameManager>())
+        {
+            return;
+        }
+        var newObj = new GameObject("GameManager");
+        newObj.AddComponent<GameManager>();
+    }
+#endif
 
     public void TogglePause(bool Pause)
     {
@@ -63,5 +72,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
+
+    public void LoadScene(SceneAsset Scene)
+    {
+        StartCoroutine(SceneLoader.LoadScene(Scene.name));
+    }
 }

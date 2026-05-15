@@ -22,8 +22,6 @@ public class SceneLoader
         _LoadingOperation.allowSceneActivation = true;
         _LoadingOperation = null;
         
-
-        
     }
 
 }
