@@ -533,18 +533,6 @@ public class Skater : MonoBehaviour
             Gizmos.DrawWireCube(closestRailPoint.ResultRailPoint.GetWorldPosition(), Vector3.one * 0.75f);
         }
     }
-    protected bool _EditorSelected
-    {
-        get
-        {
-            if (Selection.activeGameObject == null) return false;
-            else
-            {
-                var Selected = Selection.activeGameObject;
-                return Selected == this.gameObject || Selected.transform.IsChildOf(this.transform);
-            }
-        }
-    }
 
     private int GuiID = Guid.NewGuid().GetHashCode();
     private Rect _GuiRect = new Rect(20, 20, 300, 200);
