@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 131197ee83ab01843bc529bbf35ca570
+guid: b751b502ea08e20418038794b9df6d09
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5060691862110418204
-    second: Sp_TerryBanner_0
+      213: 8553939379897606112
+    second: Terry_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sp_TerryBanner_0
+      name: Terry_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 41
+        y: 0
         width: 721
-        height: 750
+        height: 832
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4eac239609fc4c9b0800000000000000
-      internalID: -5060691862110418204
+      spriteID: 0ef95099b82b5b670800000000000000
+      internalID: 8553939379897606112
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sp_TerryBanner_0: -5060691862110418204
+      Terry_0: 8553939379897606112
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

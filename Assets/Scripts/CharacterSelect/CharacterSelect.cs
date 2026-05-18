@@ -3,36 +3,74 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 namespace CharacterSelect
 {
-    public enum CharacterOption
+    public enum CharacterName
     {
         Terry,
-        Snake,
-        Spider
+        K4RMA,
+        Ax,
+        Manny
     }
 
-    public struct PlayerSelection
+    [Serializable]
+    public struct CharacterPrefab
     {
-        CharacterOption Character;
-        int ColourIndex;
-        string DevicePath;
+        public CharacterName Name;
+        public GameObject PrefabObject;
     }
 
+    public class PlayerSelection
+    {
+        CharacterName Character;
+        int ColourIndex;
+        int PlayerIndex;
+        string DevicePath;
+        bool Confirmed;
+
+        public PlayerSelection(int playerIndex,string InputDevicePath)
+        {
+            Character = CharacterName.Terry;
+            ColourIndex = 0;
+            this.PlayerIndex = playerIndex;
+            DevicePath = "";
+            Confirmed = false;
+        }
+
+        public override string ToString()
+        {
+            return $"Player Selection: Device {DevicePath} | {Character}";
+        }
+    }
+
+    public enum PlayerChangeEvent
+    {
+        Joined,
+        Left
+    }
 
     public class CharacterSelect : MonoBehaviour
     {
         [SerializeField] private EventReference _MusicTrack;
         [Header("Controller")]
         [SerializeField] private GameObject CharacterSelectControllerPrefab;
-        [Header("Variables")]
-        [SerializeField] private GameObject DefaultSelection;
+
+        [Header("Player Banner Setup")]
+        [SerializeField] private GameObject PlayerBannerList;
+        [SerializeField] private GameObject PlayerBannerPrefab;
+        [SerializeField] private GameObject PlayerJoinBanner;
 
         private List<InputDevice> _DeviceQueue = new List<InputDevice>();
-        private List<(PlayerSelection Select, bool Confirmed)> _Selections = new List<(PlayerSelection Select, bool Confirmed)>();
 
+        public static List<PlayerSelection> Selections => _Selections; 
+        private static List<PlayerSelection> _Selections = new List<PlayerSelection>();
+
+        //Events
+        public UnityEvent<PlayerChangeEvent> OnPlayerChange = new UnityEvent<PlayerChangeEvent>();
 
         private void Start()
         {
@@ -59,7 +97,6 @@ namespace CharacterSelect
             AudioManager.Instance.PlayAudioInstance(_MusicTrack,AudioManager.AudioType.Music);
         }
 
-
         private void Update()
         {
             foreach (var device in _DeviceQueue)
@@ -67,25 +104,50 @@ namespace CharacterSelect
                 if (device is Gamepad)
                 {
                     if (((Gamepad)device).aButton.wasPressedThisFrame)
+                    {
                         AddPlayer(device);
+                        break;
+                    }
                 }
                 else if (device is Keyboard)
                 {
                     if (((Keyboard)device).enterKey.wasPressedThisFrame)
+                    {
                         AddPlayer(device);
+                        break;
+                    }
                 }
-
 
             }
         }
 
         private void AddPlayer(InputDevice Device)
         {
-            var newInputObj = PlayerInput.Instantiate(CharacterSelectControllerPrefab, -1, null, -1, Device);
+            var newInputComp = PlayerInput.Instantiate(CharacterSelectControllerPrefab, -1, null, -1, Device);
+            newInputComp.gameObject.name = $"Player Select Controller: {newInputComp.playerIndex}";
+
+            var UIComponent = newInputComp.gameObject.GetComponent<InputSystemUIInputModule>();
+            UIComponent.cancel.action.performed += inputState  =>
+            {
+                if (inputState.phase == InputActionPhase.Started)
+                {
+                    RemovePlayer(newInputComp.playerIndex);
+                }
+            };
+
             _DeviceQueue.Remove(Device);
+            _Selections.Add(new PlayerSelection(newInputComp.playerIndex,Device.path));
+            this.OnPlayerChange.Invoke(PlayerChangeEvent.Joined);
+            
         }
 
+        private void RemovePlayer(int index)
+        {
+            if (index < 0 || index >= _Selections.Count) return;
 
+            _Selections.RemoveAt(index);
+            OnPlayerChange.Invoke(PlayerChangeEvent.Left);
+        }
 
 
 #if UNITY_EDITOR
