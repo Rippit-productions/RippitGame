@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using RippitGameManager;
 
 
 [RequireComponent(typeof(Track))]
@@ -256,7 +257,7 @@ public class RaceGameMode : MonoBehaviour
             GUILayout.Label(PlayerString);
             if (GUILayout.Button("Clone"))
             {
-                if (Skater.All.Length >= GameManager.MaxPlayerCount) return;
+                if (Skater.All.Length >= RippitGameManager.GameManager.MaxPlayerCount) return;
                 var toCopy = leaderboard[i].SkaterComponent.gameObject;
                 var newPlayer = GameObject.Instantiate(toCopy.gameObject);
                 newPlayer.transform.position = toCopy.transform.position;
