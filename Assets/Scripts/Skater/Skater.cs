@@ -537,7 +537,7 @@ public class Skater : MonoBehaviour
         OnSkateDestroy.Invoke(this);
     }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && RIPPIT_DEBUG_GIZMOS
     // Draw Debug Gizmos
     void OnDrawGizmos()
     {

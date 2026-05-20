@@ -210,7 +210,7 @@ public class RaceGameMode : MonoBehaviour
     }
 
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && RIPPIT_DEBUG_GIZMOS
     private void OnDrawGizmos()
     {
         foreach (var player in _Players) 
