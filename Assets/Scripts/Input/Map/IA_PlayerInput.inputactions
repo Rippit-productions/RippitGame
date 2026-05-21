@@ -375,7 +375,7 @@
                 {
                     "name": "",
                     "id": "7c9caf64-a4a5-45a3-b4ea-5c5da1db1175",
-                    "path": "*/{Cancel}",
+                    "path": "<Keyboard>/backspace",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",

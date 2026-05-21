@@ -244,10 +244,10 @@ MonoBehaviour:
       Data3: 1748531119
       Data4: 1547582539
     Path: event:/Music/Menu Tracks/Lordsun and CubeNatural - Prince of the Moon
-  CharacterSelectControllerPrefab: {fileID: 2637500096241469699, guid: de1085ef851667942911cae7e25dfe9f, type: 3}
-  PlayerBannerList: {fileID: 2609408300325845021}
-  PlayerBannerPrefab: {fileID: 114736324346237152, guid: 7b04bbf54ad29d0428dcbbc3539b8725, type: 3}
-  PlayerJoinBanner: {fileID: 3080637199225875116, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
+  PlayerControllerPrefab: {fileID: 3894573558575625179, guid: 812726dad23f25f48ad12b66719db345, type: 3}
+  JoinPrompt: {fileID: 8166854272511771773}
+  DisplayList: {fileID: 6869350640895885444}
+  PlayerUIPrefab: {fileID: 114736324346237152, guid: 7b04bbf54ad29d0428dcbbc3539b8725, type: 3}
 --- !u!1001 &3791072486752721620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -348,6 +348,11 @@ PrefabInstance:
 --- !u!224 &1979200470825541543 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3452871134455825779, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
+  m_PrefabInstance: {fileID: 3791072486752721620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &8166854272511771773 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 5029085817479700137, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
   m_PrefabInstance: {fileID: 3791072486752721620}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5255556910499346014
@@ -452,7 +457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6880667922287737552, guid: 12416fdff96a001429b35f69a693d6f1, type: 3}
       propertyPath: m_fontSize
-      value: 33.75
+      value: 33.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

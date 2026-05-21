@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 341199492612833087}
   - component: {fileID: 480835637177608264}
   - component: {fileID: 155753822681079019}
-  - component: {fileID: 4639242926950443531}
   m_Layer: 5
   m_Name: PlayerBanner
   m_TagString: Untagged
@@ -29,7 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3150511210983623489}
   - {fileID: 5291121559360108159}
@@ -70,33 +69,10 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: 150
-  m_PreferredHeight: -1
+  m_PreferredHeight: 1080
   m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
---- !u!114 &4639242926950443531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114736324346237152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799e90b07d14e604b87b70ec8b7cf338, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Options:
-  - Name: 0
-    PrefabObject: {fileID: 6978137312422337064, guid: d22395604cc178447a136d537a8d1510, type: 3}
-  - Name: 0
-    PrefabObject: {fileID: 0}
-  - Name: 0
-    PrefabObject: {fileID: 0}
-  _PlayerText: {fileID: 4844035990773685511}
-  OnSelectionChange:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3437382084695709083
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +248,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
