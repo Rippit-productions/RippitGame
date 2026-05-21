@@ -1,4 +1,5 @@
 using CharacterSelect.Controller;
+using CharacterSelect.UI;
 using FMODUnity;
 using System;
 using System.Collections;
@@ -17,13 +18,12 @@ public class CharacterSelectScene : MonoBehaviour
     [Header("UI Setup")]
     public HorizontalLayoutGroup DisplayList;
     public GameObject PlayerUIPrefab;
-
+    private Dictionary<CharacterSelectController, GameObject> _PlayerUI = new Dictionary<CharacterSelectController, GameObject>();
     private Dictionary<string, InputDevice> _DeviceQueue = new Dictionary<string, InputDevice>();
 
     // Start is called before the first frame update
     void Start()
     {
-
         foreach (var gamepad in Gamepad.all)
         {
             _DeviceQueue.Add(gamepad.path,gamepad);
@@ -47,7 +47,12 @@ public class CharacterSelectScene : MonoBehaviour
             }
         };
 
+
+        CharacterSelectController.OnControllerDestroy += OnControllerDestroy;
+
         AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);
+
+        
     }
 
     // Update is called once per frame
@@ -73,7 +78,6 @@ public class CharacterSelectScene : MonoBehaviour
             }
         }
 
-
         if (_DeviceQueue.Count > 0)
         {
             JoinPrompt.alpha = 1;
@@ -82,28 +86,31 @@ public class CharacterSelectScene : MonoBehaviour
         {
             JoinPrompt.alpha = 0;
         }
-
     }
 
     private void AddPlayer(InputDevice device)
     {
-        var ControllerGameObj = PlayerInput.Instantiate(PlayerControllerPrefab, -1, null, -1, device).gameObject;
+        var ControllerGameObj = PlayerInput.Instantiate(PlayerControllerPrefab, -1, null, -1, device);
+        ControllerGameObj.neverAutoSwitchControlSchemes = true;
         CharacterSelectController CharSelectControllerModule = ControllerGameObj.GetComponent<CharacterSelectController>();
 
         var UIObject = GameObject.Instantiate(PlayerUIPrefab);
         UIObject.transform.SetParent(DisplayList.gameObject.transform,false);
         UIObject.transform.SetSiblingIndex(CharSelectControllerModule.PlayerIndex);
 
-        CharacterSelectController.OnControllerDestroy += (CharacterSelectController controller) =>
-        {
-            if (!_DeviceQueue.ContainsKey(controller.InputDevice.path))
-            {
-                _DeviceQueue.Add(controller.InputDevice.path, controller.InputDevice);
-            }
-            GameObject.Destroy(UIObject);
-        };
+        UIObject.GetComponent<CharacterSelectBanner>().SetController(CharSelectControllerModule);
 
+        _PlayerUI.Add(CharSelectControllerModule, UIObject);
         _DeviceQueue.Remove(device.path);
+    }
+
+    private void OnControllerDestroy(CharacterSelectController Controller)
+    {
+        _DeviceQueue.Add(Controller.InputDevice.path, Controller.InputDevice);
+
+        var UIObj = _PlayerUI[Controller];
+        _PlayerUI.Remove(Controller);
+        GameObject.Destroy(UIObj.gameObject);
     }
 
 #if UNITY_EDITOR

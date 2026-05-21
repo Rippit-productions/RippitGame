@@ -3,11 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
-using static Skater;
 
 
 namespace CharacterSelect.Controller
@@ -22,13 +20,14 @@ namespace CharacterSelect.Controller
         public InputDevice InputDevice => _InputDevice;
         public InputDevice _InputDevice = null;
 
-        private int SelectIndex => _SelectIndex;
+        public Character SelectedCharacrter => (Character)_SelectIndex;
         private int _SelectIndex = 0;
         public bool Confirmed => _Confirmed;
         private bool _Confirmed = false;
 
         private InputSystemUIInputModule _UIInputModule;
         private PlayerInput _PlayerInput;
+
 
         public static Action<CharacterSelectController> OnSpawn = Controller => {};
         public static Action<CharacterSelectController> OnControllerDestroy = Controller => {};
@@ -65,7 +64,7 @@ namespace CharacterSelect.Controller
 
         private void _OnUIControllerMove(InputAction.CallbackContext Context)
         {
-            var value = Context.action.ReadValue<Vector2>();
+            var value = Context.ReadValue<Vector2>();
             _SelectIndex += (int)value.x;
 
             var maxValue = Enum.GetNames(typeof(Character)).Length;
@@ -81,7 +80,6 @@ namespace CharacterSelect.Controller
             SelectionData.Character = (Character)_SelectIndex;
 
             GameManager.Instance.CharacterSelection[this._PlayerIndex] = SelectionData;
-
             OnSelectionChange.Invoke((Character)_SelectIndex);
         }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 341199492612833087}
   - component: {fileID: 480835637177608264}
   - component: {fileID: 155753822681079019}
+  - component: {fileID: 1330114525690556993}
   m_Layer: 5
   m_Name: PlayerBanner
   m_TagString: Untagged
@@ -73,6 +74,29 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1
+--- !u!114 &1330114525690556993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114736324346237152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126fe4347dbe2704fbefa2d430654e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PlayerNumber: {fileID: 4844035990773685511}
+  _CharacterImage: {fileID: 5522842663289389783}
+  Banners:
+  - character: 0
+    Banner: {fileID: 21300000, guid: 131197ee83ab01843bc529bbf35ca570, type: 3}
+  - character: 1
+    Banner: {fileID: 21300000, guid: b751b502ea08e20418038794b9df6d09, type: 3}
+  - character: 2
+    Banner: {fileID: 21300000, guid: d4284776dedc80744a93484d3fd1872d, type: 3}
+  - character: 3
+    Banner: {fileID: 21300000, guid: 5db64d132345a5745a8a51835c3514c0, type: 3}
 --- !u!1 &3437382084695709083
 GameObject:
   m_ObjectHideFlags: 0
