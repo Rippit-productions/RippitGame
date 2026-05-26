@@ -27,8 +27,6 @@ public class PlayerUIController : MonoBehaviour
     public int PlayerIndex => _PlayerIndex;
     private int _PlayerIndex = -1;
 
-    public InputDevice InputDevice => _InputDevice;
-    public InputDevice _InputDevice = null;
 
     private InputSystemUIInputModule _UIInputModule;
     private PlayerInput _PlayerInput;
@@ -38,10 +36,16 @@ public class PlayerUIController : MonoBehaviour
     {
         _UIInputModule = GetComponent<InputSystemUIInputModule>();
         _PlayerInput = GetComponent<PlayerInput>();
+        _PlayerInput.uiInputModule = _UIInputModule;
         _EventSystem = GetComponent<MultiplayerEventSystem>();
+
         _PlayerIndex = _PlayerInput.playerIndex;
     }
-    
+
+    private void Update()
+    {
+        this.gameObject.name = $"Player UI Controller {_PlayerIndex}";
+    }
 
     private void OnDestroy()
     {
@@ -58,11 +62,13 @@ public class PlayerUIController : MonoBehaviour
     private Rect _GuiRect = new Rect(20, 20, 300, 50);
     void OnGUI()
     {
-        //_GuiRect = GUILayout.Window(GuiID, _GuiRect, _DrawGUIWindow, $"UI Controller{}");
+        _GuiRect = GUILayout.Window(GuiID, _GuiRect, _DrawGUIWindow, $"UI Controller {PlayerIndex}");
     }
 
     void _DrawGUIWindow(int WindowID)
     {
+        GUILayout.Label($"Device: {_PlayerInput.devices.First().name}");
+        GUILayout.Label($"Selected Obj: {_EventSystem.currentSelectedGameObject.name}");
         GUI.DragWindow(new Rect(0, 0, float.MaxValue, float.MaxValue));
     }
 #endif

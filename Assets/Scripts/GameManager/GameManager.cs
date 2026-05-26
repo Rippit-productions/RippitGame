@@ -32,17 +32,17 @@ namespace RippitGameManager
         }
         private static GameManager _instance = null;
 
-
         public GameMode Mode = GameMode.Race;
         public const int MaxPlayerCount = 6;
 
         public CharacterSelect.Dictionary CharacterSelection = new CharacterSelect.Dictionary();
-
-        //Events
-        public Action<bool> OnPause = new Action<bool>((bool IsPaused) => { });
+        public string SelectedSceneName = null;
 
         public bool IsPaused => _paused;
         private bool _paused;
+
+        //Events
+        public Action<bool> OnPause = new Action<bool>((bool IsPaused) => { });
 
         private void Start()
         {
@@ -82,10 +82,10 @@ namespace RippitGameManager
             }
         }
 
-
-        public void LoadScene(SceneAsset Scene)
+        public void LoadScene(string sceneName)
         {
-            StartCoroutine(SceneLoader.LoadScene(Scene.name));
+            StartCoroutine(SceneLoader.LoadScene(sceneName));
         }
+
     }
 } 

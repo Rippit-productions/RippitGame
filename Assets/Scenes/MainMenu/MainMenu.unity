@@ -363,6 +363,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c932a63c4386834e85ca129d4319c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mode: 0
+  SelectedSceneName: 
 --- !u!4 &1341235786
 Transform:
   m_ObjectHideFlags: 0
@@ -465,30 +467,6 @@ PrefabInstance:
     - target: {fileID: 1510192438989822255, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1586782857758266949, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1586782857758266949, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1341235785}
-    - target: {fileID: 1586782857758266949, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 1586782857758266949, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1586782857758266949, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 102900000, guid: 26ca66c2d261d0b43a585b12634ec48c, type: 3}
-    - target: {fileID: 1586782857758266949, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEditor.SceneAsset, UnityEditor.CoreModule
       objectReference: {fileID: 0}
     - target: {fileID: 1692717887960774930, guid: 0e2a36b20e849764b9501bddbaa6a327, type: 3}
       propertyPath: m_AnchorMax.y

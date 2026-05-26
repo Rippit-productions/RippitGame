@@ -10,8 +10,8 @@ public class MainMenu : Menu
     private bool FirstClick = false;
     [SerializeField] private FMODUnity.EventReference _MusicTrack;
 
-    [SerializeField] private SceneAsset _CharacterSelectScene;
-    [SerializeField] private SceneAsset _GreyboxScene;
+    [SerializeField] private string _CharacterSelectScene;
+    [SerializeField] private string _GreyboxScene;
     // Start is called before the first frame update
     private new void Start()
     {

@@ -17,7 +17,9 @@ namespace CharacterSelect.UI
     }
     public class CharacterSelectUI : MonoBehaviour, IMoveHandler, ICancelHandler, ISubmitHandler
     {
+        public int PlayerIndex => _PlayerIndex;
         private int _PlayerIndex = -1;
+
         [SerializeField] TMPro.TMP_Text _PlayerNumber;
         [SerializeField] Image _CharacterImage;
 
@@ -32,16 +34,20 @@ namespace CharacterSelect.UI
 
         // Events
         public Action<Character> OnSelectionChange = character => { };
-        public Action<CharacterSelectUI> OnBeforeDestroy = UI => { };
+        public static Action OnSpawn = () => { };
+        public static Action<CharacterSelectUI> OnBeforeDestroy = UI => { };
 
         // Start is called before the first frame update
         void Start()
         {
-            
+            OnSpawn += this._RefreshSiblingIndex;
+            OnSpawn.Invoke();
+            _Refresh();
         }
 
         private void OnDestroy()
         {
+            OnSpawn -= this._RefreshSiblingIndex;
             OnBeforeDestroy.Invoke(this);
         }
 
@@ -52,6 +58,8 @@ namespace CharacterSelect.UI
 
         private void _Refresh()
         {
+            this.gameObject.name = $"Char Select UI {_PlayerIndex}";
+            _PlayerNumber.text = $"P{_PlayerIndex + 1}";
             _CharacterImage.sprite = Options[_SelectIndex].BannerImage;
 
             if (_Confirmed)
@@ -62,6 +70,12 @@ namespace CharacterSelect.UI
             {
                 _ConfirmedPrompt.alpha = 0;
             }
+        }
+
+
+        private void _RefreshSiblingIndex()
+        {
+            transform.SetSiblingIndex(_PlayerIndex);
         }
 
         public void OnMove(AxisEventData eventData)

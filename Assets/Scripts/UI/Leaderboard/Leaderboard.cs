@@ -11,21 +11,15 @@ public class Leaderboard : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Init();
+        RaceGameMode.Instance.OnRaceFinish.AddListener(Init);
     }
 
     private void Init()
     {
-
-        foreach (Transform existingChild in transform)
-        {
-            GameObject.Destroy(existingChild.gameObject);
-        }
-
         foreach (var skater in Skater.All)
         {
             var newGameObj = GameObject.Instantiate(PinPrefab);
-            newGameObj.transform.SetParent(transform);
+            newGameObj.transform.SetParent(transform,false);
         }
         
     }

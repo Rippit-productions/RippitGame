@@ -11,15 +11,19 @@ using System.Linq;
 
 public class CharacterSelectScene : MonoBehaviour
 {
+    public static CharacterSelectScene Instance => FindFirstObjectByType<CharacterSelectScene>();
+
     [SerializeField] private EventReference _MusicTrack;
 
-    public GameObject PlayerControllerPrefab;
-    public CanvasGroup JoinPrompt;
-
     [Header("UI Setup")]
-    public HorizontalLayoutGroup DisplayList;
-    public GameObject PlayerUIPrefab;
-    private Dictionary<PlayerUIController, GameObject> _PlayerUI = new Dictionary<PlayerUIController, GameObject>();
+    [SerializeField] private GameObject UIControllerPrefab;
+
+    [SerializeField] private HorizontalLayoutGroup DisplayList;
+    [SerializeField] private GameObject PlayerUIPrefab;
+    private Dictionary<int, CharacterSelectUI> _PlayerUI = new Dictionary<int, CharacterSelectUI>();
+
+    // Device Queue
+    public InputDevice[] DeviceQueue => _DeviceQueue.Values.ToArray();
     private Dictionary<string, InputDevice> _DeviceQueue = new Dictionary<string, InputDevice>();
 
     // Start is called before the first frame update
@@ -48,6 +52,15 @@ public class CharacterSelectScene : MonoBehaviour
             }
         };
 
+        CharacterSelectUI.OnBeforeDestroy += (CharacterSelectUI UI) =>
+        {
+            var device = GameManager.Instance.CharacterSelection[UI.PlayerIndex].InputDevice;
+            GameManager.Instance.CharacterSelection.RemovePlayer(UI.PlayerIndex);
+            _DeviceQueue.Add(device.path, device);
+            _PlayerUI.Remove(UI.PlayerIndex);
+            GameObject.Destroy(PlayerUIController.GetPlayerController(UI.PlayerIndex).gameObject);
+        };
+
         AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);
     }
 
@@ -73,36 +86,23 @@ public class CharacterSelectScene : MonoBehaviour
                 }
             }
         }
-
-        if (_DeviceQueue.Count > 0)
-        {
-            JoinPrompt.alpha = 1;
-        }
-        else
-        {
-            JoinPrompt.alpha = 0;
-        }
     }
 
     private void AddPlayer(InputDevice device)
     {
-        var newInputController = PlayerInput.Instantiate(PlayerControllerPrefab, -1, null, -1, device);
+        var newInputController = PlayerInput.Instantiate(UIControllerPrefab, -1, null, -1, device);
         newInputController.neverAutoSwitchControlSchemes = true;
 
         var newCharacterSelectUI = GameObject.Instantiate(PlayerUIPrefab).GetComponent<CharacterSelectUI>();
         newCharacterSelectUI.SetPlayerIndex(newInputController.playerIndex);
         newCharacterSelectUI.transform.SetParent(DisplayList.transform, false);
 
-
         int playerIndex = newInputController.playerIndex;
         InputDevice PlayerDevice = device;
         GameObject InputControllerObj = newInputController.gameObject;
-        newCharacterSelectUI.OnBeforeDestroy += UI =>
-        {
-            GameManager.Instance.CharacterSelection.RemovePlayer(playerIndex);
-            _DeviceQueue.Add(PlayerDevice.path,PlayerDevice);
-            GameObject.Destroy(InputControllerObj);
-        };
+
+        _PlayerUI.Add(playerIndex, newCharacterSelectUI);
+        
 
         newInputController.GetComponent<PlayerUIController>().SetSelectedGameObject(newCharacterSelectUI.gameObject);
 

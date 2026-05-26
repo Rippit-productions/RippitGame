@@ -15084,7 +15084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b7e061ab54e1146b833557e0b15599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Laps: 1
+  Laps: 2
   IsClosed: 0
   CheckPoints:
   - LocalPosition: {x: 0.6677933, y: 8.48204, z: 0}
