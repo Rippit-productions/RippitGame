@@ -7,7 +7,6 @@ namespace StageSelect
     {
         public string SceneName;
         public Sprite PreviewImage;
-        public Sprite TitleImage;
+        public Sprite LogoImage;
     }
- 
 }

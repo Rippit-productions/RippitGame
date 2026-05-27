@@ -24,6 +24,10 @@ namespace CharacterSelect
     {
         private Dictionary<int, PlayerCharacterSelection> _Selection = new Dictionary<int, PlayerCharacterSelection>();
 
+        public int Count => _Selection.Count;
+
+        public IEnumerator GetEnumerator() => _Selection.GetEnumerator(); 
+
         public bool AddPlayer(int PlayerIndex, InputDevice inputDevice)
         {
             var newData = new PlayerCharacterSelection()

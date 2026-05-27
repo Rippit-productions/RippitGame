@@ -39,6 +39,8 @@ public class TrackEditor : Editor
 
         SliderInt LapSlider = (SliderInt)root.Q("LapsSlider");
 
+        LapSlider.value = _Component.Laps;
+
         Button MoveToolButton = (Button)root.Q("MoveButton");
         Button ColliderToolButton = (Button)root.Q("ColliderButon");
         Button AddToolButton = (Button)root.Q("AddButton");

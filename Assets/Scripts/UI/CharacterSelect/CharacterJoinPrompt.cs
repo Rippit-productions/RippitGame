@@ -12,7 +12,9 @@ namespace CharacterSelect.UI
         void Start()
         {
             CharacterSelectUI.OnSpawn += _Refresh;
-            CharacterSelectUI.OnBeforeDestroy += ui => { _Refresh();  };
+            CharacterSelectUI.OnBeforeDestroy += ui => { 
+                _Refresh();
+            };
         }
 
         private void _Refresh()

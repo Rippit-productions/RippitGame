@@ -8,18 +8,35 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using RippitGameManager;
 using System.Linq;
+using TMPro;
 
 public class CharacterSelectScene : MonoBehaviour
 {
     public static CharacterSelectScene Instance => FindFirstObjectByType<CharacterSelectScene>();
 
     [SerializeField] private EventReference _MusicTrack;
+    [SerializeField] private string GreyboxSceneName;
 
     [Header("UI Setup")]
     [SerializeField] private GameObject UIControllerPrefab;
 
     [SerializeField] private HorizontalLayoutGroup DisplayList;
     [SerializeField] private GameObject PlayerUIPrefab;
+
+    public bool PlayersReady 
+    {
+        get
+        {
+            if (_PlayerUI.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return _PlayerUI.Where(obj => obj.Value.Confirmed == false).Count() == 0;
+            }
+        }
+    }
     private Dictionary<int, CharacterSelectUI> _PlayerUI = new Dictionary<int, CharacterSelectUI>();
 
     // Device Queue
@@ -52,14 +69,7 @@ public class CharacterSelectScene : MonoBehaviour
             }
         };
 
-        CharacterSelectUI.OnBeforeDestroy += (CharacterSelectUI UI) =>
-        {
-            var device = GameManager.Instance.CharacterSelection[UI.PlayerIndex].InputDevice;
-            GameManager.Instance.CharacterSelection.RemovePlayer(UI.PlayerIndex);
-            _DeviceQueue.Add(device.path, device);
-            _PlayerUI.Remove(UI.PlayerIndex);
-            GameObject.Destroy(PlayerUIController.GetPlayerController(UI.PlayerIndex).gameObject);
-        };
+        CharacterSelectUI.OnBeforeDestroy += OnCharacterUIDestroy;
 
         AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);
     }
@@ -86,6 +96,20 @@ public class CharacterSelectScene : MonoBehaviour
                 }
             }
         }
+
+        if (PlayersReady)
+        {
+            GameManager.Instance.LoadScene(GreyboxSceneName); 
+        }
+    }
+
+    private void OnCharacterUIDestroy(CharacterSelectUI UI)
+    {
+        var device = GameManager.Instance.CharacterSelection[UI.PlayerIndex].InputDevice;
+        GameManager.Instance.CharacterSelection.RemovePlayer(UI.PlayerIndex);
+        _DeviceQueue.Add(device.path, device);
+        _PlayerUI.Remove(UI.PlayerIndex);
+        GameObject.Destroy(PlayerUIController.GetPlayerController(UI.PlayerIndex).gameObject);
     }
 
     private void AddPlayer(InputDevice device)
@@ -98,11 +122,7 @@ public class CharacterSelectScene : MonoBehaviour
         newCharacterSelectUI.transform.SetParent(DisplayList.transform, false);
 
         int playerIndex = newInputController.playerIndex;
-        InputDevice PlayerDevice = device;
-        GameObject InputControllerObj = newInputController.gameObject;
-
         _PlayerUI.Add(playerIndex, newCharacterSelectUI);
-        
 
         newInputController.GetComponent<PlayerUIController>().SetSelectedGameObject(newCharacterSelectUI.gameObject);
 
@@ -110,12 +130,6 @@ public class CharacterSelectScene : MonoBehaviour
         GameManager.Instance.CharacterSelection.AddPlayer(newInputController.playerIndex, device);
 
         _DeviceQueue.Remove(device.path);
-    }
-
-
-    private void RemovePlayer(int playerIndex)
-    {
-
     }
 
 #if UNITY_EDITOR

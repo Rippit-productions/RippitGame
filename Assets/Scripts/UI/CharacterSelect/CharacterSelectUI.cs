@@ -23,7 +23,7 @@ namespace CharacterSelect.UI
         [SerializeField] TMPro.TMP_Text _PlayerNumber;
         [SerializeField] Image _CharacterImage;
 
-        public bool Confirmed = true;
+        public bool Confirmed => _Confirmed;
         private bool _Confirmed = false;
 
         [SerializeField] private CanvasGroup _ConfirmedPrompt;

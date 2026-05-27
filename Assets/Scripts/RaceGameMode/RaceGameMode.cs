@@ -84,6 +84,11 @@ public class RaceGameMode : MonoBehaviour
 
     void Start()
     {
+        StartRace();
+    }
+
+    private void StartRace()
+    {
         _State = RaceState.InProgress;
         _track = GetComponent<Track>();
     }

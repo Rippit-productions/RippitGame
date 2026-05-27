@@ -244,6 +244,7 @@ MonoBehaviour:
       Data3: 1748531119
       Data4: 1547582539
     Path: event:/Music/Menu Tracks/Lordsun and CubeNatural - Prince of the Moon
+  GreyboxSceneName: Greybox
   UIControllerPrefab: {fileID: 3894573558575625179, guid: 812726dad23f25f48ad12b66719db345, type: 3}
   DisplayList: {fileID: 6869350640895885444}
   PlayerUIPrefab: {fileID: 114736324346237152, guid: 7b04bbf54ad29d0428dcbbc3539b8725, type: 3}
