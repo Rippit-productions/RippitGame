@@ -1,4 +1,5 @@
 using UnityEngine;
+using AudioManager;
 
 public class Level : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class Level : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _LevelMusic = AudioManager.Instance.PlayAudioInstance(_Song,AudioManager.AudioType.Music);
-        AudioManager.Instance.PlayAudioInstance(_AmbienceTrack, AudioManager.AudioType.SFX);
+        _LevelMusic = AudioManager.AudioManager.Instance.PlayAudioInstance(_Song,AudioManager.AudioType.Music);
+        AudioManager.AudioManager.Instance.PlayAudioInstance(_AmbienceTrack, AudioManager.AudioType.SFX);
     }
 
     // Update is called once per frame

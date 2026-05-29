@@ -7,21 +7,38 @@ using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine.SceneManagement;
 
-
-
-public struct AudioSettings
+namespace AudioManager
 {
+    public struct AudioSettings
+{
+    public const string PrefName_MasterVolume = "MasterVolume";
+    public const string PrefName_MusicVolume = "MasterVolume";
+    public const string PrefName_SFXVolume = "MasterVolume";
+
     public float MasterVolume;
     public float MusicVolume;
     public float SFXVolume;
 
     public float GetMusicVolume() => MusicVolume * MasterVolume;
     public float GetSFXVolume() => SFXVolume * MasterVolume;
+
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetFloat(PrefName_MasterVolume, MasterVolume);
+        PlayerPrefs.SetFloat(PrefName_MusicVolume, MusicVolume);
+        PlayerPrefs.SetFloat(PrefName_SFXVolume, SFXVolume);
+    }
 }
 
+    public enum AudioType
+    {
+        Music,
+        SFX,
+        Voice,
+        Other
+    }
 
-public class AudioManager 
-{
     public class Event
     {
         public Event(EventReference fmodEventRef, AudioType AudioType)
@@ -44,7 +61,7 @@ public class AudioManager
 
         public void SetParam(string ParamName, float Value)
         {
-            _FmodInstance.setParameterByName(ParamName, Value,true);
+            _FmodInstance.setParameterByName(ParamName, Value, true);
         }
 
         public void Play()
@@ -71,80 +88,75 @@ public class AudioManager
         }
     }
 
-    public enum AudioType
+    public class AudioManager
     {
-        Music,
-        SFX,
-        Voice,
-        Other
-    }
-    
-    private static AudioManager _Instance;
-    public static AudioManager Instance
-    {
-        get
+        private static AudioManager _Instance;
+        public static AudioManager Instance
         {
-            if (_Instance == null) _Instance = new AudioManager();
-            return _Instance;
+            get
+            {
+                if (_Instance == null) _Instance = new AudioManager();
+                return _Instance;
+            }
         }
-    }
 
-    ~AudioManager()
-    {
-        CleanUp();
-    }
-
-    public AudioSettings Settings = new AudioSettings();
-
-    private List<Event> _Events = new List<Event>();
-
-    public void PlayOneShot(EventReference Sound, Vector3 WorldPosition)
-    {
-        FMODUnity.RuntimeManager.PlayOneShot(Sound, WorldPosition);
-    }
-
-    /// <summary>
-    /// Create Audio Instance and Play immediate.
-    /// Instance will be removed by Garbage Collector
-    /// </summary>
-    public AudioManager.Event PlayAudioInstance(EventReference audioEventReference,AudioType type)
-    {
-        if (audioEventReference.IsNull)
+        ~AudioManager()
         {
-            Debug.LogWarning("No FMOD Audio reference is NULL");
-            return null;
+            CleanUp();
         }
-        var newEvent = new AudioManager.Event(audioEventReference, type);
-        newEvent.Play();
-        return newEvent;
-    }
 
-    public AudioManager.Event CreateAudioInstance(EventReference audioEventReference,AudioType type)
-    {
-        var newEvent = new AudioManager.Event(audioEventReference, type);
-        _Events.Append(newEvent);
-        return newEvent;
-    }
+        public AudioSettings Settings = new AudioSettings();
 
-    public void RefreshAllAudioVolume()
-    {
-        foreach (var musicInstance in GetAllAudioOfType(AudioType.Music))
+        private List<Event> _Events = new List<Event>();
+
+        public void PlayOneShot(EventReference Sound, Vector3 WorldPosition)
         {
-            musicInstance.SetVolume(this.Settings.GetMusicVolume());
+            FMODUnity.RuntimeManager.PlayOneShot(Sound, WorldPosition);
         }
-        foreach (var SFXInstance in GetAllAudioOfType(AudioType.SFX))
+
+        /// <summary>
+        /// Create Audio Instance and Play immediate.
+        /// Instance will be removed by Garbage Collector
+        /// </summary>
+        public Event PlayAudioInstance(EventReference audioEventReference, AudioType type)
         {
-            SFXInstance.SetVolume(this.Settings.GetSFXVolume());
+            if (audioEventReference.IsNull)
+            {
+                Debug.LogWarning("No FMOD Audio reference is NULL");
+                return null;
+            }
+            var newEvent = new Event(audioEventReference, type);
+            newEvent.Play();
+            return newEvent;
         }
-    }
 
-    public Event[] GetAllAudioOfType(AudioType type)
-    {
-        return this._Events.Where(e =>
+        public Event CreateAudioInstance(EventReference audioEventReference, AudioType type)
         {
-            return e.Type == type;
-        }).ToArray();
-    }
+            var newEvent = new Event(audioEventReference, type);
+            _Events.Append(newEvent);
+            return newEvent;
+        }
 
-    public void CleanUp() => _Events.Clear();
+        public void RefreshAllAudioVolume()
+        {
+            foreach (var musicInstance in GetAllAudioOfType(AudioType.Music))
+            {
+                musicInstance.SetVolume(this.Settings.GetMusicVolume());
+            }
+            foreach (var SFXInstance in GetAllAudioOfType(AudioType.SFX))
+            {
+                SFXInstance.SetVolume(this.Settings.GetSFXVolume());
+            }
+        }
+
+        public Event[] GetAllAudioOfType(AudioType type)
+        {
+            return this._Events.Where(e =>
+            {
+                return e.Type == type;
+            }).ToArray();
+        }
+
+        public void CleanUp() => _Events.Clear();
+    }
 }

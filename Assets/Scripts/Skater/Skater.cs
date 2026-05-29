@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using Unity.VisualScripting;
 using AnimationStateReference;
+using AudioManager;
 
 
 public struct SkaterGrindAction
@@ -114,7 +115,7 @@ public class Skater : MonoBehaviour
     }
     private void _InitSounds()
     {
-        var Manager = AudioManager.Instance;
+        var Manager = AudioManager.AudioManager.Instance;
         JumpSFX = Manager.CreateAudioInstance(SoundSet.JumpSFX, AudioManager.AudioType.SFX);
         GrindOnSFX = Manager.CreateAudioInstance(SoundSet.GrindOnSFX, AudioManager.AudioType.SFX);
         GrindOffSFX = Manager.CreateAudioInstance(SoundSet.GrindOffSFX, AudioManager.AudioType.SFX);

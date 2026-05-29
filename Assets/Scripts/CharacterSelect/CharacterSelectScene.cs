@@ -8,13 +8,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using RippitGameManager;
 using System.Linq;
-using TMPro;
+using AudioManager;
 
 public class CharacterSelectScene : MonoBehaviour
 {
     public static CharacterSelectScene Instance => FindFirstObjectByType<CharacterSelectScene>();
 
     [SerializeField] private EventReference _MusicTrack;
+    [SerializeField] private string MainMenuScene;
     [SerializeField] private string GreyboxSceneName;
 
     [Header("UI Setup")]
@@ -71,7 +72,8 @@ public class CharacterSelectScene : MonoBehaviour
 
         CharacterSelectUI.OnBeforeDestroy += OnCharacterUIDestroy;
 
-        AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);
+
+        AudioManager.AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);
     }
 
     // Update is called once per frame
