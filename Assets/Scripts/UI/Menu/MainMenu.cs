@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
-using AudioManager;
+using Audio;
 
 public class MainMenu : Menu
 {
@@ -36,7 +36,7 @@ public class MainMenu : Menu
             yield return null;
         }
 #endif
-        AudioManager.AudioManager.Instance.PlayAudioInstance(_MusicTrack, AudioManager.AudioType.Music);
+        Audio.AudioEvent.Instansiate(_MusicTrack, Audio.AudioEventType.Music);
 
         yield break;
     }

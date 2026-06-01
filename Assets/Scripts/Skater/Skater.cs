@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using Unity.VisualScripting;
 using AnimationStateReference;
-using AudioManager;
+using Audio;
 
 
 public struct SkaterGrindAction
@@ -92,10 +92,10 @@ public class Skater : MonoBehaviour
 
     [Header("Sounds")]
     [SerializeField] private SkaterSoundSet SoundSet;
-    private AudioManager.Event JumpSFX;
-    private AudioManager.Event GrindOnSFX;
-    private AudioManager.Event GrindOffSFX;
-    private AudioManager.Event GrindSFX;
+    private Audio.AudioEvent JumpSFX;
+    private Audio.AudioEvent GrindOnSFX;
+    private Audio.AudioEvent GrindOffSFX;
+    private Audio.AudioEvent GrindSFX;
 
     [Header("Camera")]
     public PlayerCamera.Setup CameraSetup;
@@ -115,11 +115,10 @@ public class Skater : MonoBehaviour
     }
     private void _InitSounds()
     {
-        var Manager = AudioManager.AudioManager.Instance;
-        JumpSFX = Manager.CreateAudioInstance(SoundSet.JumpSFX, AudioManager.AudioType.SFX);
-        GrindOnSFX = Manager.CreateAudioInstance(SoundSet.GrindOnSFX, AudioManager.AudioType.SFX);
-        GrindOffSFX = Manager.CreateAudioInstance(SoundSet.GrindOffSFX, AudioManager.AudioType.SFX);
-        GrindSFX = Manager.CreateAudioInstance(SoundSet.GrindSFX, AudioManager.AudioType.SFX);
+        JumpSFX = AudioEvent.Instansiate(SoundSet.JumpSFX, Audio.AudioEventType.SFX);
+        GrindOnSFX = AudioEvent.Instansiate(SoundSet.GrindOnSFX, Audio.AudioEventType.SFX);
+        GrindOffSFX = AudioEvent.Instansiate(SoundSet.GrindOffSFX, Audio.AudioEventType.SFX);
+        GrindSFX = AudioEvent.Instansiate(SoundSet.GrindSFX, Audio.AudioEventType.SFX);
     }
 
     void Start()

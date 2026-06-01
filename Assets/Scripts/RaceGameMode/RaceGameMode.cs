@@ -104,7 +104,7 @@ public class RaceGameMode : MonoBehaviour
 
                 if (IsRaceFinished())
                 {
-                    Level.GetInstance().LevelMusic.SetParam(FMODParam_RaceEnd, 1.0f);
+                    Level.GetInstance().LevelMusic.SetAudioParam(FMODParam_RaceEnd, 1.0f);
                     foreach (Skater skater in Skater.All)
                     {
                         skater.ToggleIdle(false);
