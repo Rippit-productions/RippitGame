@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Audio
 {
-    public class AudioSettings
+    public class AudioSettings : MonoBehaviour
     {
         public const string PrefName_MasterVolume = "MasterVolume";
         public const string PrefName_MusicVolume = "MasterVolume";
@@ -12,6 +12,35 @@ namespace Audio
         public float MasterVolume;
         public float MusicVolume;
         public float SFXVolume;
+
+        private static AudioSettings _Instance = null;
+        
+        public static AudioSettings Instance
+        {
+            get
+            {
+                if (_Instance == null)
+                {
+                    var newObj = new GameObject();
+                    newObj.name = "AudioSettings";
+                    GameObject.DontDestroyOnLoad(newObj);
+                    _Instance = newObj.AddComponent<AudioSettings>();
+                }
+                return _Instance;
+            }
+        }
+
+        private void Start()
+        {
+            if (_Instance == null)
+            {
+                _Instance = this;
+            }
+            else if (_Instance != this)
+            {
+                GameObject.Destroy(this);
+            }
+        }
 
         public AudioSettings()
         {

@@ -28,7 +28,7 @@ public class CharacterSelectScene : MonoBehaviour
     {
         get
         {
-            if (_PlayerUI.Count == 0)
+            if (_PlayerUI.Count == 0 && PlayerUIController.GetPlayerController(0))
             {
                 return false;
             }

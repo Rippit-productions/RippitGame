@@ -1,17 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 using UnityEditor;
-using System.Collections.Generic;
-using CharacterSelect;
-using UnityEngine.InputSystem;
 
 public enum GameMode
 {
     Race,
     Practise,
 }
-
 
 namespace RippitGameManager
 {
@@ -49,7 +44,7 @@ namespace RippitGameManager
             DontDestroyOnLoad(gameObject);
             if (_instance == null)
             {
-                _instance = GetComponent<GameManager>();
+                _instance = this;
             }
             else if (_instance != this)
             {
