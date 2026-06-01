@@ -86,9 +86,13 @@ public class Skater : MonoBehaviour
     public float BreakingSpeedScale;
     [Range(0.0f,20.0f)]
     public float JumpForce = 3.0f;
+    [SerializeField, Range(0.0f, 0.5f)] private float _GrindExitClearance = 0.08f;
 
     private SkaterGrindAction _GrindAction = new SkaterGrindAction();
     private SkaterGrappleAction _GrappleAction = new SkaterGrappleAction();
+    private RigidbodyType2D _PreGrindBodyType = RigidbodyType2D.Dynamic;
+    private CollisionDetectionMode2D _PreGrindCollisionMode = CollisionDetectionMode2D.Discrete;
+    private bool _HasStoredPreGrindPhysics = false;
 
     [Header("Sounds")]
     [SerializeField] private SkaterSoundSet SoundSet;
@@ -112,6 +116,7 @@ public class Skater : MonoBehaviour
         _physicsMaterial.friction = Friction;
         _physicsMaterial.bounciness = 0.0f;
         _RigidBody.sharedMaterial = _physicsMaterial;
+        _RigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
     private void _InitSounds()
     {
@@ -234,14 +239,7 @@ public class Skater : MonoBehaviour
                         {
                             this._GrindAction.InSplineDirection = false;
                         }
-                        this._GrindAction.GrindSpeed = _RigidBody.velocity.magnitude;
-                        this._GrindAction.grindRailPoint = collidingRailPoint;
-                        _RigidBody.bodyType = RigidbodyType2D.Kinematic;
-                        _RigidBody.velocity = Vector2.zero;
-                        this._CharacterState = SkaterState.Grind;
-                        this.OnGrind.Invoke(true);
-                        this.GrindOnSFX.Play();
-                        this.GrindSFX.Play();
+                        EnterGrind(collidingRailPoint);
                     }
                     break; 
                 }
@@ -257,33 +255,14 @@ public class Skater : MonoBehaviour
                     }
 
                     this._UpVector = _GrindAction.grindRailPoint.GetUpVector();
-                    Vector2 newPosition = this._GrindAction.grindRailPoint.GetWorldPosition();
-                    newPosition += (Vector2)_GrindAction.grindRailPoint.GetUpVector() * this.GetBounds().extents.y;
-                    _RigidBody.position = newPosition ;
+                    MoveAlongGrind();
 
                     bool JumpPresssed = this._PlayerController.Jump.WasPressedThisFrame();
                     bool breakGrind = JumpPresssed || !this._GrindAction.grindRailPoint.OnSpline;
 
                     if (breakGrind)
                     {
-                        this._CharacterState = SkaterState.Jumping;
-                        Vector2 grindVector = _GrindAction.grindRailPoint.GetForwardVector();
-                        if (!_GrindAction.InSplineDirection) grindVector *= -1.0f;
-                        _RigidBody.velocity = grindVector * _GrindAction.GrindSpeed;
-
-                        if (JumpPresssed)
-                        {
-                            Jump();
-                        }
-                        else
-                        {
-                            this._GrindAction.PreviousSpline = _GrindAction.grindRailPoint.RailSpline;
-                        }
-                        this.GrindSFX.Stop();
-                        this.GrindOffSFX.Play();
-
-                        _RigidBody.bodyType = RigidbodyType2D.Dynamic;
-                        this.OnGrind.Invoke(false);
+                        ExitGrind(JumpPresssed);
                     }
                     break;
                 }
@@ -304,6 +283,72 @@ public class Skater : MonoBehaviour
         return RigidBodyBounds.Get2DBodyBounds(_RigidBody);
     }
     protected Vector3 GetForwardMoveVector() => Vector3.Cross(_UpVector, Vector3.forward);
+
+    private void EnterGrind(GrindRailPoint railPoint)
+    {
+        _PreGrindBodyType = _RigidBody.bodyType;
+        _PreGrindCollisionMode = _RigidBody.collisionDetectionMode;
+        _HasStoredPreGrindPhysics = true;
+
+        this._GrindAction.GrindSpeed = _RigidBody.velocity.magnitude;
+        this._GrindAction.grindRailPoint = railPoint;
+        _RigidBody.bodyType = RigidbodyType2D.Kinematic;
+        _RigidBody.velocity = Vector2.zero;
+        this._CharacterState = SkaterState.Grind;
+        this.OnGrind.Invoke(true);
+        this.GrindOnSFX.Play();
+        this.GrindSFX.Play();
+    }
+
+    private void MoveAlongGrind()
+    {
+        Vector2 newPosition = this._GrindAction.grindRailPoint.GetWorldPosition();
+        newPosition += (Vector2)_GrindAction.grindRailPoint.GetUpVector() * this.GetBounds().extents.y;
+        _RigidBody.MovePosition(newPosition);
+    }
+
+    private void ExitGrind(bool jumpPressed)
+    {
+        this._CharacterState = SkaterState.Jumping;
+        Vector2 grindVector = _GrindAction.grindRailPoint.GetForwardVector();
+        if (!_GrindAction.InSplineDirection) grindVector *= -1.0f;
+
+        Vector2 clearanceVector = _GrindAction.grindRailPoint.GetUpVector() * _GrindExitClearance;
+        _RigidBody.position += clearanceVector;
+
+        // Rail movement uses a kinematic body. Restore dynamic physics before setting
+        // launch velocity or calling Jump(), because kinematic bodies ignore impulses.
+        RestorePreGrindPhysics();
+        _RigidBody.velocity = grindVector * _GrindAction.GrindSpeed;
+
+        if (jumpPressed)
+        {
+            Jump();
+        }
+        else
+        {
+            this._GrindAction.PreviousSpline = _GrindAction.grindRailPoint.RailSpline;
+        }
+        this.GrindSFX.Stop();
+        this.GrindOffSFX.Play();
+
+        this.OnGrind.Invoke(false);
+    }
+
+    private void RestorePreGrindPhysics()
+    {
+        if (!_HasStoredPreGrindPhysics)
+        {
+            _RigidBody.bodyType = RigidbodyType2D.Dynamic;
+            _RigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            return;
+        }
+
+        _RigidBody.bodyType = _PreGrindBodyType;
+        _RigidBody.collisionDetectionMode = _PreGrindCollisionMode;
+        _HasStoredPreGrindPhysics = false;
+    }
+
     public void Move(Vector2 Input)
     {
         Vector2 moveVector = Vector2.zero +
@@ -492,7 +537,7 @@ public class Skater : MonoBehaviour
         OnSkateDestroy.Invoke(this);
     }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && RIPPIT_DEBUG_GIZMOS
     // Draw Debug Gizmos
     void OnDrawGizmos()
     {
