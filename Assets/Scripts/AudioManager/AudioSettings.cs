@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Audio
+namespace GameAudio
 {
     public class AudioSettings : MonoBehaviour
     {

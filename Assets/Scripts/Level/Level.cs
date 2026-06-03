@@ -1,5 +1,5 @@
 using UnityEngine;
-using Audio;
+using GameAudio;
 
 public class Level : MonoBehaviour
 {
@@ -8,13 +8,13 @@ public class Level : MonoBehaviour
     [SerializeField]private FMODUnity.EventReference _Song;
     [SerializeField]private FMODUnity.EventReference _AmbienceTrack;
 
-    private Audio.AudioEvent _LevelMusic;
-    public Audio.AudioEvent LevelMusic => _LevelMusic;
+    private GameAudio.AudioEvent _LevelMusic;
+    public GameAudio.AudioEvent LevelMusic => _LevelMusic;
 
     // Start is called before the first frame update
     void Start()
     {
-        _LevelMusic = Audio.AudioEvent.Instansiate(_Song, Audio.AudioEventType.Music);
+        _LevelMusic = GameAudio.AudioEvent.Instansiate(_Song, GameAudio.AudioEventType.Music);
         _LevelMusic.Play();
     }
 

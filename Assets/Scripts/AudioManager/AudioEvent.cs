@@ -3,7 +3,7 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
-namespace Audio
+namespace GameAudio
 {
     public enum AudioEventType
     {

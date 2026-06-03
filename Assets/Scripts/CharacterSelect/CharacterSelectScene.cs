@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using RippitGameManager;
 using System.Linq;
-using Audio;
+using GameAudio;
 
 public class CharacterSelectScene : MonoBehaviour
 {
@@ -71,7 +71,7 @@ public class CharacterSelectScene : MonoBehaviour
         };
 
         CharacterSelectUI.OnBeforeDestroy += OnCharacterUIDestroy;
-        Audio.AudioEvent.Instansiate(_MusicTrack, Audio.AudioEventType.Music).Play();
+        GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music).Play();
     }
 
     // Update is called once per frame
