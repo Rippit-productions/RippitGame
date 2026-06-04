@@ -50,7 +50,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -124,7 +124,7 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -137,7 +137,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sp_BGBuilding_1
+      name: Sp_BGBuildingThin_1
       rect:
         serializedVersion: 2
         x: 512
@@ -145,7 +145,7 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -166,7 +166,7 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -187,7 +187,7 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -195,27 +195,6 @@ TextureImporter:
       bones: []
       spriteID: 816db92607896d441b34082be0158723
       internalID: -1351115061
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sp_BGBuilding_4
-      rect:
-        serializedVersion: 2
-        x: 3584
-        y: 3584
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7185eb37627888c4186e6874e974fe87
-      internalID: -259319402
       vertices: []
       indices: 
       edges: []
@@ -229,7 +208,7 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -242,7 +221,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sp_BGBuilding_6
+      name: Sp_BGBuildingThin_2
       rect:
         serializedVersion: 2
         x: 512
@@ -250,7 +229,7 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -258,69 +237,6 @@ TextureImporter:
       bones: []
       spriteID: a56c07437b51eaf4a80a1fbf180d8628
       internalID: -1686336018
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sp_BGBuilding_7
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 3072
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5de6697464fa153478547c873f90529d
-      internalID: 1475625679
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sp_BGBuilding_8
-      rect:
-        serializedVersion: 2
-        x: 1536
-        y: 3072
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 281d4ba96d55ae9448bde4c5225c0212
-      internalID: 1427322458
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sp_BGBuilding_9
-      rect:
-        serializedVersion: 2
-        x: 3584
-        y: 3072
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: da4a458305dffcc45a2f69726ddf004d
-      internalID: -202481610
       vertices: []
       indices: 
       edges: []
@@ -334,7 +250,7 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -347,7 +263,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sp_BGBuilding_11
+      name: Sp_BGBuildingThin_3
       rect:
         serializedVersion: 2
         x: 512
@@ -355,7 +271,7 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -368,106 +284,43 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sp_BGBuilding_12
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 2560
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f02bdf72ce00b0e48b7124adc8ac367f
-      internalID: 1418184723
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sp_BGBuilding_13
+      name: Sp_BGBuilding_20
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 2048
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5f1d4022398e9b44a7767425b301c0a
-      internalID: -1619029247
+      spriteID: dad5d82b0933bba48b3ffe3f0096e8c8
+      internalID: -1228333415
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sp_BGBuilding_14
+      name: Sp_BGBuildingThin_4
       rect:
         serializedVersion: 2
         x: 512
-        y: 0
+        y: 2048
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b24797a4db4686446a6c86108b4a5798
-      internalID: 1280354404
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sp_BGBuilding_15
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f5ef2b5efe13e2a47805f6ced3ca3899
-      internalID: -1038427086
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sp_BGBuilding_16
-      rect:
-        serializedVersion: 2
-        x: 3584
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7357e442400982c49991e79f68f50660
-      internalID: -172676396
+      spriteID: 47e712bb9505bbd44a01dd8d81d46daf
+      internalID: -182539775
       vertices: []
       indices: 
       edges: []
@@ -483,20 +336,32 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Sp_BGBuildingThin_1: -1847947147
+      Sp_BGBuildingThin_2: -1686336018
+      Sp_BGBuildingThin_3: -442908647
+      Sp_BGBuildingThin_4: -182539775
       Sp_BGBuilding_0: -1438330990
-      Sp_BGBuilding_1: -1847947147
+      Sp_BGBuilding_1: 65267360
       Sp_BGBuilding_10: 1952487252
-      Sp_BGBuilding_11: -442908647
       Sp_BGBuilding_12: 1418184723
       Sp_BGBuilding_13: -1619029247
       Sp_BGBuilding_14: 1280354404
       Sp_BGBuilding_15: -1038427086
       Sp_BGBuilding_16: -172676396
+      Sp_BGBuilding_17: -1489714122
+      Sp_BGBuilding_18: 810018242
+      Sp_BGBuilding_19: -1307041170
       Sp_BGBuilding_2: 1011469974
+      Sp_BGBuilding_20: -1228333415
+      Sp_BGBuilding_22: -469232452
+      Sp_BGBuilding_23: -246337207
+      Sp_BGBuilding_24: 103368109
+      Sp_BGBuilding_25: -1111796627
+      Sp_BGBuilding_26: 1827465596
+      Sp_BGBuilding_27: -198860069
       Sp_BGBuilding_3: -1351115061
       Sp_BGBuilding_4: -259319402
       Sp_BGBuilding_5: 133852328
-      Sp_BGBuilding_6: -1686336018
       Sp_BGBuilding_7: 1475625679
       Sp_BGBuilding_8: 1427322458
       Sp_BGBuilding_9: -202481610

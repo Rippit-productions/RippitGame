@@ -20,7 +20,7 @@ namespace CharacterSelect.UI
         private void _Refresh()
         {
             transform.SetSiblingIndex(int.MaxValue); 
-            if (CharacterSelectScene.Instance.DeviceQueue.Length == 0)
+            if (CharacterSelectMenu.Instance.DeviceQueue.Length == 0)
             {
                 this.gameObject.SetActive(false);
             }

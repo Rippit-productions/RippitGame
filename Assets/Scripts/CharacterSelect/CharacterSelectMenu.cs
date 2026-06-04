@@ -1,18 +1,16 @@
 using CharacterSelect.UI;
 using FMODUnity;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using RippitGameManager;
 using System.Linq;
-using GameAudio;
 
-public class CharacterSelectScene : MonoBehaviour
+public class CharacterSelectMenu : MonoBehaviour
 {
-    public static CharacterSelectScene Instance => FindFirstObjectByType<CharacterSelectScene>();
+    public static CharacterSelectMenu Instance => FindFirstObjectByType<CharacterSelectMenu>();
 
     [SerializeField] private EventReference _MusicTrack;
     [SerializeField] private string MainMenuScene;
@@ -28,7 +26,7 @@ public class CharacterSelectScene : MonoBehaviour
     {
         get
         {
-            if (_PlayerUI.Count == 0 && PlayerUIController.GetPlayerController(0))
+            if (_PlayerUI.Count == 0 && PlayerUIController.GetControllerByPlayerIndex(0))
             {
                 return false;
             }
@@ -109,7 +107,7 @@ public class CharacterSelectScene : MonoBehaviour
         GameManager.Instance.CharacterSelection.RemovePlayer(UI.PlayerIndex);
         _DeviceQueue.Add(device.path, device);
         _PlayerUI.Remove(UI.PlayerIndex);
-        GameObject.Destroy(PlayerUIController.GetPlayerController(UI.PlayerIndex).gameObject);
+        GameObject.Destroy(PlayerUIController.GetControllerByPlayerIndex(UI.PlayerIndex).gameObject);
     }
 
     private void AddPlayer(InputDevice device)

@@ -19,13 +19,12 @@ public class PlayerUIController : MonoBehaviour
 {
     public static PlayerUIController[] All => FindObjectsByType<PlayerUIController>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
     
-    public static PlayerUIController GetPlayerController(int PlayerIndex)
+    public static PlayerUIController GetControllerByPlayerIndex(int PlayerIndex)
     {
-        return All.Where(component => component._PlayerIndex == PlayerIndex).First();
+        return All.Where(component => component.PlayerIndex == PlayerIndex).First();
     }
     
-    public int PlayerIndex => _PlayerIndex;
-    private int _PlayerIndex = -1;
+    public int PlayerIndex => _PlayerInput.playerIndex;
 
 
     private InputSystemUIInputModule _UIInputModule;
@@ -38,13 +37,11 @@ public class PlayerUIController : MonoBehaviour
         _PlayerInput = GetComponent<PlayerInput>();
         _PlayerInput.uiInputModule = _UIInputModule;
         _EventSystem = GetComponent<MultiplayerEventSystem>();
-
-        _PlayerIndex = _PlayerInput.playerIndex;
     }
 
     private void Update()
     {
-        this.gameObject.name = $"Player UI Controller {_PlayerIndex}";
+        this.gameObject.name = $"Player UI Controller {PlayerIndex}";
     }
 
     private void OnDestroy()
