@@ -94,6 +94,10 @@ public class Skater : MonoBehaviour
     private CollisionDetectionMode2D _PreGrindCollisionMode = CollisionDetectionMode2D.Discrete;
     private bool _HasStoredPreGrindPhysics = false;
 
+    [Header("UI")]
+    private GameObject _UIControllerPrefab;
+
+
     [Header("Sounds")]
     [SerializeField] private SkaterSoundSet SoundSet;
     private GameAudio.AudioEvent JumpSFX;

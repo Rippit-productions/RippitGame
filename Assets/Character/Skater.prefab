@@ -9996,6 +9996,7 @@ MonoBehaviour:
   MoveSpeed: 35
   BreakingSpeedScale: 2
   JumpForce: 8
+  _GrindExitClearance: 0.08
   SoundSet: {fileID: 11400000, guid: eeec8fa6af865d7408d18fa1c26e6ed2, type: 2}
   CameraSetup:
     minZDistance: 30
@@ -10064,7 +10065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Combos: []
   _ComboTimeLimit: 1.25
-  _StepTimeLimit: 0.75
+  _StepTimeLimit: 0.75534576
   _ResultDisplayTime: 0.45
   _InputThreshold: 0.65
   _BoostMultiplier: 1.3

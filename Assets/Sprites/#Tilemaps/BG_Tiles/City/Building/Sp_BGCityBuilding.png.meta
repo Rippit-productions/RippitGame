@@ -54,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 49
+  spritePixelsToUnits: 50
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -225,7 +225,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 512
-        y: 3072
+        y: 3082
         width: 512
         height: 512
       alignment: 0
@@ -325,6 +325,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Sp_BGCityBuilding_2
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 3072
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cea9ce3dd879fbc4ba919a495d387007
+      internalID: 182369611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_BGCityBuilding_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1536
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e767865ce6e43549835ba62e99ac428
+      internalID: -563041488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_BGCityBuilding_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7640ff95fe297764fbae55da6065e19e
+      internalID: -1746325447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -365,6 +428,31 @@ TextureImporter:
       Sp_BGBuilding_7: 1475625679
       Sp_BGBuilding_8: 1427322458
       Sp_BGBuilding_9: -202481610
+      Sp_BGCityBuilding_0: 1496767211
+      Sp_BGCityBuilding_1: -2055325884
+      Sp_BGCityBuilding_10: -622197244
+      Sp_BGCityBuilding_11: -563041488
+      Sp_BGCityBuilding_12: 473173668
+      Sp_BGCityBuilding_13: 2020782390
+      Sp_BGCityBuilding_14: 1489970312
+      Sp_BGCityBuilding_15: -1746325447
+      Sp_BGCityBuilding_16: 438228515
+      Sp_BGCityBuilding_17: 993315163
+      Sp_BGCityBuilding_18: 73636293
+      Sp_BGCityBuilding_19: -1846331682
+      Sp_BGCityBuilding_2: 182369611
+      Sp_BGCityBuilding_20: 1198605047
+      Sp_BGCityBuilding_21: 955053871
+      Sp_BGCityBuilding_22: 351015632
+      Sp_BGCityBuilding_23: 1872241871
+      Sp_BGCityBuilding_24: -1916455648
+      Sp_BGCityBuilding_3: -1588855224
+      Sp_BGCityBuilding_4: 1544666507
+      Sp_BGCityBuilding_5: 1734079206
+      Sp_BGCityBuilding_6: 1042004483
+      Sp_BGCityBuilding_7: 1200465773
+      Sp_BGCityBuilding_8: -1031971913
+      Sp_BGCityBuilding_9: -1232826960
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

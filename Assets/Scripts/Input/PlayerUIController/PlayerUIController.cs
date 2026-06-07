@@ -9,12 +9,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
 
-
-
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(InputSystemUIInputModule))]
 [RequireComponent(typeof(MultiplayerEventSystem))]
-
 public class PlayerUIController : MonoBehaviour
 {
     public static PlayerUIController[] All => FindObjectsByType<PlayerUIController>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
