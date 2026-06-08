@@ -34,7 +34,7 @@ namespace RippitGameManager
         public string SelectedSceneName = null;
 
         public bool IsPaused => _paused;
-        private bool _paused;
+        private bool _paused = false;
 
         //Events
         public Action<bool> OnPause = new Action<bool>((bool IsPaused) => { });
@@ -54,6 +54,32 @@ namespace RippitGameManager
 
         public void QuitGame() => Application.Quit();
 
+        public void TogglePause(bool Pause)
+        {
+            switch (_paused)
+            {
+                case false:
+                    if (Pause == true)
+                    {
+                        Time.timeScale = 0.0f;
+                        OnPause(Pause);
+                    }
+                    break;
+                case true:
+                    if (Pause == false)
+                    {
+                        Time.timeScale = 1.0f;
+                        OnPause(Pause);
+                    }
+                    break;
+            }
+        }
+
+        public void LoadScene(string sceneName)
+        {
+            StartCoroutine(SceneLoader.LoadScene(sceneName));
+        }
+
 #if UNITY_EDITOR
         [MenuItem("GameObject/GameManager", false, 10)]
         public static void _EditorCreateGameManager()
@@ -67,20 +93,6 @@ namespace RippitGameManager
         }
 #endif
 
-        public void TogglePause(bool Pause)
-        {
-            Time.timeScale = 1.0f;
-            if (Pause)
-            {
-                Time.timeScale = 0.0f;
-                OnPause(Pause);
-            }
-        }
-
-        public void LoadScene(string sceneName)
-        {
-            StartCoroutine(SceneLoader.LoadScene(sceneName));
-        }
 
     }
 } 
