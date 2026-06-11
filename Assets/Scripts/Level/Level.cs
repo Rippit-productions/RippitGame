@@ -1,26 +1,29 @@
 using UnityEngine;
 using GameAudio;
 
-public class Level : MonoBehaviour
+namespace GameLevel
 {
-    public static Level GetInstance() => FindFirstObjectByType<Level>(FindObjectsInactive.Exclude);
-
-    [SerializeField]private FMODUnity.EventReference _Song;
-    [SerializeField]private FMODUnity.EventReference _AmbienceTrack;
-
-    private GameAudio.AudioEvent _LevelMusic;
-    public GameAudio.AudioEvent LevelMusic => _LevelMusic;
-
-    // Start is called before the first frame update
-    void Start()
+    public class Level : MonoBehaviour
     {
-        _LevelMusic = GameAudio.AudioEvent.Instansiate(_Song, GameAudio.AudioEventType.Music);
-        _LevelMusic.Play();
-    }
+        public static Level GetInstance() => FindFirstObjectByType<Level>(FindObjectsInactive.Exclude);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField] private FMODUnity.EventReference _Song;
+        [SerializeField] private FMODUnity.EventReference _AmbienceTrack;
+
+        private GameAudio.AudioEvent _LevelMusic;
+        public GameAudio.AudioEvent LevelMusic => _LevelMusic;
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            _LevelMusic = GameAudio.AudioEvent.Instansiate(_Song, GameAudio.AudioEventType.Music);
+            _LevelMusic.Play();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }
