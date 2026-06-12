@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using System.Linq;
 
 namespace GameAudio
 {
@@ -16,6 +17,11 @@ namespace GameAudio
     public class AudioEvent : MonoBehaviour
     {
         public static AudioEvent[] All => FindObjectsByType<AudioEvent>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
+
+        public static AudioEvent[] GetAudioOfType(AudioEventType type)
+        {
+            return All.Where(e => e.Type == type).ToArray();
+        }
 
         private StudioEventEmitter _FMODEmitter;
 
@@ -32,7 +38,7 @@ namespace GameAudio
             this.gameObject.name = $"Sound: {_FMODEmitter.EventInstance}";
         }
 
-        public static AudioEvent Instansiate(EventReference fmodEventRef,AudioEventType AudioType)
+        public static AudioEvent Instansiate(EventReference fmodEventRef,AudioEventType AudioType, float Volume = 1.0f)
         {
             var newGameObj = new GameObject();
             newGameObj.name = "Sound Event";
@@ -41,10 +47,12 @@ namespace GameAudio
             Component._FMODEmitter = FMODemitter;
 
             FMODemitter.PlayEvent = EmitterGameEvent.None;
-            FMODemitter.StopEvent = EmitterGameEvent.None;
+            FMODemitter.StopEvent = EmitterGameEvent.ObjectDestroy;
 
             FMODemitter.EventReference = fmodEventRef;
             Component._AudioType = AudioType;
+
+            Component.SetVolume(Volume);
             return Component;
         }
 

@@ -69,8 +69,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 32a85fd58e7ebd349aa5030c792697d9, type: 2}
-  m_sharedMaterial: {fileID: 1927278274800469195, guid: 32a85fd58e7ebd349aa5030c792697d9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 02c421b2ff949ef4f911f6461ea61ab9, type: 2}
+  m_sharedMaterial: {fileID: -2673104683162507814, guid: 02c421b2ff949ef4f911f6461ea61ab9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.1
+  m_fontSize: 23.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -152,7 +152,6 @@ GameObject:
   - component: {fileID: 4995936976556800438}
   - component: {fileID: 6319780783836638935}
   - component: {fileID: 4127386376949708968}
-  - component: {fileID: 1940410376152668890}
   m_Layer: 5
   m_Name: GenericButton
   m_TagString: Untagged
@@ -201,14 +200,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.101960786}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -462334163, guid: d75960c7c6a174741b7851cb67405165, type: 3}
+  m_Sprite: {fileID: -866854676, guid: d75960c7c6a174741b7851cb67405165, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -298,18 +297,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IncludeChildren: 0
   AnimatorVariableName: Selected
---- !u!114 &1940410376152668890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8719455232332499975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 2, y: 2}
-  m_UseGraphicAlpha: 1

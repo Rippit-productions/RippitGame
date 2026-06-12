@@ -30,7 +30,7 @@ namespace GameAudio
             }
         }
 
-        private void Start()
+        private void Awake()
         {
             if (_Instance == null)
             {
@@ -40,11 +40,8 @@ namespace GameAudio
             {
                 GameObject.Destroy(this);
             }
-        }
 
-        public AudioSettings()
-        {
-            MasterVolume = PlayerPrefs.GetFloat(PrefName_MasterVolume, 1.0f);
+            MasterVolume = PlayerPrefs.GetFloat(PrefName_MasterVolume, 0.2f);
             MusicVolume = PlayerPrefs.GetFloat(PrefName_MusicVolume, 1.0f);
             SFXVolume = PlayerPrefs.GetFloat(PrefName_SFXVolume, 1.0f);
         }

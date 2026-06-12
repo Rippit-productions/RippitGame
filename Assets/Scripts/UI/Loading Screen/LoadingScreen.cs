@@ -20,7 +20,7 @@ public class LoadingScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _animator.SetBool(ANIM_VAR, FMODBankLoader.Loading || SceneLoader.Loading); 
+        _animator.SetBool(ANIM_VAR, SceneLoader.Loading); 
     }
 
 

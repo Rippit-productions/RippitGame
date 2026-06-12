@@ -16,7 +16,8 @@ namespace GameLevel
         // Start is called before the first frame update
         void Start()
         {
-            _LevelMusic = GameAudio.AudioEvent.Instansiate(_Song, GameAudio.AudioEventType.Music);
+            _LevelMusic = GameAudio.AudioEvent.Instansiate(_Song, GameAudio.AudioEventType.Music,
+                GameAudio.AudioSettings.Instance.GetMusicVolume());
             _LevelMusic.Play();
         }
 

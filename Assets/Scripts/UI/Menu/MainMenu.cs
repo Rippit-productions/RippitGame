@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using GameAudio;
+using RippitGameManager;
 
 public class MainMenu : Menu
 {
@@ -36,7 +37,7 @@ public class MainMenu : Menu
             yield return null;
         }
 #endif
-        GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music);
+        GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music).Play();
 
         yield break;
     }
@@ -47,6 +48,11 @@ public class MainMenu : Menu
         {
             FirstClick = true;
         }
+    }
+
+    public void GotoRaceMode()
+    {
+        GameManager.Instance.LoadScene(_GreyboxScene);
     }
 
     // Update is called once per frame
