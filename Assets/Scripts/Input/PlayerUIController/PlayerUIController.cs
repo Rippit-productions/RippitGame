@@ -20,9 +20,14 @@ public class PlayerUIController : MonoBehaviour
     {
         return All.Where(component => component.PlayerIndex == PlayerIndex).First();
     }
+
+    public static PlayerUIController Instantiate(GameObject Prefab, int PlayerIndex = -1)
+    {
+        return PlayerInput.Instantiate(Prefab, PlayerIndex).GetComponentInChildren<PlayerUIController>();
+    }
+    
     
     public int PlayerIndex => _PlayerInput.playerIndex;
-
 
     private InputSystemUIInputModule _UIInputModule;
     private PlayerInput _PlayerInput;

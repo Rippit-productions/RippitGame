@@ -95,6 +95,8 @@ public class Skater : MonoBehaviour
     private bool _HasStoredPreGrindPhysics = false;
 
     [Header("UI")]
+    public PlayerUIController UIController => _UIController;
+    private PlayerUIController _UIController;
     private GameObject _UIControllerPrefab;
 
 
@@ -149,6 +151,7 @@ public class Skater : MonoBehaviour
         OnSkaterSpawn.Invoke(this);
         this._CharacterState = SkaterState.Grounded;
         this.RespawnPosition = transform.position;
+        this._UIController = PlayerUIController.Instantiate(_UIControllerPrefab, -1);
     }
 
     // Update is called once per frame
