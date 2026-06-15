@@ -13,7 +13,7 @@ using GameLevel;
 [RequireComponent(typeof(Track))]
 public class RaceGameMode : MonoBehaviour
 {
-    public SceneReference SomeScene;
+    public SceneName SomeScene;
 
     public static RaceGameMode Instance => FindFirstObjectByType<RaceGameMode>();
     public enum RaceState

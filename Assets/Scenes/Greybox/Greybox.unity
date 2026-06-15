@@ -29124,6 +29124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb5ddd799d39664b83a6cd9c9521a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SomeScene:
+    AssetGUID: 85538b7d47450854a9c79998a6d372ee
+    name: CharacterSelect
   OnPlayerFinish:
     m_PersistentCalls:
       m_Calls: []

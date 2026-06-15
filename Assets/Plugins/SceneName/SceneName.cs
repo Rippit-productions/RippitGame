@@ -5,16 +5,20 @@ using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
-public class SceneReference
+public class SceneName
 {
-#if UNITY_EDITOR
-    public SceneAsset Asset;
-#endif
     public string AssetGUID;
-    public string SceneName;
+    public string name;
 
     public override string ToString()
     {
-        return SceneName;
+        return name;
     }
+
+#if UNITY_EDITOR
+    public bool IsValid()
+    {
+        return AssetDatabase.GUIDToAssetPath(AssetGUID) != null;
+    }
+#endif
 }
