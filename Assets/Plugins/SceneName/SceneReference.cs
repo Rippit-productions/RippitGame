@@ -1,3 +1,4 @@
+using Codice.Utils;
 using PlasticPipe.PlasticProtocol.Messages;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,15 +6,14 @@ using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
-public class SceneName
+public class SceneReference
 {
     public string AssetGUID;
     public string name;
 
-    public override string ToString()
-    {
-        return name;
-    }
+    public override string ToString() => name;
+
+    
 
 #if UNITY_EDITOR
     public bool IsValid()
@@ -21,4 +21,5 @@ public class SceneName
         return AssetDatabase.GUIDToAssetPath(AssetGUID) != null;
     }
 #endif
+
 }

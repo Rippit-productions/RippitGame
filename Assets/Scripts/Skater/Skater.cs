@@ -97,7 +97,7 @@ public class Skater : MonoBehaviour
     [Header("UI")]
     public PlayerUIController UIController => _UIController;
     private PlayerUIController _UIController;
-    private GameObject _UIControllerPrefab;
+    [SerializeField]private GameObject _UIControllerPrefab;
 
 
     [Header("Sounds")]

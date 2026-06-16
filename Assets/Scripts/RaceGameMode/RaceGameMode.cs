@@ -1,19 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using RippitGameManager;
 using GameLevel;
 
 
-
 [RequireComponent(typeof(Track))]
 public class RaceGameMode : MonoBehaviour
 {
-    public SceneName SomeScene;
+    public SceneReference CharacterSelectScene;
 
     public static RaceGameMode Instance => FindFirstObjectByType<RaceGameMode>();
     public enum RaceState

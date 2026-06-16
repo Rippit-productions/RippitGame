@@ -1,0 +1,18 @@
+{
+    "name": "SceneReferencePropertyDrawer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0806373b768d9e54b97215678bb3bc95"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
