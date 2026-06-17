@@ -752,6 +752,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2824441701533620948, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: OnSwitcherEnable.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824441701533620948, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: OnSwitcherEnable.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824441701533620948, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: OnSwitcherEnable.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 332882166}
+    - target: {fileID: 2824441701533620948, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: OnSwitcherEnable.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824441701533620948, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: OnSwitcherEnable.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TakeUIFocus
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824441701533620948, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: OnSwitcherEnable.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RaceUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824441701533620948, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: OnSwitcherEnable.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 332882165}
+    - target: {fileID: 2824441701533620948, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+      propertyPath: OnSwitcherEnable.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5208934616941111148, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
       propertyPath: m_Name
       value: 'GameUI '
@@ -841,6 +873,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+--- !u!1 &332882165 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 562396396139975942, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+  m_PrefabInstance: {fileID: 332882164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &332882166 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4593561635778194625, guid: 4ccd4b82db16c77438f7c4400f076590, type: 3}
+  m_PrefabInstance: {fileID: 332882164}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004639255c5ae3049a7995e24db877f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &429730747
 GameObject:
   m_ObjectHideFlags: 0

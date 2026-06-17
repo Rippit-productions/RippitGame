@@ -20,11 +20,5 @@ namespace GameLevel
                 GameAudio.AudioSettings.Instance.GetMusicVolume());
             _LevelMusic.Play();
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

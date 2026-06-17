@@ -26,7 +26,7 @@ public class CharacterSelectMenu : MonoBehaviour
     {
         get
         {
-            if (_PlayerUI.Count == 0 && PlayerUIController.GetControllerByPlayerIndex(0))
+            if (_PlayerUI.Count == 0 && PlayerUIController.GetController(0))
             {
                 return false;
             }
@@ -107,7 +107,7 @@ public class CharacterSelectMenu : MonoBehaviour
         GameManager.Instance.CharacterSelection.RemovePlayer(UI.PlayerIndex);
         _DeviceQueue.Add(device.path, device);
         _PlayerUI.Remove(UI.PlayerIndex);
-        GameObject.Destroy(PlayerUIController.GetControllerByPlayerIndex(UI.PlayerIndex).gameObject);
+        GameObject.Destroy(PlayerUIController.GetController(UI.PlayerIndex).gameObject);
     }
 
     private void AddPlayer(InputDevice device)

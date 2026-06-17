@@ -1,9 +1,7 @@
-﻿using RippitGameManager;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -16,7 +14,7 @@ public class PlayerUIController : MonoBehaviour
 {
     public static PlayerUIController[] All => FindObjectsByType<PlayerUIController>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
     
-    public static PlayerUIController GetControllerByPlayerIndex(int PlayerIndex)
+    public static PlayerUIController GetController(int PlayerIndex)
     {
         return All.Where(component => component.PlayerIndex == PlayerIndex).First();
     }
