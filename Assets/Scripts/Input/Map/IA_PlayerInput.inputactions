@@ -374,6 +374,17 @@
                 },
                 {
                     "name": "",
+                    "id": "59b943e7-a8e9-430f-b7aa-7689b9702bbe",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7c9caf64-a4a5-45a3-b4ea-5c5da1db1175",
                     "path": "<Keyboard>/backspace",
                     "interactions": "",

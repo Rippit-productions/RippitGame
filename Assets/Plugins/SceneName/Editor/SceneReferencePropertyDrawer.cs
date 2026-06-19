@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 
@@ -11,30 +13,26 @@ public class SceneReferencePropertyDrawer : PropertyDrawer
     {
         var GUI = new VisualElement();
         SceneReference  currentvalue = (SceneReference)property.boxedValue;
-        
-        var valueField = new UnityEditor.UIElements.ObjectField("Scene Asset");
-        valueField.objectType = typeof(SceneAsset);
-        valueField.RegisterValueChangedCallback(callback =>
-        {
-            SceneAsset asset = (SceneAsset)callback.newValue;
-            var newData = (SceneReference)property.boxedValue;
-            newData.name = asset.name;
-            newData.AssetGUID = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(asset));
 
-            //Apply changes
+        var assetField = new PropertyField(property.FindPropertyRelative("sceneAsset"));
+        assetField.label = property.name;
+
+        assetField.RegisterValueChangeCallback(value => {
+            SceneAsset sceneasset = (SceneAsset)value.changedProperty.boxedValue;
+            SceneReference newData = (SceneReference)property.boxedValue;
+            if (sceneasset == null) 
+            {
+                newData.name = null;
+
+            }
+
+            newData.name = sceneasset.name;
             property.boxedValue = newData;
-            property.serializedObject.ApplyModifiedProperties();
             EditorUtility.SetDirty(property.serializedObject.targetObject);
+            property.serializedObject.ApplyModifiedProperties();
         });
 
-        if (currentvalue.IsValid())
-        {
-            var assetPath = AssetDatabase.GUIDToAssetPath(currentvalue.AssetGUID);
-            SceneAsset currentAsset = AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath);
-            valueField.value = currentAsset;
-        }
-
-        GUI.Add(valueField);
+        GUI.Add(assetField);
         return GUI;
     }
 }

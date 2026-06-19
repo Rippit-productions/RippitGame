@@ -151,7 +151,7 @@ public class Skater : MonoBehaviour
         OnSkaterSpawn.Invoke(this);
         this._CharacterState = SkaterState.Grounded;
         this.RespawnPosition = transform.position;
-        this._UIController = PlayerUIController.Instantiate(_UIControllerPrefab, -1);
+        this._UIController = PlayerUIController.Instantiate(_UIControllerPrefab, _PlayerController.PlayerIndex, _PlayerController.PlayerInputComponent.devices[0]);
     }
 
     // Update is called once per frame

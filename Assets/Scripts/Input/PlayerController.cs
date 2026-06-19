@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public int PlayerIndex => _PlayerInputComponent.playerIndex;
     public PlayerInput PlayerInputComponent => _PlayerInputComponent;
     private PlayerInput _PlayerInputComponent;
 

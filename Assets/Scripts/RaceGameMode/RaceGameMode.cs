@@ -216,7 +216,7 @@ public class RaceGameMode : MonoBehaviour
     }
 
 
-#if UNITY_EDITOR && RIPPIT_DEBUG_GIZMOS
+#if UNITY_EDITOR 
     private void OnDrawGizmos()
     {
         foreach (var player in _Players) 
@@ -252,7 +252,7 @@ public class RaceGameMode : MonoBehaviour
             var lapNum = leaderboard[i].Lap;
             var CheckPointNum = leaderboard[i].TargetCheckPoint;
 
-            string PlayerString = $"{i + 1}. {playerName} | Lap {lapNum} | CheckPoint {CheckPointNum}|  {leaderboard[i].Completion.ToString().Truncate(4)}%";
+            string PlayerString = $"{i + 1}. {playerName} | Lap {lapNum} | CheckPoint {CheckPointNum}|  {leaderboard[i].Completion}%";
 
             if (leaderboard[i].Finished)
             {

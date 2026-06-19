@@ -12,18 +12,18 @@ using UnityEngine.InputSystem.UI;
 [RequireComponent(typeof(MultiplayerEventSystem))]
 public class PlayerUIController : MonoBehaviour
 {
-    public static PlayerUIController[] All => FindObjectsByType<PlayerUIController>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
+    public static PlayerUIController[] All => 
+        FindObjectsByType<PlayerUIController>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID).OrderBy(controller => controller.PlayerIndex).ToArray();
     
     public static PlayerUIController GetController(int PlayerIndex)
     {
-        return All.Where(component => component.PlayerIndex == PlayerIndex).First();
+        return All.Where(component => component.PlayerIndex == PlayerIndex).FirstOrDefault();
     }
 
-    public static PlayerUIController Instantiate(GameObject Prefab, int PlayerIndex = -1)
+    public static PlayerUIController Instantiate(GameObject Prefab, int PlayerIndex = -1,params InputDevice[] Devices)
     {
-        return PlayerInput.Instantiate(Prefab, PlayerIndex).GetComponentInChildren<PlayerUIController>();
+        return PlayerInput.Instantiate(Prefab, PlayerIndex,null,-1,Devices).GetComponentInChildren<PlayerUIController>();
     }
-    
     
     public int PlayerIndex => _PlayerInput.playerIndex;
 
@@ -44,13 +44,14 @@ public class PlayerUIController : MonoBehaviour
         this.gameObject.name = $"Player UI Controller {PlayerIndex}";
     }
 
-    private void OnDestroy()
-    {
-    }
-
     public void SetSelectedGameObject(GameObject TargetObject)
     {
         _EventSystem.SetSelectedGameObject(TargetObject);
+    }
+
+    public void SetPlayerRoot(GameObject Target)
+    {
+        _EventSystem.playerRoot = Target;
     }
 
 
@@ -59,7 +60,7 @@ public class PlayerUIController : MonoBehaviour
     private Rect _GuiRect = new Rect(20, 20, 300, 50);
     void OnGUI()
     {
-        _GuiRect = GUILayout.Window(GuiID, _GuiRect, _DrawGUIWindow, $"UI Controller {PlayerIndex}");
+        //_GuiRect = GUILayout.Window(GuiID, _GuiRect, _DrawGUIWindow, $"UI Controller {PlayerIndex}");
     }
 
     void _DrawGUIWindow(int WindowID)
