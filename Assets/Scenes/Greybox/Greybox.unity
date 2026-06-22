@@ -11216,7 +11216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223f1ff688c73c1409becbe94bf6f8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnOnStart: 1
+  SpawnOnStart: 0
   PrefabOptions:
   - CharacterName: 0
     Prefab: {fileID: 7654531047351847983, guid: 7f312d67f2208e34cba10022fa440051, type: 3}
@@ -28802,7 +28802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterSelectScene:
-    sceneAsset: {fileID: 0}
+    sceneAsset: {fileID: 102900000, guid: 85538b7d47450854a9c79998a6d372ee, type: 3}
     name: 
   OnPlayerFinish:
     m_PersistentCalls:

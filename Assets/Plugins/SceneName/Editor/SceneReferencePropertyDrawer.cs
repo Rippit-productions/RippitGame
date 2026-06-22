@@ -17,21 +17,6 @@ public class SceneReferencePropertyDrawer : PropertyDrawer
         var assetField = new PropertyField(property.FindPropertyRelative("sceneAsset"));
         assetField.label = property.name;
 
-        assetField.RegisterValueChangeCallback(value => {
-            SceneAsset sceneasset = (SceneAsset)value.changedProperty.boxedValue;
-            SceneReference newData = (SceneReference)property.boxedValue;
-            if (sceneasset == null) 
-            {
-                newData.name = null;
-
-            }
-
-            newData.name = sceneasset.name;
-            property.boxedValue = newData;
-            EditorUtility.SetDirty(property.serializedObject.targetObject);
-            property.serializedObject.ApplyModifiedProperties();
-        });
-
         GUI.Add(assetField);
         return GUI;
     }

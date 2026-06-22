@@ -5,7 +5,6 @@ using UnityEngine.Splines;
 using UnityEditor;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-using Unity.VisualScripting;
 using AnimationStateReference;
 using GameAudio;
 
@@ -33,7 +32,7 @@ public class Skater : MonoBehaviour
     public static Skater[] All => FindObjectsByType<Skater>(FindObjectsSortMode.InstanceID);
     public static Action<Skater> OnSkaterSpawn = (Skater) => { };
     public static Action<Skater> OnSkateDestroy = (Skater) => { };
-    public int SkaterIndex => GetComponent<PlayerInput>().playerIndex;
+    public int PlayerIndex => GetComponent<PlayerInput>().playerIndex;
 
     public enum SkaterState
     {
@@ -97,7 +96,7 @@ public class Skater : MonoBehaviour
     [Header("UI")]
     public PlayerUIController UIController => _UIController;
     private PlayerUIController _UIController;
-    [SerializeField]private GameObject _UIControllerPrefab;
+    [SerializeField] private GameObject UIControllerPrefab;
 
 
     [Header("Sounds")]
@@ -138,20 +137,19 @@ public class Skater : MonoBehaviour
             audioSettings.GetSFXVolume());
     }
 
-    void Start()
+
+    private void Start()
     {
         _InitRigidbody();
         _SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        _AnimatorComp = GetComponentInChildren<Animator>(); 
+        _AnimatorComp = GetComponentInChildren<Animator>();
         _PlayerController = GetComponent<PlayerController>();
-
+        _UIController = GetComponent<PlayerUIController>();
         var newCamera = PlayerCamera.CreateCamera(this);
-
         _InitSounds();
-        OnSkaterSpawn.Invoke(this);
         this._CharacterState = SkaterState.Grounded;
         this.RespawnPosition = transform.position;
-        this._UIController = PlayerUIController.Instantiate(_UIControllerPrefab, _PlayerController.PlayerIndex, _PlayerController.PlayerInputComponent.devices[0]);
+        OnSkaterSpawn.Invoke(this);
     }
 
     // Update is called once per frame
@@ -418,10 +416,7 @@ public class Skater : MonoBehaviour
         }
         return _RigidBody.velocity.magnitude / Maxspeed;
     }
-    public void ToggleIdle(bool on)
-    {
-        this._PlayerController.PlayerInputComponent.enabled = on;
-    }
+
 
     //Floor Raycasting
     protected (bool Success, RaycastHit2D Result) RaycastFloor()

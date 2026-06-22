@@ -26,7 +26,7 @@ public class CharacterSelectMenu : MonoBehaviour
     {
         get
         {
-            if (_PlayerUI.Count == 0 && PlayerUIController.GetController(0))
+            if (_PlayerUI.Count == 0)
             {
                 return false;
             }
@@ -68,7 +68,7 @@ public class CharacterSelectMenu : MonoBehaviour
             }
         };
 
-        CharacterSelectUI.OnBeforeDestroy += OnCharacterUIDestroy;
+        CharacterSelectUI.OnUserCancel += OnCharacterUIDestroy;
         GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music).Play();
     }
 

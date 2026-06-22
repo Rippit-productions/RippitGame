@@ -11,15 +11,12 @@ public class SceneLoader
     {
         if (_LoadingOperation != null) yield break;
         _LoadingOperation = SceneManager.LoadSceneAsync(scenename);
-        _LoadingOperation.allowSceneActivation = false;
-        while (_LoadingOperation.progress < 0.9f)
+        _LoadingOperation.allowSceneActivation = true;
+        while (_LoadingOperation.progress < 1.0f)
         {
             yield return null;
         }
-
         yield return new WaitForSeconds(1.0f);
-
-        _LoadingOperation.allowSceneActivation = true;
         _LoadingOperation = null;
         
     }

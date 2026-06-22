@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using RippitGameManager;
 using GameLevel;
+using System.Runtime.CompilerServices;
 
 
 [RequireComponent(typeof(Track))]
 public class RaceGameMode : MonoBehaviour
 {
     public SceneReference CharacterSelectScene;
-
     public static RaceGameMode Instance => FindFirstObjectByType<RaceGameMode>();
     public enum RaceState
     {
@@ -21,7 +21,7 @@ public class RaceGameMode : MonoBehaviour
     }
 
     private RaceState _State = RaceState.Intro;
-    public RaceState Stae => _State;
+    public RaceState State => _State;
 
     public const string FMODParam_RaceEnd = "RaceEnd";
 
@@ -58,29 +58,14 @@ public class RaceGameMode : MonoBehaviour
 
     private void Awake()
     {
-        // Add Player to tracker
-        Skater.OnSkaterSpawn += (Skater newPlayer) =>
-        {
-            _Players.Add(new PlayerInfo
-            {
-                SkaterComponent = newPlayer,
-                Lap = 0,
-                TargetCheckPoint = 0,
-                Finished = false,
-                DNF = false
-            });
-        };
+        _State = RaceState.Intro;
+        var players = PlayerSpawn.PlayerSpawn.Instance.SpawnPlayers();
 
-        Skater.OnSkateDestroy += (Skater) =>
-        {
-            for (int i = 0; i < _Players.Count; i++)
-            {
-                if (_Players[i].SkaterComponent == Skater)
-                {
-                    _Players.RemoveAt(i);
-                }
-            }
-        };
+        Skater.OnSkaterSpawn += OnSkaterSpawn;
+
+        Skater.OnSkateDestroy += OnSKaterDestroy;
+
+        Debug.Log($"Players = {Skater.All.Length}");
     }
 
     void Start()
@@ -88,6 +73,11 @@ public class RaceGameMode : MonoBehaviour
         StartRace();
     }
 
+    private void OnDestroy()
+    {
+        Skater.OnSkaterSpawn -= OnSkaterSpawn;
+        Skater.OnSkateDestroy -= OnSKaterDestroy;
+    }
     public void StartRace()
     {
         _State = RaceState.InProgress;
@@ -108,7 +98,6 @@ public class RaceGameMode : MonoBehaviour
                     Level.GetInstance().LevelMusic.SetAudioParam(FMODParam_RaceEnd, 1.0f);
                     foreach (Skater skater in Skater.All)
                     {
-                        skater.ToggleIdle(false);
                     }
                     this._State = RaceState.Finished;
                     this.OnRaceFinish.Invoke();
@@ -126,8 +115,21 @@ public class RaceGameMode : MonoBehaviour
         return timerString;
     }
 
+    private void AddPlayerToRace (Skater newPlayer)
+    {
+            _Players.Add(new PlayerInfo
+            {
+                SkaterComponent = newPlayer,
+                Lap = 0,
+                TargetCheckPoint = 0,
+                Finished = false,
+                DNF = false
+            });
+    }
+    
     public bool IsRaceFinished()
     {
+        if (_Players.Count == 0) return false;
         return !_Players.Where(p => p.Finished == false).Any();
     }
 
@@ -194,7 +196,7 @@ public class RaceGameMode : MonoBehaviour
     {
         foreach (var skater in Skater.All)
         {
-            skater.ToggleIdle(on);
+            Debug.LogWarning("To add");
         }
     }
 
@@ -215,6 +217,19 @@ public class RaceGameMode : MonoBehaviour
         }
     }
 
+
+    private void OnSkaterSpawn(Skater newPlayer) => AddPlayerToRace (newPlayer);
+
+    private void OnSKaterDestroy(Skater skater)
+    {
+        for (int i = 0; i < _Players.Count; i++)
+        {
+            if (_Players[i].SkaterComponent == skater)
+            {
+                _Players.RemoveAt(i);
+            }
+        }
+    }
 
 #if UNITY_EDITOR 
     private void OnDrawGizmos()

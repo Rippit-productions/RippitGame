@@ -21,6 +21,7 @@ public class SelectAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     void Update()
     {
+        if (EventSystem.current == null) return;
         GameObject SelectedObj = EventSystem.current.currentSelectedGameObject ;
         if (SelectedObj == null) return;
 

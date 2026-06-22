@@ -127,7 +127,7 @@ public class PlayerCamera : MonoBehaviour
         this._cinemachineTransposer.Lookahead.Time = this.CameraSetup.LookAheadTime;
         this._cinemachineTransposer.Lookahead.IgnoreY = true;
 
-        int index = 1 << linkedCharacter.SkaterIndex + 1;
+        int index = 1 << linkedCharacter.PlayerIndex + 1;
         this._cinemachineVirtualCamera.OutputChannel = (OutputChannels)index;
 
         _CinemachineBrain.ChannelMask = (OutputChannels) index;

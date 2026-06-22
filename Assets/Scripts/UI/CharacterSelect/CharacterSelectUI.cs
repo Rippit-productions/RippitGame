@@ -35,7 +35,7 @@ namespace CharacterSelect.UI
         // Events
         public Action<Character> OnSelectionChange = character => { };
         public static Action OnSpawn = () => { };
-        public static Action<CharacterSelectUI> OnBeforeDestroy = UI => { };
+        public static Action<CharacterSelectUI> OnUserCancel = UI => { };
 
         // Start is called before the first frame update
         void Start()
@@ -48,7 +48,6 @@ namespace CharacterSelect.UI
         private void OnDestroy()
         {
             OnSpawn -= this._RefreshSiblingIndex;
-            OnBeforeDestroy.Invoke(this);
         }
 
         public void SetPlayerIndex(int newIndex)
@@ -117,6 +116,7 @@ namespace CharacterSelect.UI
             
             if (this._Confirmed == false)
             {
+                OnUserCancel.Invoke(this);
                 GameObject.Destroy(this.gameObject);
             }
             else

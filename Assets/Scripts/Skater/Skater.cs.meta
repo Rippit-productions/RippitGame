@@ -3,7 +3,13 @@ guid: cfc1a196f1a0c9945b7b5bc9f530e7a0
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _PlayerController: {instanceID: 0}
+  - _AnimatorComp: {instanceID: 0}
+  - _SpriteRenderer: {instanceID: 0}
+  - _LineRenderer: {instanceID: 0}
+  - UIControllerPrefab: {fileID: 3894573558575625179, guid: 812726dad23f25f48ad12b66719db345, type: 3}
+  - SoundSet: {instanceID: 0}
   executionOrder: 0
   icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   userData: 

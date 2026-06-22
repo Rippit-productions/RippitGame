@@ -16,6 +16,8 @@ namespace PlayerSpawn
     }
     public class PlayerSpawn : MonoBehaviour
     {
+        public static PlayerSpawn Instance => FindFirstObjectByType<PlayerSpawn>();
+
         public bool SpawnOnStart = false;
 
         [SerializeField] private SpawnPrefab[] PrefabOptions;
@@ -33,12 +35,18 @@ namespace PlayerSpawn
             return PrefabOptions.Where( p => p.CharacterName == character ).FirstOrDefault().Prefab;
         }
 
-        public void SpawnPlayers()
+        public GameObject[] SpawnPlayers()
         {
+            List<GameObject> spawnedObjects = new List<GameObject>();
             if (GameManager.Instance.CharacterSelection.Count == 0)
             {
                 var newPlayerObj = GameObject.Instantiate(PrefabOptions[0].Prefab);
                 newPlayerObj.transform.position = transform.position;
+
+                var Skater = newPlayerObj.GetComponent<Skater>();
+                var playerIndex = Skater.PlayerIndex;
+
+                spawnedObjects.Add(newPlayerObj);
             }
             else
             {
@@ -49,9 +57,10 @@ namespace PlayerSpawn
                     var playerIndex = selection.Key;
                     var newPlayerObj = PlayerInput.Instantiate(toSpawn, playerIndex, null, -1, inputDevice).gameObject;
                     newPlayerObj.transform.position = transform.position;
+                    spawnedObjects.Add(newPlayerObj);
                 }
             }
-
+            return spawnedObjects.ToArray();
         }
 
     }

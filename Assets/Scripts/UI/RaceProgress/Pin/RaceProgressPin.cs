@@ -18,13 +18,6 @@ public class RaceProgressPin : MonoBehaviour
     void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
-        Skater.OnSkateDestroy += skater =>
-        {
-            if (skater == _targetSkater)
-            {
-                Destroy(this.gameObject);
-            }
-        };
     }
 
     public void SetTargetSkater(Skater target)

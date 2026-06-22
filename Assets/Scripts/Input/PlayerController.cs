@@ -6,9 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
     public int PlayerIndex => _PlayerInputComponent.playerIndex;
-    public PlayerInput PlayerInputComponent => _PlayerInputComponent;
+    public PlayerInput InputComponent => _PlayerInputComponent;
     private PlayerInput _PlayerInputComponent;
 
     private float _NoMoveInputTime = 0.0f;
