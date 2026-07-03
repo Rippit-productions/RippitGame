@@ -1,0 +1,412 @@
+fileFormatVersion: 2
+guid: fc65fdc0a7ab8664f8cb5eb70820cd52
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2385807848720432275
+    second: Sp_RippitUI_0
+  - first:
+      213: -4257379839656292281
+    second: Sp_RippitUI_1
+  - first:
+      213: -8740954706642064201
+    second: Sp_RippitUI_2
+  - first:
+      213: 1883786052649170242
+    second: Sp_RippitUI_3
+  - first:
+      213: 8590878641811980629
+    second: Sp_RippitUI_4
+  - first:
+      213: -5979521693999833733
+    second: Sp_RippitUI_5
+  - first:
+      213: -7192608872794615417
+    second: Sp_RippitUI_6
+  - first:
+      213: -7192511257203609024
+    second: Sp_RippitUI_7
+  - first:
+      213: 4895845535783223985
+    second: Sp_RippitUI_8
+  - first:
+      213: 565272468415640246
+    second: Sp_RippitUI_9
+  - first:
+      213: -2272395524698193524
+    second: Sp_RippitUI_10
+  - first:
+      213: -1946323351963676170
+    second: Sp_RippitUI_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Sp_RippitUI_Box
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4375
+        width: 2160
+        height: 2105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 720, y: 720, z: 720, w: 720}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39cf15d09971c1120800000000000000
+      internalID: 2385807848720432275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_Box2
+      rect:
+        serializedVersion: 2
+        x: 2164
+        y: 4375
+        width: 2163
+        height: 2105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 720, y: 720, z: 720, w: 720}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7409067a79fbae4c0800000000000000
+      internalID: -4257379839656292281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_Box_Mask
+      rect:
+        serializedVersion: 2
+        x: 4440
+        y: 4494
+        width: 1963
+        height: 1906
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 720, y: 720, z: 720, w: 720}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bc22d08104e1b680800000000000000
+      internalID: -8740954706642064201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_6
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 2160
+        width: 2160
+        height: 2160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78111c89658be2c90800000000000000
+      internalID: -7192608872794615417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_TitleMask
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2160
+        width: 4320
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1440, y: 0, z: 1440, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 042716f7e111f2c90800000000000000
+      internalID: -7192511257203609024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_Pause
+      rect:
+        serializedVersion: 2
+        x: 4320
+        y: 2160
+        width: 2160
+        height: 2160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1daec49682ee1b46b4070d1cd8e1b07
+      internalID: -1534343402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_Title
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3240
+        width: 4320
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1440, y: 0, z: 1440, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80ff96d449018fd418f7a707b7dc3965
+      internalID: -1949525998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_RaceBar
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 1080
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16c9fd68f13d9d54caad236234f3756f
+      internalID: -810158483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_RaceBar2
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1087
+        width: 3240
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 360, y: 0, z: 360, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e234369295dd9241a4d3d80f76dd548
+      internalID: -640981028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_RaceBar_Mask
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1080
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bcc2493abb04424f99c4e87e37ece74
+      internalID: -1725341180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sp_RippitUI_RaceBar2_Mask
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 0
+        width: 3240
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 360, y: 0, z: 360, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be68c62c09a90ee4d82ca4383d2dea41
+      internalID: -73233355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 7ad2e2987e1a6d643be6345cc503d0c5
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Sp_RippitUI_10: -2272395524698193524
+      Sp_RippitUI_11: -1946323351963676170
+      Sp_RippitUI_4: 8590878641811980629
+      Sp_RippitUI_5: -5979521693999833733
+      Sp_RippitUI_6: -7192608872794615417
+      Sp_RippitUI_8: 4895845535783223985
+      Sp_RippitUI_9: 565272468415640246
+      Sp_RippitUI_Box: 2385807848720432275
+      Sp_RippitUI_Box2: -4257379839656292281
+      Sp_RippitUI_Box_Mask: -8740954706642064201
+      Sp_RippitUI_OptionButton: 1883786052649170242
+      Sp_RippitUI_Pause: -1534343402
+      Sp_RippitUI_RaceBar: -810158483
+      Sp_RippitUI_RaceBar2: -640981028
+      Sp_RippitUI_RaceBar2_Mask: -73233355
+      Sp_RippitUI_RaceBar_Mask: -1725341180
+      Sp_RippitUI_Title: -1949525998
+      Sp_RippitUI_TitleMask: -7192511257203609024
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
