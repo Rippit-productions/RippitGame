@@ -127,14 +127,17 @@ public class Skater : MonoBehaviour
     {
         var audioSettings = GameAudio.AudioSettings.Instance;
 
-        JumpSFX = AudioEvent.Instansiate(SoundSet.JumpSFX, GameAudio.AudioEventType.SFX,
-            audioSettings.GetSFXVolume()) ;
-        GrindOnSFX = AudioEvent.Instansiate(SoundSet.GrindOnSFX, GameAudio.AudioEventType.SFX,
-            audioSettings.GetSFXVolume());
-        GrindOffSFX = AudioEvent.Instansiate(SoundSet.GrindOffSFX, GameAudio.AudioEventType.SFX,
-            audioSettings.GetSFXVolume());
-        GrindSFX = AudioEvent.Instansiate(SoundSet.GrindSFX, GameAudio.AudioEventType.SFX,
-            audioSettings.GetSFXVolume());
+        JumpSFX = AudioEvent.Instansiate(SoundSet.JumpSFX, GameAudio.AudioEventType.SFX);
+        GrindOnSFX = AudioEvent.Instansiate(SoundSet.GrindOnSFX, GameAudio.AudioEventType.SFX);
+        GrindOffSFX = AudioEvent.Instansiate(SoundSet.GrindOffSFX, GameAudio.AudioEventType.SFX);
+        GrindSFX = AudioEvent.Instansiate(SoundSet.GrindSFX, GameAudio.AudioEventType.SFX);
+
+        AudioEvent[] events = { JumpSFX,GrindOnSFX,GrindOffSFX,GrindSFX};
+
+        foreach (var e in events)
+        {
+            e.SetVolume(GameAudio.AudioSettings.Instance.GetSFXVolume());
+        }
     }
 
 

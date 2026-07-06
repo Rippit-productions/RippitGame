@@ -28807,7 +28807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterSelectScene:
     sceneAsset: {fileID: 102900000, guid: 85538b7d47450854a9c79998a6d372ee, type: 3}
-    sceneName: 
+    sceneName: CharSelect
   OnPlayerFinish:
     m_PersistentCalls:
       m_Calls: []

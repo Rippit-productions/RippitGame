@@ -47,7 +47,12 @@ namespace GameAudio
         }
 
         public float GetMasterVolume() => MasterVolume;
-        public float GetMusicVolume() => MusicVolume * MasterVolume;
+        public float GetMusicVolume()
+        {
+            float vol = MusicVolume * MasterVolume;
+            return vol;
+
+        }
         public float GetSFXVolume() => SFXVolume * MasterVolume;
 
         public void SaveSettings()
@@ -55,6 +60,7 @@ namespace GameAudio
             PlayerPrefs.SetFloat(PrefName_MasterVolume, MasterVolume);
             PlayerPrefs.SetFloat(PrefName_MusicVolume, MusicVolume);
             PlayerPrefs.SetFloat(PrefName_SFXVolume, SFXVolume);
+            PlayerPrefs.Save();
         }
     }
 }

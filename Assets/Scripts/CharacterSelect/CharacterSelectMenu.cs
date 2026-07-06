@@ -70,7 +70,9 @@ public class CharacterSelectMenu : MonoBehaviour
         };
 
         CharacterSelectUI.OnUserCancel += OnCharacterUIDestroy;
-        GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music).Play();
+        var music = GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music);
+        music.Play();
+        music.SetVolume(GameAudio.AudioSettings.Instance.GetMusicVolume());
     }
 
     // Update is called once per frame

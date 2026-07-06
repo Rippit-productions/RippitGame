@@ -38,7 +38,7 @@ namespace GameAudio
             this.gameObject.name = $"Sound: {_FMODEmitter.EventInstance}";
         }
 
-        public static AudioEvent Instansiate(EventReference fmodEventRef,AudioEventType AudioType, float Volume = 1.0f)
+        public static AudioEvent Instansiate(EventReference fmodEventRef,AudioEventType AudioType)
         {
             var newGameObj = new GameObject();
             newGameObj.name = "Sound Event";
@@ -52,7 +52,6 @@ namespace GameAudio
             FMODemitter.EventReference = fmodEventRef;
             Component._AudioType = AudioType;
 
-            Component.SetVolume(Volume);
             return Component;
         }
 
