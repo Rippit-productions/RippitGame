@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float _NoMoveInputTime = 0.0f;
     [SerializeField] private InputActionReference _MoveAction;
     [SerializeField] private InputActionReference _JumpAction;
+    [SerializeField] private InputActionReference _TrickAction;
     [SerializeField] private InputActionReference _GrappleAction;
 
     public Vector2 Move => _PlayerInputComponent.actions.FindAction(_MoveAction.name).ReadValue<Vector2>();
@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     public InputAction Jump => _PlayerInputComponent.actions.FindAction(_JumpAction.name);
 
     public InputAction Grapple => _PlayerInputComponent.actions.FindAction(_GrappleAction.name);
-
 
     void _Init() {
         _PlayerInputComponent = GetComponent<PlayerInput>();

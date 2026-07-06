@@ -3,8 +3,8 @@ guid: 1737d89e86924f7478783304934b16ae
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4486893423162516281
-    second: BrickTile_0
+      213: 6283885832060695797
+    second: Sp_BrickTile_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,11 +96,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BrickTile_0
+      name: Sp_BrickTile_0
       rect:
         serializedVersion: 2
         x: 0
@@ -114,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 93363a8bbc5a44e30800000000000000
-      internalID: 4486893423162516281
+      spriteID: 5f4761deed8d43750800000000000000
+      internalID: 6283885832060695797
       vertices: []
       indices: 
       edges: []
@@ -130,8 +143,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      BrickTile_0: 4486893423162516281
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

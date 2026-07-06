@@ -9,9 +9,9 @@ public class SceneReference
 #if UNITY_EDITOR
     public SceneAsset sceneAsset;
 #endif
-    public string name;
+    public string sceneName;
 
-    public override string ToString() => name;
+    public override string ToString() => sceneName;
     public static implicit operator string(SceneReference obj) => obj.ToString();
 
     public static implicit operator bool(SceneReference obj)
@@ -19,7 +19,7 @@ public class SceneReference
         if (obj == null) return false;
         else
         {
-            return obj.name == null;
+            return obj.sceneName == null;
         }
     }
 

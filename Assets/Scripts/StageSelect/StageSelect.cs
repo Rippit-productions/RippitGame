@@ -4,7 +4,6 @@ using UnityEngine;
 namespace StageSelect
 {
 
-
     public class StageSelect : MonoBehaviour
     {
         [SerializeField] 

@@ -63,8 +63,12 @@ MonoBehaviour:
       Data3: 1386897040
       Data4: -1534676055
     Path: event:/Music/Menu Tracks/Cubenatural - Eto
-  _CharacterSelectScene: CharacterSelect
-  _GreyboxScene: Greybox
+  _CharacterSelectScene:
+    sceneAsset: {fileID: 102900000, guid: 85538b7d47450854a9c79998a6d372ee, type: 3}
+    sceneName: CharSelect
+  _GreyboxScene:
+    sceneAsset: {fileID: 102900000, guid: 26ca66c2d261d0b43a585b12634ec48c, type: 3}
+    sceneName: Greybox
 --- !u!223 &8225404774171370501
 Canvas:
   m_ObjectHideFlags: 0
@@ -213,7 +217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4486893423162516281, guid: 1737d89e86924f7478783304934b16ae, type: 3}
+  m_Sprite: {fileID: 6283885832060695797, guid: 1737d89e86924f7478783304934b16ae, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1197,7 +1201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4907572639054564955, guid: 8cb4ffe459e743449af9d637db1ed0a3, type: 3}
       propertyPath: m_Name
-      value: Mode Select
+      value: Modes
       objectReference: {fileID: 0}
     - target: {fileID: 5490644212081530655, guid: 8cb4ffe459e743449af9d637db1ed0a3, type: 3}
       propertyPath: m_fontSize
@@ -1313,7 +1317,7 @@ PrefabInstance:
       objectReference: {fileID: 2368709414909201959}
     - target: {fileID: 7690202863731589511, guid: 8cb4ffe459e743449af9d637db1ed0a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GotoRaceMode
+      value: GotoCharacterSelect
       objectReference: {fileID: 0}
     - target: {fileID: 7690202863731589511, guid: 8cb4ffe459e743449af9d637db1ed0a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

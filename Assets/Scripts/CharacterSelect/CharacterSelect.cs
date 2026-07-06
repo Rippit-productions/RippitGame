@@ -17,7 +17,7 @@ namespace CharacterSelect
     [Serializable]
     public struct PlayerCharacterSelection
     {
-        public InputDevice InputDevice;
+        public InputDevice[] InputDevice;
         public Character Character;
     }
     public class Dictionary
@@ -28,7 +28,7 @@ namespace CharacterSelect
 
         public IEnumerator GetEnumerator() => _Selection.GetEnumerator(); 
 
-        public bool AddPlayer(int PlayerIndex, InputDevice inputDevice)
+        public bool AddPlayer(int PlayerIndex,params InputDevice[] inputDevice)
         {
             var newData = new PlayerCharacterSelection()
             {
@@ -43,6 +43,8 @@ namespace CharacterSelect
         {
             _Selection.Remove(PlayerIndex);
         }
+
+        public void Clear() => _Selection.Clear();
 
         public PlayerCharacterSelection this[int PlayerIndex]
         {

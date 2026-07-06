@@ -45,6 +45,7 @@ public class CharacterSelectMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.CharacterSelection.Clear();
         foreach (var gamepad in Gamepad.all)
         {
             _DeviceQueue.Add(gamepad.path,gamepad);
@@ -81,7 +82,8 @@ public class CharacterSelectMenu : MonoBehaviour
             {
                 if (((Keyboard)device.Value).enterKey.wasPressedThisFrame)
                 {
-                    AddPlayer(device.Value);
+                    AddPlayer(new InputDevice[] {device.Value,Mouse.current});
+                    _DeviceQueue.Remove(device.Key);
                     break;
                 }
             }
@@ -90,6 +92,7 @@ public class CharacterSelectMenu : MonoBehaviour
                 if (((Gamepad)device.Value).aButton.wasPressedThisFrame)
                 {
                     AddPlayer(device.Value);
+                    _DeviceQueue.Remove(device.Key);
                     break;
                 }
             }
@@ -103,14 +106,17 @@ public class CharacterSelectMenu : MonoBehaviour
 
     private void OnCharacterUIDestroy(CharacterSelectUI UI)
     {
-        var device = GameManager.Instance.CharacterSelection[UI.PlayerIndex].InputDevice;
+        var device = GameManager.Instance.CharacterSelection[UI.PlayerIndex].InputDevice[0];
         GameManager.Instance.CharacterSelection.RemovePlayer(UI.PlayerIndex);
         _DeviceQueue.Add(device.path, device);
         _PlayerUI.Remove(UI.PlayerIndex);
+
+        var playerController = PlayerUIController.GetController(UI.PlayerIndex);
+        playerController.SetSelectedGameObject(null);
         GameObject.Destroy(PlayerUIController.GetController(UI.PlayerIndex).gameObject);
     }
 
-    private void AddPlayer(InputDevice device)
+    private void AddPlayer(params InputDevice[] device)
     {
         var newInputController = PlayerInput.Instantiate(UIControllerPrefab, -1, null, -1, device);
         newInputController.neverAutoSwitchControlSchemes = true;
@@ -126,8 +132,7 @@ public class CharacterSelectMenu : MonoBehaviour
 
         //Add Selection to GameManager
         GameManager.Instance.CharacterSelection.AddPlayer(newInputController.playerIndex, device);
-
-        _DeviceQueue.Remove(device.path);
+        
     }
 
 #if UNITY_EDITOR

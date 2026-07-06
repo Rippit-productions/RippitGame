@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
@@ -16,6 +17,19 @@ public class SceneReferencePropertyDrawer : PropertyDrawer
 
         var assetField = new PropertyField(property.FindPropertyRelative("sceneAsset"));
         assetField.label = property.name;
+
+        // Update string value
+        assetField.RegisterValueChangeCallback(callback =>
+        {
+            SceneAsset asset = (SceneAsset)callback.changedProperty.objectReferenceValue;
+            if (asset != null)
+            {
+                SceneReference boxValue = (SceneReference)property.boxedValue;
+                boxValue.sceneName = asset.name;
+                property.boxedValue = boxValue;
+                property.serializedObject.ApplyModifiedProperties();
+            }
+        });
 
         GUI.Add(assetField);
         return GUI;

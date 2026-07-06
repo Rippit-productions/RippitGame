@@ -32,7 +32,9 @@ namespace PlayerSpawn
 
         public GameObject GetPrefabForCharacter (CharacterSelect.Character character)
         {
-            return PrefabOptions.Where( p => p.CharacterName == character ).FirstOrDefault().Prefab;
+            var selection = PrefabOptions.Where(p => p.CharacterName == character).FirstOrDefault().Prefab;
+            if (selection == null) return PrefabOptions[0].Prefab;
+            return selection;
         }
 
         public GameObject[] SpawnPlayers()

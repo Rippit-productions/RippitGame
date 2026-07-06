@@ -12,8 +12,8 @@ public class MainMenu : Menu
     private bool FirstClick = false;
     [SerializeField] private FMODUnity.EventReference _MusicTrack;
 
-    [SerializeField] private string _CharacterSelectScene;
-    [SerializeField] private string _GreyboxScene;
+    [SerializeField] private SceneReference _CharacterSelectScene;
+    [SerializeField] private SceneReference _GreyboxScene;
     // Start is called before the first frame update
     private new void Start()
     {
@@ -48,6 +48,11 @@ public class MainMenu : Menu
         {
             FirstClick = true;
         }
+    }
+
+    public void GotoCharacterSelect()
+    {
+        GameManager.Instance.LoadScene(_CharacterSelectScene);
     }
 
     public void GotoRaceMode()

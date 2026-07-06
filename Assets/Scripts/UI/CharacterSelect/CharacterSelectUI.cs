@@ -26,6 +26,10 @@ namespace CharacterSelect.UI
         public bool Confirmed => _Confirmed;
         private bool _Confirmed = false;
 
+        [SerializeField] private Animator _Animator;
+        [SerializeField] private AnimationStateReference.AnimatorStateReference LeftAnimation;
+        [SerializeField] private AnimationStateReference.AnimatorStateReference RightAnimation;
+
         [SerializeField] private CanvasGroup _ConfirmedPrompt;
 
         public Character SelectedCharacter => Options[_SelectIndex].character;
@@ -43,6 +47,8 @@ namespace CharacterSelect.UI
             OnSpawn += this._RefreshSiblingIndex;
             OnSpawn.Invoke();
             _Refresh();
+
+            _Animator = GetComponentInChildren<Animator>();
         }
 
         private void OnDestroy()
@@ -92,6 +98,15 @@ namespace CharacterSelect.UI
             else if (_SelectIndex < 0)
             {
                 _SelectIndex = maxValue - 1;
+            }
+
+            if (move.x > 0)
+            {
+                _Animator.Play(LeftAnimation,-1,0);
+            }
+            else
+            {
+                _Animator.Play(RightAnimation,-1,0);
             }
 
             OnSelectionChange.Invoke(this.SelectedCharacter);

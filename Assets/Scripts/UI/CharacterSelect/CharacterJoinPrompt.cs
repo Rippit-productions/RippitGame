@@ -12,9 +12,13 @@ namespace CharacterSelect.UI
         void Start()
         {
             CharacterSelectUI.OnSpawn += _Refresh;
-            CharacterSelectUI.OnUserCancel += ui => { 
-                _Refresh();
-            };
+            CharacterSelectUI.OnUserCancel += OnUserCancel;
+        }
+
+        private void OnDestroy()
+        {
+            CharacterSelectUI.OnSpawn -= _Refresh;
+            CharacterSelectUI.OnUserCancel -= OnUserCancel;
         }
 
         private void _Refresh()
@@ -29,5 +33,7 @@ namespace CharacterSelect.UI
                 this.gameObject.SetActive(true);
             }
         }
+
+        private void OnUserCancel(CharacterSelectUI UI) => _Refresh();
     }
 }
