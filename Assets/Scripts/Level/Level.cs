@@ -18,7 +18,7 @@ namespace GameLevel
         {
             _LevelMusic = GameAudio.AudioEvent.Instansiate(_Song, GameAudio.AudioEventType.Music);
             _LevelMusic.Play();
-            _LevelMusic.SetVolume(0.0f);
+            _LevelMusic.SetVolume(GameAudio.AudioSettings.Instance.GetMusicVolume());
         }
     }
 }

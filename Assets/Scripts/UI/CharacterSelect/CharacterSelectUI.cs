@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 using TMPro;
 using UnityEngine.UI;
 using System;
@@ -20,12 +21,17 @@ namespace CharacterSelect.UI
         public int PlayerIndex => _PlayerIndex;
         private int _PlayerIndex = -1;
 
-        [SerializeField] TMPro.TMP_Text _PlayerNumber;
+        [SerializeField] TMP_Text _PlayerNumber;
         [SerializeField] Image _CharacterImage;
 
         public bool Confirmed => _Confirmed;
         private bool _Confirmed = false;
 
+
+        [Header("Sound")]
+        [SerializeField] private StudioEventEmitter SelectSFX;
+
+        [Header("Animation")]
         [SerializeField] private Animator _Animator;
         [SerializeField] private AnimationStateReference.AnimatorStateReference LeftAnimation;
         [SerializeField] private AnimationStateReference.AnimatorStateReference RightAnimation;
@@ -109,6 +115,7 @@ namespace CharacterSelect.UI
                 _Animator.Play(RightAnimation,-1,0);
             }
 
+            SelectSFX.Play();
             OnSelectionChange.Invoke(this.SelectedCharacter);
 
             if (GameManager.Instance.CharacterSelection.HasPlayer(_PlayerIndex))

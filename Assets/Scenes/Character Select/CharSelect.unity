@@ -264,30 +264,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1979200470825541543, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1979200470825541543, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1979200470825541543, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1979200470825541543, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1979200470825541543, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1979200470825541543, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2716356779985946597, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -375,6 +351,10 @@ PrefabInstance:
     - target: {fileID: 8500811923378575647, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
       propertyPath: m_Name
       value: Character Select
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140043456031805009, guid: 0a3b673f4159cfa4d808ad0db05ea5f4, type: 3}
+      propertyPath: m_FlexibleWidth
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

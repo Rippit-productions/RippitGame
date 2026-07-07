@@ -8,13 +8,17 @@ using UnityEngine.UI;
 using RippitGameManager;
 using System.Linq;
 
-public class CharacterSelectMenu : MonoBehaviour
+public class CharacterSelectScene : MonoBehaviour
 {
-    public static CharacterSelectMenu Instance => FindFirstObjectByType<CharacterSelectMenu>();
+    public static CharacterSelectScene Instance => FindFirstObjectByType<CharacterSelectScene>();
 
+    [Header("Sound")]
     [SerializeField] private EventReference _MusicTrack;
-    [SerializeField] private string MainMenuScene;
-    [SerializeField] private string GreyboxSceneName;
+    [SerializeField] private StudioEventEmitter _CancelSFX;
+
+    [Header("Scenes")]
+    [SerializeField] private SceneReference MainMenuScene;
+    [SerializeField] private SceneReference GreyboxSceneName;
 
     [Header("UI Setup")]
     [SerializeField] private GameObject UIControllerPrefab;
@@ -73,6 +77,12 @@ public class CharacterSelectMenu : MonoBehaviour
         var music = GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music);
         music.Play();
         music.SetVolume(GameAudio.AudioSettings.Instance.GetMusicVolume());
+        music.SetVolume(GameAudio.AudioSettings.Instance.GetMusicVolume());
+    }
+
+    private void OnDestroy()
+    {
+        CharacterSelectUI.OnUserCancel -= OnCharacterUIDestroy;
     }
 
     // Update is called once per frame
@@ -115,6 +125,8 @@ public class CharacterSelectMenu : MonoBehaviour
 
         var playerController = PlayerUIController.GetController(UI.PlayerIndex);
         playerController.SetSelectedGameObject(null);
+
+        _CancelSFX.Play();
         GameObject.Destroy(PlayerUIController.GetController(UI.PlayerIndex).gameObject);
     }
 
@@ -148,6 +160,11 @@ public class CharacterSelectMenu : MonoBehaviour
     void _DrawGUIWindow(int WindowID)
     {
         GUILayout.Label($"Queued Devices = {_DeviceQueue.Count}");
+
+        foreach (KeyValuePair<int,CharacterSelect.PlayerCharacterSelection> element in GameManager.Instance.CharacterSelection)
+        {
+            GUILayout.Label($"Selection : {element.Key} /{element.Value} "); 
+        }
         GUI.DragWindow(new Rect(0, 0, float.MaxValue, float.MaxValue));
     }
 #endif
