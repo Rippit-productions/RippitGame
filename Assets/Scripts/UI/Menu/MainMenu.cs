@@ -11,6 +11,7 @@ public class MainMenu : Menu
 {
     private bool FirstClick = false;
     [SerializeField] private FMODUnity.EventReference _MusicTrack;
+    private AudioEvent BGMusic;
 
     [SerializeField] private SceneReference _CharacterSelectScene;
     [SerializeField] private SceneReference _GreyboxScene;
@@ -24,29 +25,18 @@ public class MainMenu : Menu
     IEnumerator Init()
     {
         InputSystemUIInputModule InputModule = FindFirstObjectByType<InputSystemUIInputModule>();
-
-        /* 
-         * Google Chomr can't start Audio until the web page is clicked on. 
-         * MainMenu shall wait until click to play its audio.
-         * See https://docs.unity3d.com/2022.1/Documentation/Manual/webgl-audio.html
-         * */
-#if UNITY_WEBGL
         InputModule.leftClick.action.performed += ClickActionCallback;
-        while (FMODBankLoader.Loading || !Application.isFocused || !FirstClick)
-        {
-            yield return null;
-        }
-#endif
-        GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music).Play();
-
         yield break;
     }
 
     private void ClickActionCallback(InputAction.CallbackContext callbackContext)
     {
+        if (BGMusic != null) return;
         if (callbackContext.phase == InputActionPhase.Performed)
         {
             FirstClick = true;
+            BGMusic = GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music);
+            BGMusic.Play();
         }
     }
 
