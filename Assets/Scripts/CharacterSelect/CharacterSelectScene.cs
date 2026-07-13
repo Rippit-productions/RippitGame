@@ -76,8 +76,6 @@ public class CharacterSelectScene : MonoBehaviour
         CharacterSelectUI.OnUserCancel += OnCharacterUIDestroy;
         var music = GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music);
         music.Play();
-        music.SetVolume(GameAudio.AudioSettings.Instance.GetMusicVolume());
-        music.SetVolume(GameAudio.AudioSettings.Instance.GetMusicVolume());
     }
 
     private void OnDestroy()

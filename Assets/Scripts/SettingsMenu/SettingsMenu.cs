@@ -24,10 +24,6 @@ public class SettingsMenu : MonoBehaviour
         {
             GameAudio.AudioSettings.Instance.MasterVolume = newValue;
 
-            foreach (var audio in AudioEvent.GetAudioOfType(AudioEventType.Music))
-            {
-                audio.SetVolume(GameAudio.AudioSettings.Instance.GetMusicVolume());
-            }
         });
 
 
@@ -35,11 +31,6 @@ public class SettingsMenu : MonoBehaviour
         _MusicVolSlider.onValueChanged.AddListener(newValue =>
         {
             GameAudio.AudioSettings.Instance.MusicVolume = newValue;
-
-            foreach (var audio in AudioEvent.GetAudioOfType(AudioEventType.Music))
-            {
-                audio.SetVolume(GameAudio.AudioSettings.Instance.GetMusicVolume());
-            }
         });
 
         _SFXVolSlider.value = GameAudio.AudioSettings.Instance.SFXVolume;

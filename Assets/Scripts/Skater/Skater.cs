@@ -133,11 +133,6 @@ public class Skater : MonoBehaviour
         GrindSFX = AudioEvent.Instansiate(SoundSet.GrindSFX, GameAudio.AudioEventType.SFX);
 
         AudioEvent[] events = { JumpSFX,GrindOnSFX,GrindOffSFX,GrindSFX};
-
-        foreach (var e in events)
-        {
-            e.SetVolume(GameAudio.AudioSettings.Instance.GetSFXVolume());
-        }
     }
 
 

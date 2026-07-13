@@ -9,9 +9,50 @@ namespace GameAudio
         public const string PrefName_MusicVolume = "MasterVolume";
         public const string PrefName_SFXVolume = "MasterVolume";
 
-        public float MasterVolume;
-        public float MusicVolume;
-        public float SFXVolume;
+
+        private const string FMODParam_MasterVolume = "Master Volume";
+        private const string FMODParam_MusicVolume = "Music Volume";
+        private const string FMODParam_SFXVolume = "SFX Volume";
+
+        public float MasterVolume
+        {
+            get
+            {
+                float value = 0.0f;
+                FMODUnity.RuntimeManager.StudioSystem.getParameterByName(FMODParam_MasterVolume,out value);
+                return value;
+            }
+            set
+            {
+                FMODUnity.RuntimeManager.StudioSystem.setParameterByName(FMODParam_MasterVolume,value);
+            }
+        }
+        public float MusicVolume
+        {
+            get
+            {
+                float value = 0.0f;
+                FMODUnity.RuntimeManager.StudioSystem.getParameterByName(FMODParam_MusicVolume, out value);
+                return value;
+            }
+            set
+            {
+                FMODUnity.RuntimeManager.StudioSystem.setParameterByName(FMODParam_MusicVolume, value);
+            }
+        }
+        public float SFXVolume
+        {
+            get
+            {
+                float value = 0.0f;
+                FMODUnity.RuntimeManager.StudioSystem.getParameterByName(FMODParam_SFXVolume, out value);
+                return value;
+            }
+            set
+            {
+                FMODUnity.RuntimeManager.StudioSystem.setParameterByName(FMODParam_SFXVolume, value);
+            }
+        }
 
         private static AudioSettings _Instance = null;
         
@@ -45,15 +86,6 @@ namespace GameAudio
             MusicVolume = PlayerPrefs.GetFloat(PrefName_MusicVolume, 1.0f);
             SFXVolume = PlayerPrefs.GetFloat(PrefName_SFXVolume, 1.0f);
         }
-
-        public float GetMasterVolume() => MasterVolume;
-        public float GetMusicVolume()
-        {
-            float vol = MusicVolume * MasterVolume;
-            return vol;
-
-        }
-        public float GetSFXVolume() => SFXVolume * MasterVolume;
 
         public void SaveSettings()
         {
