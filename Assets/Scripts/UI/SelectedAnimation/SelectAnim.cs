@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Animator))]
-public class SelectAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class SelectAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler , ISelectHandler, IDeselectHandler
 {
     private Animator _animatorComponent;
 
@@ -40,6 +40,16 @@ public class SelectAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        _PointerHover = false;
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        _PointerHover = true;
+    }
+
+    public void OnDeselect(BaseEventData eventData)
     {
         _PointerHover = false;
     }

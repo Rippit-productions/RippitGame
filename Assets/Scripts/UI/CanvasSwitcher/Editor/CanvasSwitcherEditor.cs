@@ -127,6 +127,11 @@ public class CanvasSwitcherEditor : Editor
 
     private static void _EditorRefreshAll()
     {
+
+        if (UnityEditor.Timeline.TimelineEditor.inspectedAsset != null)
+        {
+            return;
+        }
         GameObject[] rootObjs;
 
         if (_InPrefabMode)

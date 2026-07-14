@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using RippitGameManager;
 using GameLevel;
-using System.Runtime.CompilerServices;
-
 
 [RequireComponent(typeof(Track))]
 public class RaceGameMode : MonoBehaviour
@@ -204,7 +201,7 @@ public class RaceGameMode : MonoBehaviour
     /// Finish all players.
     /// Any places that haven't finished get DNF
     /// </summary>
-    public void ForceFinish()
+    private void ForceFinish()
     {
         foreach (var info in this._Players)
         {
@@ -216,7 +213,6 @@ public class RaceGameMode : MonoBehaviour
             }
         }
     }
-
 
     private void OnSkaterSpawn(Skater newPlayer) => AddPlayerToRace (newPlayer);
 

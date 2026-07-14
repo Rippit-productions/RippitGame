@@ -2,7 +2,9 @@
     "name": "CanvasSwitcherEditor",
     "rootNamespace": "",
     "references": [
-        "GUID:70ac04ec9cb243e49aa0ab77f5400bc2"
+        "GUID:70ac04ec9cb243e49aa0ab77f5400bc2",
+        "GUID:02f771204943f4a40949438e873e3eff",
+        "GUID:f06555f75b070af458a003d92f9efb00"
     ],
     "includePlatforms": [
         "Editor"

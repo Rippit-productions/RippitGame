@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
@@ -29,14 +30,14 @@ public class PlayerUIController : MonoBehaviour
 
     private InputSystemUIInputModule _UIInputModule;
     private PlayerInput _PlayerInput;
-    private MultiplayerEventSystem _EventSystem;
+    private EventSystem _EventSystem;
     
     void Awake()
     {
         _UIInputModule = GetComponent<InputSystemUIInputModule>();
         _PlayerInput = GetComponent<PlayerInput>();
         _PlayerInput.uiInputModule = _UIInputModule;
-        _EventSystem = GetComponent<MultiplayerEventSystem>();
+        _EventSystem = GetComponent<EventSystem>();
     }
 
     public void SetSelectedGameObject(GameObject TargetObject)
@@ -46,6 +47,9 @@ public class PlayerUIController : MonoBehaviour
 
     public void SetPlayerRoot(GameObject Target)
     {
-        _EventSystem.playerRoot = Target;
+        if (_EventSystem is MultiplayerEventSystem) {
+            ((MultiplayerEventSystem)_EventSystem).playerRoot = Target;
+        }
+
     }
 }

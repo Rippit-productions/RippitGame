@@ -6,11 +6,28 @@ using UnityEngine;
 
 public class CanvasSwitcher : MonoBehaviour
 {
-    private int _ActiveIndex;
+    public int ActiveIndex
+    {
+        get
+        {
+            return _ActiveIndex;
+        }
+        set
+        {
+            var newIndex = value;
+            if (transform.childCount == 0) return;
+            else if (newIndex < 0 || newIndex >= transform.childCount) return;
+            else if (_ActiveIndex != newIndex)
+            {
+                _ActiveIndex = newIndex;
+                Refresh();
+            }
+        }
+    }
+    public int _ActiveIndex;
 
     [SerializeField]public int DefaultIndex = 0;
 
-    public Action OnCanvasSwitch = () => { };
     private void Awake()
     {
         SetActiveIndex(DefaultIndex);
@@ -24,18 +41,8 @@ public class CanvasSwitcher : MonoBehaviour
             transform.GetChild(i).gameObject.SetActive(i == _ActiveIndex);
         }
     }
-    
-    public void SetActiveIndex(int newIndex)
-    {
-        if (transform.childCount == 0) return;
-        else if (newIndex < 0 || newIndex >= transform.childCount) return;
-        else if (_ActiveIndex != newIndex)
-        {
-            OnCanvasSwitch.Invoke();
-            _ActiveIndex = newIndex;
-            Refresh();
-        }
-    }
+
+    public void SetActiveIndex(int newIndex) => _ActiveIndex = newIndex;
 
     /// <summary>
     /// Set Canvas layer to show target Child Object.
