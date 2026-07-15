@@ -13,13 +13,24 @@ public class CanvasSwitcherChild : MonoBehaviour
 
     private void OnDisable() => OnSwitcherDisable.Invoke();
 
+    public CanvasSwitcher ParentSwitcher => GetComponentInParent<CanvasSwitcher>();
+
     public void SwitchToSibling(int newIndex)
     {
-        var ParentObj  = transform.parent;
-        CanvasSwitcher ParentSwitcher = ParentObj.GetComponent<CanvasSwitcher>();
-
         if (ParentSwitcher == null) return;
-
         ParentSwitcher.SetActiveIndex(newIndex);
     }
+
+    public void GotoNextLayer()
+    {
+        if (ParentSwitcher == null) return;
+        ParentSwitcher.ActiveIndex += 1;
+    }
+
+    public void GotoPreviousLayer()
+    {
+        if (ParentSwitcher == null) return;
+        ParentSwitcher.ActiveIndex -= 1;
+    }
+    
 }

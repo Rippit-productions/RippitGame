@@ -93,9 +93,6 @@ public class RaceGameMode : MonoBehaviour
                 if (IsRaceFinished())
                 {
                     Level.GetInstance().LevelMusic.SetAudioParam(FMODParam_RaceEnd, 1.0f);
-                    foreach (Skater skater in Skater.All)
-                    {
-                    }
                     this._State = RaceState.Finished;
                     this.OnRaceFinish.Invoke();
                 }

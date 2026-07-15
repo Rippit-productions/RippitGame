@@ -28,6 +28,8 @@ public class PlayerUIController : MonoBehaviour
     
     public int PlayerIndex => _PlayerInput.playerIndex;
 
+
+    public InputSystemUIInputModule UIInputModule => _UIInputModule;
     private InputSystemUIInputModule _UIInputModule;
     private PlayerInput _PlayerInput;
     private EventSystem _EventSystem;

@@ -8,7 +8,6 @@ using UnityEngine.Events;
 using AnimationStateReference;
 using GameAudio;
 
-
 public struct SkaterGrindAction
 {
     public bool InSplineDirection;
@@ -37,6 +36,7 @@ public class Skater : MonoBehaviour
     public enum SkaterState
     {
         GodMode,
+        Idle,
         Grounded,
         Jumping,
         Grind,
@@ -135,7 +135,6 @@ public class Skater : MonoBehaviour
         AudioEvent[] events = { JumpSFX,GrindOnSFX,GrindOffSFX,GrindSFX};
     }
 
-
     private void Start()
     {
         _InitRigidbody();
@@ -156,6 +155,9 @@ public class Skater : MonoBehaviour
         var lastPosition = this.transform.position;
         switch (_CharacterState)
         {
+            case SkaterState.Idle:
+                    this.ApplyGravity(Vector2.down);
+                    break;
             case SkaterState.Grounded:
                 {
                     bool solidGround = Vector2.Angle(_UpVector, Vector2.up) < 45.0f;

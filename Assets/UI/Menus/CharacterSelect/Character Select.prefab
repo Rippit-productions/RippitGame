@@ -127,7 +127,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4486893423162516281, guid: 1737d89e86924f7478783304934b16ae, type: 3}
+  m_Sprite: {fileID: 6283885832060695797, guid: 1737d89e86924f7478783304934b16ae, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -249,8 +249,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2716356779985946597}
-  - component: {fileID: 3465453967708164827}
-  - component: {fileID: 7548229927851075759}
   - component: {fileID: 7070671888926657624}
   m_Layer: 5
   m_Name: Character Select
@@ -268,7 +266,7 @@ RectTransform:
   m_GameObject: {fileID: 8500811923378575647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8371434440621616543}
@@ -283,52 +281,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!223 &3465453967708164827
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8500811923378575647}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
---- !u!114 &7548229927851075759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8500811923378575647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
 --- !u!114 &7070671888926657624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,13 +318,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2716356779985946597}
     m_Modifications:
-    - target: {fileID: 1284189997025833751, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
-      propertyPath: m_fontSize
-      value: 39.65
-      objectReference: {fileID: 0}
     - target: {fileID: 3080637199225875116, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
       propertyPath: m_Name
-      value: PlayerJoinBanner
+      value: Player Join Prompt
       objectReference: {fileID: 0}
     - target: {fileID: 3452871134455825779, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
       propertyPath: m_Pivot.x
@@ -453,10 +401,6 @@ PrefabInstance:
     - target: {fileID: 3452871134455825779, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5353492771867972741, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
-      propertyPath: m_FlexibleWidth
-      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

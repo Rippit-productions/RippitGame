@@ -110,7 +110,10 @@ public class CharacterSelectScene : MonoBehaviour
 
         if (PlayersReady)
         {
-            GameManager.Instance.LoadScene(GreyboxSceneName); 
+            if (PlayerUIController.All[0].UIInputModule.submit.action.WasPressedThisFrame())
+            {
+                GameManager.Instance.LoadScene(GreyboxSceneName);
+            }
         }
     }
 

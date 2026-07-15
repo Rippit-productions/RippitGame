@@ -22,6 +22,7 @@ public class CanvasSwitcher : MonoBehaviour
                 _ActiveIndex = newIndex;
                 Refresh();
             }
+            
         }
     }
     public int _ActiveIndex;
@@ -42,7 +43,7 @@ public class CanvasSwitcher : MonoBehaviour
         }
     }
 
-    public void SetActiveIndex(int newIndex) => _ActiveIndex = newIndex;
+    public void SetActiveIndex(int newIndex) => ActiveIndex = newIndex;
 
     /// <summary>
     /// Set Canvas layer to show target Child Object.
