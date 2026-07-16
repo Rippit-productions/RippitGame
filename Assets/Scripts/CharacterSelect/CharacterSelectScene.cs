@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using RippitGameManager;
 using System.Linq;
+using CharacterSelect;
 
 public class CharacterSelectScene : MonoBehaviour
 {
@@ -74,8 +75,9 @@ public class CharacterSelectScene : MonoBehaviour
         };
 
         CharacterSelectUI.OnUserCancel += OnCharacterUIDestroy;
-        var music = GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music);
-        music.Play();
+        GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music).Play();
+
+        AddExistingPlayers();
     }
 
     private void OnDestroy()
@@ -131,7 +133,15 @@ public class CharacterSelectScene : MonoBehaviour
         GameObject.Destroy(PlayerUIController.GetController(UI.PlayerIndex).gameObject);
     }
 
-    private void AddPlayer(params InputDevice[] device)
+    private void AddExistingPlayers()
+    {
+        foreach (KeyValuePair<int, PlayerCharacterSelection>  slection in GameManager.Instance.CharacterSelection)
+        {
+            // To-do
+        }
+    }
+
+    private (CharacterSelectUI SelectUI,PlayerUIController UIController )AddPlayer(params InputDevice[] device)
     {
         var newInputController = PlayerInput.Instantiate(UIControllerPrefab, -1, null, -1, device);
         newInputController.neverAutoSwitchControlSchemes = true;
@@ -143,11 +153,13 @@ public class CharacterSelectScene : MonoBehaviour
         int playerIndex = newInputController.playerIndex;
         _PlayerUI.Add(playerIndex, newCharacterSelectUI);
 
-        newInputController.GetComponent<PlayerUIController>().SetSelectedGameObject(newCharacterSelectUI.gameObject);
+        var UIController = newInputController.GetComponent<PlayerUIController>();
+        UIController.SetSelectedGameObject(newCharacterSelectUI.gameObject);
 
         //Add Selection to GameManager
         GameManager.Instance.CharacterSelection.AddPlayer(newInputController.playerIndex, device);
         
+        return (newCharacterSelectUI, UIController);
     }
 
 #if UNITY_EDITOR
