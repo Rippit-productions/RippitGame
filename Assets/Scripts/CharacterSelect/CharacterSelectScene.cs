@@ -8,9 +8,23 @@ using UnityEngine.UI;
 using RippitGameManager;
 using System.Linq;
 using CharacterSelect;
+using UnityEngine.Events;
+
+
+
+
+
 
 public class CharacterSelectScene : MonoBehaviour
 {
+    public struct Player
+    {
+        public CharacterSelectUI UI;
+        public PlayerInput InputComponent;
+        public InputDevice[] InputDevices;
+    }
+
+    private Dictionary<int, Player> Players = new Dictionary<int, Player>();
     public static CharacterSelectScene Instance => FindFirstObjectByType<CharacterSelectScene>();
 
     [Header("Sound")]
@@ -24,10 +38,13 @@ public class CharacterSelectScene : MonoBehaviour
     [Header("UI Setup")]
     [SerializeField] private GameObject UIControllerPrefab;
 
+    private PlayerInput DefaultController;
+    private PlayerInput UIControllers;
+
     [SerializeField] private HorizontalLayoutGroup DisplayList;
     [SerializeField] private GameObject PlayerUIPrefab;
 
-    public bool PlayersReady 
+    public bool IsPlayersReady 
     {
         get
         {
@@ -47,120 +64,50 @@ public class CharacterSelectScene : MonoBehaviour
     public InputDevice[] DeviceQueue => _DeviceQueue.Values.ToArray();
     private Dictionary<string, InputDevice> _DeviceQueue = new Dictionary<string, InputDevice>();
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject _PlayerJoinPrompt;
+    [SerializeField] private GameObject _StartRacePrompt;
+
+    private void Start()
     {
-        GameManager.Instance.CharacterSelection.Clear();
-        foreach (var gamepad in Gamepad.all)
-        {
-            _DeviceQueue.Add(gamepad.path,gamepad);
-        }
-        if (Keyboard.current != null)
-        {
-            _DeviceQueue.Add(Keyboard.current.path,Keyboard.current);
-        }
+        DefaultController = GameObject.Instantiate(UIControllerPrefab).GetComponent<PlayerInput>();
+        DefaultController.gameObject.name = "Default UI Controller";
 
-
-        // Add device to queue
-        InputSystem.onDeviceChange += (device, change) =>
+        foreach (var device in InputSystem.devices)
         {
-            if (change != InputDeviceChange.Added) return;
-            else
+            if (device is Keyboard || device is Gamepad)
             {
-                if (device is Gamepad)
-                {
-                    _DeviceQueue.Add(device.path, device);
-                }
+                _DeviceQueue.Add(device.path, device);
             }
-        };
+        }
 
-        CharacterSelectUI.OnUserCancel += OnCharacterUIDestroy;
-        GameAudio.AudioEvent.Instansiate(_MusicTrack, GameAudio.AudioEventType.Music).Play();
-
-        AddExistingPlayers();
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        CharacterSelectUI.OnUserCancel -= OnCharacterUIDestroy;
+        
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void CheckDeviceJoin()
     {
         foreach (var device in _DeviceQueue)
         {
-            if (device.Value is Keyboard)
-            {
-                if (((Keyboard)device.Value).enterKey.wasPressedThisFrame)
-                {
-                    AddPlayer(new InputDevice[] {device.Value,Mouse.current});
-                    _DeviceQueue.Remove(device.Key);
-                    break;
-                }
-            }
-            else if (device.Value is Gamepad)
-            {
-                if (((Gamepad)device.Value).aButton.wasPressedThisFrame)
-                {
-                    AddPlayer(device.Value);
-                    _DeviceQueue.Remove(device.Key);
-                    break;
-                }
-            }
-        }
+            var keyboard = device.Value as Keyboard;
+            var gamepad = device.Value as Gamepad;
 
-        if (PlayersReady)
-        {
-            if (PlayerUIController.All[0].UIInputModule.submit.action.WasPressedThisFrame())
+            if (keyboard != null)
             {
-                GameManager.Instance.LoadScene(GreyboxSceneName);
+
             }
+
         }
     }
 
-    private void OnCharacterUIDestroy(CharacterSelectUI UI)
+    private void AddPlayer()
     {
-        var device = GameManager.Instance.CharacterSelection[UI.PlayerIndex].InputDevice[0];
-        GameManager.Instance.CharacterSelection.RemovePlayer(UI.PlayerIndex);
-        _DeviceQueue.Add(device.path, device);
-        _PlayerUI.Remove(UI.PlayerIndex);
 
-        var playerController = PlayerUIController.GetController(UI.PlayerIndex);
-        playerController.SetSelectedGameObject(null);
-
-        _CancelSFX.Play();
-        GameObject.Destroy(PlayerUIController.GetController(UI.PlayerIndex).gameObject);
     }
 
-    private void AddExistingPlayers()
-    {
-        foreach (KeyValuePair<int, PlayerCharacterSelection>  slection in GameManager.Instance.CharacterSelection)
-        {
-            // To-do
-        }
-    }
-
-    private (CharacterSelectUI SelectUI,PlayerUIController UIController )AddPlayer(params InputDevice[] device)
-    {
-        var newInputController = PlayerInput.Instantiate(UIControllerPrefab, -1, null, -1, device);
-        newInputController.neverAutoSwitchControlSchemes = true;
-
-        var newCharacterSelectUI = GameObject.Instantiate(PlayerUIPrefab).GetComponent<CharacterSelectUI>();
-        newCharacterSelectUI.SetPlayerIndex(newInputController.playerIndex);
-        newCharacterSelectUI.transform.SetParent(DisplayList.transform, false);
-
-        int playerIndex = newInputController.playerIndex;
-        _PlayerUI.Add(playerIndex, newCharacterSelectUI);
-
-        var UIController = newInputController.GetComponent<PlayerUIController>();
-        UIController.SetSelectedGameObject(newCharacterSelectUI.gameObject);
-
-        //Add Selection to GameManager
-        GameManager.Instance.CharacterSelection.AddPlayer(newInputController.playerIndex, device);
-        
-        return (newCharacterSelectUI, UIController);
-    }
 
 #if UNITY_EDITOR
     private int GuiID = Guid.NewGuid().GetHashCode();
@@ -178,6 +125,8 @@ public class CharacterSelectScene : MonoBehaviour
         {
             GUILayout.Label($"Selection : {element.Key} /{element.Value} "); 
         }
+        GUILayout.Label($"Player Count = {_PlayerUI.Count}");
+        GUILayout.Label($"Player Ready = {IsPlayersReady}");
         GUI.DragWindow(new Rect(0, 0, float.MaxValue, float.MaxValue));
     }
 #endif

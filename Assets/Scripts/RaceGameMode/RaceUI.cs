@@ -1,12 +1,6 @@
 using RippitGameManager;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Playables;
 using UnityEngine.UI;
-
 
 public class RaceUI : MonoBehaviour
 {
@@ -34,7 +28,6 @@ public class RaceUI : MonoBehaviour
         var playerController = PlayerUIController.All[0];
         playerController.SetSelectedGameObject(TargetObject);
     }
-
 
     public void GotoRaceIntro()
     {

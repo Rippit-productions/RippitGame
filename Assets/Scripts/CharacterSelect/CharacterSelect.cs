@@ -17,9 +17,10 @@ namespace CharacterSelect
     [Serializable]
     public struct PlayerCharacterSelection
     {
-        public InputDevice[] InputDevice;
+        public InputDevice[] InputDevices;
         public Character Character;
     }
+
     public class Dictionary
     {
         private Dictionary<int, PlayerCharacterSelection> _Selection = new Dictionary<int, PlayerCharacterSelection>();
@@ -33,7 +34,7 @@ namespace CharacterSelect
             var newData = new PlayerCharacterSelection()
             {
                 Character = Character.Terry,
-                InputDevice = inputDevice
+                InputDevices = inputDevice
             };
             _Selection.Add(PlayerIndex, newData);
             return true;

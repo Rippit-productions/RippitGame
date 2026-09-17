@@ -135,7 +135,6 @@ namespace CharacterSelect.UI
 
         public void OnCancel(BaseEventData eventData)
         {
-            
             if (this._Confirmed == false)
             {
                 OnUserCancel.Invoke(this);

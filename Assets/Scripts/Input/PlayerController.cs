@@ -1,11 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController[] All  {
+        get
+        {
+            var all = FindObjectsByType<PlayerController>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
+            return all.OrderBy(controller => controller.PlayerIndex).ToArray();
+        }
+    }
     public int PlayerIndex => _PlayerInputComponent.playerIndex;
+
     public PlayerInput InputComponent => _PlayerInputComponent;
     private PlayerInput _PlayerInputComponent;
 
@@ -21,12 +33,13 @@ public class PlayerController : MonoBehaviour
 
     public InputAction Grapple => _PlayerInputComponent.actions.FindAction(_GrappleAction.name);
 
-    void _Init() {
-        _PlayerInputComponent = GetComponent<PlayerInput>();
-        _PlayerInputComponent.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
-        _PlayerInputComponent.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
-    }
 
+    [Header("UI")]
+    public InputSystemUIInputModule UIInputModule => _UIInputModule;
+    private InputSystemUIInputModule _UIInputModule;
+    private MultiplayerEventSystem _EventSystem;
+
+    
     private void Update()
     {
         if (Move.magnitude <= 0.1f)
@@ -42,6 +55,21 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        _Init();
+        _PlayerInputComponent = GetComponent<PlayerInput>();
+        _PlayerInputComponent.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
+
+        _UIInputModule = GetComponent<InputSystemUIInputModule>();
+        _EventSystem = GetComponent<MultiplayerEventSystem>();
     }
+    
+    public void UISetSelectedGameObject(GameObject Target)
+    {
+        _EventSystem.SetSelectedGameObject(Target);
+    }
+
+    public void UISetPlayerUIRoot(GameObject Target)
+    {
+        _EventSystem.playerRoot = Target;
+    }
+
 }

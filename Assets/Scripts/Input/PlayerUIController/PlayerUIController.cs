@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.InputSystem.Users;
 
 
 [RequireComponent(typeof(PlayerInput))]
@@ -27,7 +28,6 @@ public class PlayerUIController : MonoBehaviour
     }
     
     public int PlayerIndex => _PlayerInput.playerIndex;
-
 
     public InputSystemUIInputModule UIInputModule => _UIInputModule;
     private InputSystemUIInputModule _UIInputModule;

@@ -55,7 +55,7 @@ namespace PlayerSpawn
                 foreach (KeyValuePair<int,PlayerCharacterSelection> selection in GameManager.Instance.CharacterSelection)
                 {
                     var toSpawn = GetPrefabForCharacter(selection.Value.Character);
-                    var inputDevice = selection.Value.InputDevice;
+                    var inputDevice = selection.Value.InputDevices;
                     var playerIndex = selection.Key;
                     var newPlayerObj = PlayerInput.Instantiate(toSpawn, playerIndex, null, -1, inputDevice).gameObject;
                     newPlayerObj.transform.position = transform.position;

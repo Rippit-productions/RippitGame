@@ -250,6 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2716356779985946597}
   - component: {fileID: 7070671888926657624}
+  - component: {fileID: 8171711556516215184}
   m_Layer: 5
   m_Name: Character Select
   m_TagString: Untagged
@@ -310,6 +311,30 @@ MonoBehaviour:
   UIControllerPrefab: {fileID: 3894573558575625179, guid: 812726dad23f25f48ad12b66719db345, type: 3}
   DisplayList: {fileID: 6869350640895885444}
   PlayerUIPrefab: {fileID: 114736324346237152, guid: 7b04bbf54ad29d0428dcbbc3539b8725, type: 3}
+  _PlayerJoinPrompt: {fileID: 2187631639957434488}
+  _StartRacePrompt: {fileID: 0}
+--- !u!95 &8171711556516215184
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500811923378575647}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 388fc16cf3483a74e86d9c9daeb8bf6c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3791072486752721620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -410,6 +435,11 @@ PrefabInstance:
 --- !u!224 &1979200470825541543 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3452871134455825779, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
+  m_PrefabInstance: {fileID: 3791072486752721620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2187631639957434488 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3080637199225875116, guid: 1088001e85cbf044a9e73c3a64444548, type: 3}
   m_PrefabInstance: {fileID: 3791072486752721620}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5255556910499346014

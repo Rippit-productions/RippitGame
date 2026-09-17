@@ -289,6 +289,12 @@ public class Skater : MonoBehaviour
         }
         UpdateSpriteTransform();
     }
+    
+    public void BindToController(PlayerController playerController)
+    {
+        
+    }
+    
     public Bounds GetBounds()
     {
         return RigidBodyBounds.Get2DBodyBounds(_RigidBody);
