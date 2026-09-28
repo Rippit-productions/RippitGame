@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5437279179701528063}
   - component: {fileID: 8544652039568756576}
-  - component: {fileID: 7144639242617041107}
+  - component: {fileID: 6039090744616782037}
   - component: {fileID: 8802694960333065195}
   - component: {fileID: 5394586020421814805}
   m_Layer: 0
-  m_Name: PlayerUIController
+  m_Name: PlayerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,10 +62,10 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7144639242617041107
+--- !u!114 &6039090744616782037
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,9 +74,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3894573558575625179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95497fc6911929c48935847133679b04, type: 3}
+  m_Script: {fileID: 11500000, guid: 83140b2cbe7b118418c2acecac3dee8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SkateActionMapName: Player
+  UIActionMapName: UI
+  _MoveAction: {fileID: -196028678538658963, guid: ce8b708d3b1c306439392ad72a7ba5fd, type: 3}
+  _JumpAction: {fileID: -543132210360157408, guid: ce8b708d3b1c306439392ad72a7ba5fd, type: 3}
+  _TrickAction: {fileID: 9060028384682914260, guid: ce8b708d3b1c306439392ad72a7ba5fd, type: 3}
+  _GrappleAction: {fileID: 4881606065484478325, guid: ce8b708d3b1c306439392ad72a7ba5fd, type: 3}
 --- !u!114 &8802694960333065195
 MonoBehaviour:
   m_ObjectHideFlags: 0

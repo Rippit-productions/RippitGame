@@ -11286,6 +11286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnOnStart: 0
+  PlayerControllerPrefab: {fileID: 3894573558575625179, guid: 812726dad23f25f48ad12b66719db345, type: 3}
   PrefabOptions:
   - CharacterName: 0
     Prefab: {fileID: 7654531047351847983, guid: 7f312d67f2208e34cba10022fa440051, type: 3}
@@ -28531,6 +28532,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RaceModeUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8573490367552386696, guid: 487c1f14bb19bd74a87c304b11e83101, type: 3}
+      propertyPath: GameMode
+      value: 
+      objectReference: {fileID: 7751135871984589473}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28621,6 +28626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb5ddd799d39664b83a6cd9c9521a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerControllerPrefab: {fileID: 3894573558575625179, guid: 812726dad23f25f48ad12b66719db345, type: 3}
   CharacterSelectScene:
     sceneAsset: {fileID: 102900000, guid: 85538b7d47450854a9c79998a6d372ee, type: 3}
     sceneName: CharSelect

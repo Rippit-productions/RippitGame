@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 namespace PlayerSpawn
 {
@@ -20,6 +21,7 @@ namespace PlayerSpawn
 
         public bool SpawnOnStart = false;
 
+        [SerializeField] private GameObject PlayerControllerPrefab;
         [SerializeField] private SpawnPrefab[] PrefabOptions;
         // Use this for initialization
         void Start()
@@ -40,13 +42,17 @@ namespace PlayerSpawn
         public GameObject[] SpawnPlayers()
         {
             List<GameObject> spawnedObjects = new List<GameObject>();
+
+            // Default: No character selection done. Spawn 1 player.
             if (GameManager.Instance.CharacterSelection.Count == 0)
             {
+                var controller = GameObject.Instantiate(PlayerControllerPrefab).GetComponent<PlayerController>();
+
                 var newPlayerObj = GameObject.Instantiate(PrefabOptions[0].Prefab);
                 newPlayerObj.transform.position = transform.position;
 
                 var Skater = newPlayerObj.GetComponent<Skater>();
-                var playerIndex = Skater.PlayerIndex;
+                Skater.BindToController(controller);
 
                 spawnedObjects.Add(newPlayerObj);
             }
@@ -54,12 +60,16 @@ namespace PlayerSpawn
             {
                 foreach (KeyValuePair<int,PlayerCharacterSelection> selection in GameManager.Instance.CharacterSelection)
                 {
-                    var toSpawn = GetPrefabForCharacter(selection.Value.Character);
-                    var inputDevice = selection.Value.InputDevices;
+                    var PlayerPrefab = GetPrefabForCharacter(selection.Value.Character);
+                    var InputDevices = selection.Value.InputDevices;
                     var playerIndex = selection.Key;
-                    var newPlayerObj = PlayerInput.Instantiate(toSpawn, playerIndex, null, -1, inputDevice).gameObject;
-                    newPlayerObj.transform.position = transform.position;
-                    spawnedObjects.Add(newPlayerObj);
+
+                    var playerController = PlayerController.Instantiate(PlayerControllerPrefab, playerIndex, InputDevices);
+                    var newSkater = GameObject.Instantiate(PlayerPrefab).GetComponent<Skater>();
+                    newSkater.BindToController(playerController);
+
+                    newSkater.gameObject.transform.position = transform.position;
+                    spawnedObjects.Add(newSkater.gameObject);
                 }
             }
             return spawnedObjects.ToArray();

@@ -4,10 +4,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using GameLevel;
+using RippitGameManager;
+using CharacterSelect;
 
 [RequireComponent(typeof(Track))]
 public class RaceGameMode : MonoBehaviour
 {
+
+    public GameObject PlayerControllerPrefab;
+
     public SceneReference CharacterSelectScene;
     public static RaceGameMode Instance => FindFirstObjectByType<RaceGameMode>();
     public enum RaceState
@@ -56,6 +61,12 @@ public class RaceGameMode : MonoBehaviour
     private void Awake()
     {
         _State = RaceState.Intro;
+
+        foreach (KeyValuePair<int,PlayerCharacterSelection> player in GameManager.Instance.CharacterSelection)
+        {
+            PlayerController.Instantiate(PlayerControllerPrefab, player.Key, player.Value.InputDevices);
+        }
+
         var players = PlayerSpawn.PlayerSpawn.Instance.SpawnPlayers();
 
         Skater.OnSkaterSpawn += OnSkaterSpawn;

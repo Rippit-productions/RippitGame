@@ -16,12 +16,6 @@ public struct SkaterGrindAction
     public Spline PreviousSpline;
 }
 
-public struct SkaterGrappleAction
-{
-    public float GrappleLength;
-    public Vector3 HookPoint;
-}
-
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -88,7 +82,6 @@ public class Skater : MonoBehaviour
     [SerializeField, Range(0.0f, 0.5f)] private float _GrindExitClearance = 0.08f;
 
     private SkaterGrindAction _GrindAction = new SkaterGrindAction();
-    private SkaterGrappleAction _GrappleAction = new SkaterGrappleAction();
     private RigidbodyType2D _PreGrindBodyType = RigidbodyType2D.Dynamic;
     private CollisionDetectionMode2D _PreGrindCollisionMode = CollisionDetectionMode2D.Discrete;
     private bool _HasStoredPreGrindPhysics = false;
@@ -140,7 +133,6 @@ public class Skater : MonoBehaviour
         _InitRigidbody();
         _SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _AnimatorComp = GetComponentInChildren<Animator>();
-        _PlayerController = GetComponent<PlayerController>();
         _UIController = GetComponent<PlayerUIController>();
         var newCamera = PlayerCamera.CreateCamera(this);
         _InitSounds();
@@ -152,6 +144,12 @@ public class Skater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_PlayerController == null) 
+        {
+            Debug.LogWarning($"{this.gameObject.name} - Skater has no Player Controller linked");
+            return;
+        }
+
         var lastPosition = this.transform.position;
         switch (_CharacterState)
         {
@@ -292,7 +290,7 @@ public class Skater : MonoBehaviour
     
     public void BindToController(PlayerController playerController)
     {
-        
+        this._PlayerController = playerController;
     }
     
     public Bounds GetBounds()
